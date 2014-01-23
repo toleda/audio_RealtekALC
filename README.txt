@@ -23,9 +23,9 @@ Required Information (Select one from each category)
 	2. 887, 888, 889, 892, 898, 1150
 	3. 887, 888, 889, 892, 898
   3. Mavericks version (Info.plist reference)
-	1. 10.9 (-90),
-	2. 10.9.1(-91)
-	2. 10.9.2(-92)
+	1. 10.9.2 (-92)
+	2. 10.9.1 (-91)
+	3. 10.9 (-90)
 
 Realtek ALC AppleHDA Support kext Configurations:
   1. Realtek ALC AppleHDA Support kext WITHOUT patched binaries (Installation, Step 1)
