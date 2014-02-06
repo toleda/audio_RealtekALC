@@ -28,15 +28,18 @@ Required Information (Select one from each category)
 	3. 10.9 (-90)
 
 Realtek ALC AppleHDA Support kext Configurations:
-  1. Realtek ALC AppleHDA Support kext WITHOUT patched binaries (Installation, Step 1)
-	1. Native AppleHDA.kext binaries must be patched after each Software Update
+  1. Realtek ALC AppleHDA Support kext WITHOUT patched binaries 
+     (Installation, Step 1)
+	1. Native AppleHDA.kext binaries must be patched after each 
+	   Software Update
 	  1. Script provided
 	2. Realtek ALC AppleHDA Support kext WITHOUT patched binaries
 	  1. Persistent, use as is after each Software Update
-  2. Realtek ALC AppleHDA Support kext WITH patched binaries (Installation, Step 2)
+  2. Realtek ALC AppleHDA Support kext WITH patched binaries 
+     (Installation, Step 2)
 	1. Native AppleHDA.kext untouched
-	2. Install new Realtek ALC AppleHDA Support kext WITH patched binaries after 
-           each Software Update
+	2. Install new Realtek ALC AppleHDA Support kext WITH patched binaries
+	   after each Software Update
 
 Realtek ALC AppleHDA Support kext Installation (Start with 1 or 2, not both)
   1. Realtek ALC AppleHDA Support kext WITHOUT patched binaries (Use Terminal)
@@ -77,6 +80,7 @@ Realtek ALC AppleHDA Support kext Installation (Start with 1 or 2, not both)
 	6. S/L/E/AppleHDA898
 	7. S/L/E/AppleHDA1150
   5. Verify ALC onboard audio
+	1. System Preferences/Sound/Output
 
 Notes
   1. HDMI/DP audio may require
