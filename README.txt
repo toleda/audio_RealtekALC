@@ -4,7 +4,8 @@ https://github.com/toleda/audio_RealtekALC
 The Realtek ALC AppleHDA Support kext installed with the native AppleHDA.kext enables full onboard, HDMI and DP audio (Note 1).  The ALC Support kext provides  pin configuration, layout and pathmap injection.  Two choices for AppleHDA binary patching are available; 1. patching the native AppleHDA binaries or including the patched binaries in the Realtek ALC AppleHDA Support kext.
 
 Requirements
-  1. Chameleon/Chimera (For Clover, see https://github.com/toleda/audio_CloverALC)
+  1. Chameleon/Chimera 
+     1. For Clover, see https://github.com/toleda/audio_CloverALC
   2. Mavericks
   3. Native AppleHDA.kext  (If not installed, apply Combo Update)
   4. Supported Realtek on board audio codec
@@ -51,7 +52,7 @@ Realtek ALC AppleHDA Support kext Installation (Start with 1 or 2, not both)
 	3. https://github.com/Piker-Alpha/AppleHDA8Series.sh 
 	4. Download Zip
 	5. $ cd Downloads/AppleHDA8Series.sh-master 
-	6. $ ./AppleHDA8Series  (no arguments required)
+	6. $ ./AppleHDA8Series.sh  (no arguments required)
 	7. Password
 	8. Codec
 	8. Layout
@@ -62,9 +63,9 @@ Realtek ALC AppleHDA Support kext Installation (Start with 1 or 2, not both)
 	1. https://github.com/Piker-Alpha/AppleHDA8Series.sh 
 	2. Download Zip
 	3. $ cd Downloads/AppleHDA8Series.sh-master 
-	4. $ ./AppleHDA8Series -b AppleHDA
+	4. $ ./AppleHDA8Series.sh -b AppleHDA
 	  1. For HD4600 HDMI audio, use 
-	     $ ./AppleHDA8Series -b AppleHDA -b AppleHDAController
+	     $ ./AppleHDA8Series.sh -b AppleHDA -b AppleHDAController
 	5. Password
 	6. Codec
 	7. Layout
