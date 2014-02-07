@@ -1,20 +1,21 @@
+audio_RealtekALC
+============
 Realtek ALC Audio - Native AppleHDA.kext
-https://github.com/toleda/audio_RealtekALC
 
-The Realtek ALC AppleHDA Support kext installed with the native AppleHDA.kext enables full onboard, HDMI and DP audio (Note 1).  The ALC Support kext provides  pin configuration, layout and pathmap injection.  Two choices for AppleHDA binary patching are available; 1. patching the native AppleHDA binaries or including the patched binaries in the Realtek ALC AppleHDA Support kext.
+The Realtek ALC AppleHDA Support kext installed with the native AppleHDA.kext enables full onboard, HDMI and DP audio (Note 1).  The ALC Support kext provides  pin configuration, layout and pathmap injection.  Two choices for AppleHDA binary patching are available; 1. patching the native AppleHDA binaries or 2. including the patched binaries in the Realtek ALC AppleHDA Support kext.
 
 Requirements
   1. Chameleon/Chimera 
      1. For Clover, see https://github.com/toleda/audio_CloverALC
-  2. Mavericks
+  2. Mavericks (10.9 or newer)
   3. Native AppleHDA.kext  (If not installed, apply Combo Update)
   4. Supported Realtek on board audio codec
 
 Required Information (Select one from each category)
   1. Codec/ALC
 	1. 885
-	2. 887 (Legacy only, Note 2)
-	3. 888 (Legacy only, Note 2)
+	2. 887 (for Legacy only, Note 2)
+	3. 888 (for Legacy only, Note 2)
 	4. 889
 	5. 892
 	6. 898
@@ -81,7 +82,7 @@ Realtek ALC AppleHDA Support kext Installation (Start with 1 or 2, not both)
 	6. S/L/E/AppleHDA898
 	7. S/L/E/AppleHDA1150
   5. Verify ALC onboard audio
-	1. System Preferences/Sound/Output
+	1. System Preferences/Sound/Output/select audio device
 
 Notes
   1. HDMI/DP audio may require
@@ -103,6 +104,12 @@ Notes
 		1. Install AppleHDA.kext backup (previous working native
                    AppleHDA.kext)
 
+Tools
+  1. Clover Configurator - http://www.osx86.net/files/file/49-clover-configurator/
+  2. Clover Wiki - http://clover-wiki.zetam.org/Home
+  3. Property List Editor - Xcode, Property List Editor, PlistEdit Pro, TextEdit, etc.
+  4. IOReg (View Raw) - https://github.com/toleda/audio_ALCInjection/blob/master/IORegistryExplorer_v2.1.zip
+
 Problem Reporting (include the following information)
   1. Description of audio problem
 	1. OS X version/motherboard model/BIOS version/processor/graphics
@@ -120,3 +127,6 @@ Problem Reporting (include the following information)
 	2. http://www.insanelymac.com/forum/topic/293001-mavericks-realtek-alc-applehda-audio/
 
 Credit: PikeRAlpha http://pikeralpha.wordpress.com/2014/01/05/new-style-of-applehda-kext-patching-take-ii/
+
+toleda
+https://github.com/toleda/audio_RealtekALC
