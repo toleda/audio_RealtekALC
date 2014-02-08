@@ -2,7 +2,7 @@ audio_RealtekALC
 ============
 Realtek ALC Audio - Native AppleHDA.kext
 
-The Realtek ALC AppleHDA Support kext installed with the native AppleHDA.kext enables full onboard, HDMI and DP audio (Note 1).  The ALC Support kext provides  pin configuration, layout and pathmap injection.  Two choices for AppleHDA binary patching are available; 1. patching the native AppleHDA binaries or 2. including the patched binaries in the Realtek ALC AppleHDA Support kext.
+The Realtek ALC AppleHDA Support kext installed with the native AppleHDA.kext enables full onboard, HDMI and DP audio (Note 1).  The ALC Support kext provides binary patching and pin configuration, layout and pathmap injection.
 
 Requirements
   1. Chameleon/Chimera 
