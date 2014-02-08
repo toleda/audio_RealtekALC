@@ -29,51 +29,28 @@ Required Information (Select one from each category)
 	2. 10.9.1 (-91)
 	3. 10.9 (-90)
 
-Realtek ALC AppleHDA Support kext Configurations:
-  1. Realtek ALC AppleHDA Support kext WITHOUT patched binaries 
-     (Installation, Step 1)
-	1. Native AppleHDA.kext binaries must be patched after each 
-	   Software Update
-	  1. Script provided
-	2. Realtek ALC AppleHDA Support kext WITHOUT patched binaries
-	  1. Persistent, use as is after each Software Update
-  2. Realtek ALC AppleHDA Support kext WITH patched binaries 
-     (Installation, Step 2)
+Realtek ALC AppleHDA Support kext
+  1. Realtek ALC AppleHDA Support kext WITH patched binaries
 	1. Native AppleHDA.kext untouched
 	2. Install new Realtek ALC AppleHDA Support kext WITH patched binaries
-	   after each Software Update
+	   if no audio after Software Update
 
-Realtek ALC AppleHDA Support kext Installation (Start with 1 or 2, not both)
-  1. Realtek ALC AppleHDA Support kext WITHOUT patched binaries (Use Terminal)
-	1. Downloads/audio_RealtekALC-master
-	2. Select ALC codec patch and double click
-	   1. ex. audio_realtek-alc1150-patch.command
-	   2. For HD4600 HDMI audio, select
-	      1. audio_hdmi_hd5K-hda-90_patch.command
-	3. https://github.com/Piker-Alpha/AppleHDA8Series.sh 
-	4. Download Zip
-	5. $ cd Downloads/AppleHDA8Series.sh-master 
-	6. $ ./AppleHDA8Series.sh  (no arguments required)
-	7. Password
-	8. Codec
-	8. Layout
-	10. Version
-	11. Install S/L/E
-	12. Jump to Step 3.
-  2. Realtek ALC AppleHDA Support kext WITH patched binaries (Use Terminal)
+Realtek ALC AppleHDA Support kext Installation
+  1. Realtek ALC AppleHDA Support kext WITH patched binaries (Use Terminal)
 	1. https://github.com/Piker-Alpha/AppleHDA8Series.sh 
 	2. Download Zip
-	3. $ cd Downloads/AppleHDA8Series.sh-master 
-	4. $ ./AppleHDA8Series.sh -b AppleHDA
+	3. $ cp -R /System/Library/Extensions/AppleHDA.kext Desktop/AppleHDA-orig.kext
+	4. $ cd Downloads/AppleHDA8Series.sh-master 
+	5. $ ./AppleHDA8Series.sh -b AppleHDA
 	  1. For HD4600 HDMI audio, use 
 	     $ ./AppleHDA8Series.sh -b AppleHDA -b AppleHDAController
-	5. Password
-	6. Codec
-	7. Layout
-	8. Version
-	9. Install S/L/E
-  3. Restart
-  4. Verify ALC AppleHDA Support kext installed
+	6. Password
+	7. Codec
+	8. Layout
+	9. Version
+	10. Install S/L/E: y
+  2. Restart
+  3. Verify ALC AppleHDA Support kext installed
 	1. S/L/E/AppleHDA885
 	2. S/L/E/AppleHDA887 
 	3. S/L/E/AppleHDA888
@@ -81,7 +58,7 @@ Realtek ALC AppleHDA Support kext Installation (Start with 1 or 2, not both)
 	5. S/L/E/AppleHDA892
 	6. S/L/E/AppleHDA898
 	7. S/L/E/AppleHDA1150
-  5. Verify ALC onboard audio
+  4. Verify ALC onboard audio
 	1. System Preferences/Sound/Output/select audio device
 
 Notes
