@@ -4,10 +4,14 @@ Realtek ALC Audio - Native AppleHDA.kext/No Patching/Persistant
 
 The Realtek ALC AppleHDA Support kext, installed with the native AppleHDA.kext, enables full onboard, HDMI and DP audio (Note 1).  The ALC AppleHDA Support kext provides audio codec binary patch and config data and layouts and platforms injection.
 
+Update: 10.10: Yosemite Initial Realtek ALC support
+
 Requirements
-  1. Chameleon/Chimera 
-     1. For Clover, see https://github.com/toleda/audio_CloverALC
-  2. Mavericks (10.9 or newer)
+  1. Chameleon/Chimera/Clover 
+        1. Optional/Clover, see https://github.com/toleda/audio_CloverALC
+  2. OS X
+	1. 10.10 or newer
+	2. 10.9 or newer
   3. Native AppleHDA.kext  (If not installed, apply Combo Update)
   4. Supported Realtek on board audio codec
 
@@ -24,10 +28,13 @@ Required Information (Select one from each category)
 	1. 885, 887, 888, 889, 892, 898, 1150
 	2. 887, 888, 889, 892, 898, 1150
 	3. 887, 888, 889, 892, 898
-  3. Mavericks version (Info.plist reference)
-	1. 10.9.2 (-92)
-	2. 10.9.1 (-91)
-	3. 10.9 (-90)
+  3. Yosemite version (Info.plist reference)
+	1. 10.10 (-93)
+  4. Mavericks version (Info.plist reference)
+	1. 10.9.3 (-93)
+	2. 10.9.2 (-92)
+	3. 10.9.1 (-91)
+	4. 10.9 (-90)
 
 Realtek ALC AppleHDA Support Kext Method
   1. Realtek ALC AppleHDA Support kext with patched binaries
@@ -102,7 +109,8 @@ Problem Reporting (include the following information)
            Definition Audio (not Devices)
   2. Post to:
 	1. http://www.tonymacx86.com/audio/112461-mavericks-no-audio-realtek-alc-applehda.html
-	2. http://www.insanelymac.com/forum/topic/293001-mavericks-realtek-alc-applehda-audio/
+	2. http://www.insanelymac.com/forum/topic/298819-yosemite-audio-realtek-alc-applehda/
+	3. http://www.insanelymac.com/forum/topic/293001-mavericks-realtek-alc-applehda-audio/
 
 Credit: PikeRAlpha http://pikeralpha.wordpress.com/2014/01/05/new-style-of-applehda-kext-patching-take-ii/
 
