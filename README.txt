@@ -45,13 +45,18 @@ Realtek ALC AppleHDA Support Kext Method
 Realtek ALC AppleHDA Support Kext - Installation
   1. Clover (Use Clover Configurator, Xcode, Property List Editor, etc.)
 	1. EFI/Clover/config.plist/Add
-	  1. Devices/Audio/Inject/Layout (1, 2 or 3)  
-	  2. Save
+		1. Devices/Audio/Inject/Layout (1, 2 or 3)
+  		2. KernelAndKextPatches/KextsToPatch/AppleHDA/RealtekALCxxx (optional)
+			1. See https://github.com/toleda/audio_CloverALC
+		3. Save
   2. ALC Support kext (Use Terminal/Terminal output below)
 	1. https://github.com/Piker-Alpha/AppleHDA8Series.sh 
 	2. Download Zip
 	3. $ cd Downloads/AppleHDA8Series.sh-master 
-	4. $ ./AppleHDA8Series.sh  (no arguments required)
+	4a. Chameleon/Chimera/Clover - no AppleHDA binary patch
+		1. $ ./AppleHDA8Series.sh -b AppleHDA
+	4b. Clover - with AppleHDA binary patch
+		1. $ ./AppleHDA8Series.sh (no arguments required)
 	5. Password
 	6. Codec
 	7. Layout
