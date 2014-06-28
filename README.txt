@@ -53,8 +53,10 @@ Realtek ALC AppleHDA Support Kext - Installation
 	1. https://github.com/Piker-Alpha/AppleHDA8Series.sh 
 	2. Download Zip
 	3. $ cd Downloads/AppleHDA8Series.sh-master 
-	4. Chameleon/Chimera/Clover - no AppleHDA binary patch
+	4a. Chameleon/Chimera/Clover - no AppleHDA binary patch
 		1. $ ./AppleHDA8Series.sh -b AppleHDA
+	4b. Clover - with AppleHDA binary patch
+		2. $ ./AppleHDA8Series.sh
 	5. Password
 	6. Codec
 	7. Layout
