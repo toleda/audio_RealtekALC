@@ -56,7 +56,7 @@ Realtek ALC AppleHDA Support Kext - Installation
 	4a. Chameleon/Chimera/Clover - no AppleHDA binary patch
 		1. $ ./AppleHDA8Series.sh -b AppleHDA
 	4b. Clover - with AppleHDA binary patch
-		2. $ ./AppleHDA8Series.sh
+		1. $ ./AppleHDA8Series.sh
 	5. Password
 	6. Codec
 	7. Layout
