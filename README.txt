@@ -39,7 +39,7 @@ Realtek ALC Patched AppleHDA Kext Method
 
 Realtek ALC Patched AppleHDA Kext - Installation
   1. Patched AppleHDA.kext  (patch in place)
-	1. https://github.com/toleda/audio_RealtekALC/blob/master/audio_realtekALC-90_patch_v2.command.zip
+	1. https://github.com/toleda/audio_RealtekALC/blob/master/audio_realtekALC-90_v2_patch.command.zip
 	2. Download (View Raw)
 	3. Double click Downloads/audio_realtekALC-90_patch_v2.command
 	4. Password?
@@ -91,7 +91,7 @@ Problem Reporting (include the following information)
 
 Patched AppleHDA Kext Method/Terminal Output
 Last login: Thu Jul 24 14:19:15 on ttys000
-$ audio_realtekALC-90_patch_v2.command ; exit;
+$ audio_realtekALC-90_v2_patch.command ; exit;
  
 Supported RealtekALC codecs: 885, 887, 888, 889, 892, 898 and 1150
 Enter name of installed codec: 892
