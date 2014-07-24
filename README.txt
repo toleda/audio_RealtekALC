@@ -91,7 +91,7 @@ Problem Reporting (include the following information)
 
 Patched AppleHDA Kext Method/Terminal Output
 Last login: Thu Jul 24 14:19:15 on ttys000
-$ audio_realtekALC-90_patch_v2.0.command ; exit;
+$ audio_realtekALC-90_patch_v2.command ; exit;
  
 Supported RealtekALC codecs: 885, 887, 888, 889, 892, 898 and 1150
 Enter name of installed codec: 892
