@@ -92,25 +92,27 @@ Problem Reporting (include the following information)
 	3. http://www.insanelymac.com/forum/topic/293001-mavericks-realtek-alc-applehda-audio/
 
 Patched AppleHDA Kext Method/Terminal Output
-Last login: Thu Jul 24 14:19:15 on ttys000
-$ audio_realtekALC-90_v2_patch.command ; exit;
+Last login: Mon Jul 28 13:52:11 on console
+z97n:~ /Users/. . /Downloads/audio_realtekALC-90_v2_patch.command ; exit;
  
-Supported RealtekALC codecs: 885, 887, 888, 889, 892, 898 and 1150
-Enter name of installed codec: 892
+File: audio_realtekALC-90_v2_patch,command_v2.2
+Verify Audio ID injection (1, 2 or 3) for successful patched AppleHDA audio
+Password:
+Confirm Realtek ALC892 (y/n): y
 Enable HD4600 HDMI audio (y/n)?: y
 Preparing 10.9.4 ALC892 AppleHDA.kext_v2.6.3
  
-Desktop/audio_ALC892-10.9.4
+Desktop/audio_ALC892-10.9.4/AppleHDA.kext
 Download files ...
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-100 25382  100 25382    0     0  38783      0 --:--:-- --:--:-- --:--:-- 38751
+100 25382  100 25382    0     0  36928      0 --:--:-- --:--:-- --:--:-- 36892
 Install files ...
 Fix permissions ...
 Kernel cache...
 Finished, restart required.
 logout
 
-[Process completed]
+[Process completed
 toleda
 https://github.com/toleda/audio_RealtekALC
