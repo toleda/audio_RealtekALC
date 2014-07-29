@@ -73,7 +73,7 @@ Notes
 
 Tools
   1. IOReg (View Raw) - https://github.com/toleda/audio_ALCInjection/blob/master/IORegistryExplorer_v2.1.zip
-  2. audio_codecdetect.command (above) - detects, identifies and reports install audio codecs.
+  2. audio_codecdetect.command (above) - detects, identifies and reports install audio codecs. Installation: Double click, Downloads/audio_codecdetect.command
 
 Problem Reporting (include the following information)
   1. Description of audio problem
