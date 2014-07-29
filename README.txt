@@ -20,7 +20,7 @@ Requirements
   5. Audio ID Injection, see https://github.com/toleda/audio_ALCinjectiom
 
 Required Information (Select one from each category)
-  1. Codec/ALC
+  1. Codec/ALC Support (auto detection)
 	1. 885
 	2. 887
 	3. 888
@@ -37,7 +37,7 @@ Required Information (Select one from each category)
 
 Realtek ALC Patched AppleHDA Kext Method
   1. Patched AppleHDA.kext - ConfigData, layouts, Platforms and HDA binary patch
-	1. Native AppleHDA.kext untouched
+	1. Native AppleHDA.kext
 
 Realtek ALC Patched AppleHDA Kext - Installation
   1. Patched AppleHDA.kext  (patch in place)
@@ -45,7 +45,7 @@ Realtek ALC Patched AppleHDA Kext - Installation
 	2. Download (View Raw)
 	3. Double click Downloads/audio_realtekALC-90_patch_v2.command
 	4. Password?
-	5. Installed Codec? (885, 887, 888, 889, 892, 898, 1150 only)
+	5. Verify Codec? (885, 887, 888, 889, 892, 898, 1150 only)
 	6. Enable HD4600 HDMI audio - y/n? (887, 892, 898, 1150 only)
 	7. Legacy_v100202 - y/n? (887, 888 only)
   2. Restart
@@ -73,6 +73,7 @@ Notes
 
 Tools
   1. IOReg (View Raw) - https://github.com/toleda/audio_ALCInjection/blob/master/IORegistryExplorer_v2.1.zip
+  2. audio_codecdetect.command (above) - detects, identifies and reports install audio codecs.
 
 Problem Reporting (include the following information)
   1. Description of audio problem
