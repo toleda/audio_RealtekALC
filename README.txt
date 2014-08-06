@@ -51,7 +51,7 @@ Realtek ALC Patched AppleHDA Kext - Installation
   2. Restart
   3. Verify Patched AppleHDA kext installed
 	1. S/L/E/AppleHDA.kext_vx.x-toledaALCxxx
-  5. Verify ALC onboard audio
+  4. Verify ALC onboard audio
 	1. System Preferences/Sound/Output/select audio device
 
 Notes
