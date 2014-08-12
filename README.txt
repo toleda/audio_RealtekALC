@@ -4,7 +4,7 @@ Realtek ALC Audio - Patched AppleHDA.kext
 
 The Realtek ALC Patched AppleHDA kext enables full onboard, HDMI and DP audio (Note 1).  The v2 script patches the audio codec binary and installs config data (pin configs) and layouts (audio devices) and platforms (pathmap) files.  Other than the script, no file downloads are required.
 
-Update: v2.1, updated script, no downloads, double click and done.
+Update: v2, updated script, no downloads, double click and done.
 
 Other OS X Realtek ALC Onboard Audio Solutions
   1. https://github.com/toleda/audio_pikeralphaALC
