@@ -20,7 +20,7 @@ Requirements
 	3. 10.8 or newer
   3. Native AppleHDA.kext  (If not installed, run Mavericks installer)
   4. Supported Realtek on board audio codec
-  5. Audio ID Injection, see https://github.com/toleda/audio_ALCinjectiom
+  5. Audio ID Injection, see https://github.com/toleda/audio_ALCinjection
 
 Required Information (Select one from each category)
   1. Codec/ALC Support (auto detection)
