@@ -2,8 +2,10 @@ audio_realtekALC
 ============
 Realtek ALC Audio - Patched AppleHDA.kext
 
-The Realtek ALC Patched AppleHDA kext enables full onboard, HDMI and DP audio (Note 1).  The v2 script patches the audio codec binary and installs config data (pin configs) and layouts (audio devices) and platforms (pathmap) files.  Other than the script, no file downloads are required.
+The Realtek ALC Patched AppleHDA kext enables full onboard, HDMI and DP audio (Note 1).  The script patches the audio codec binary and installs config data (pin configs) and layouts (audio devices) and platforms (pathmap) files.  Other than the script, no file downloads are required.
 
+Update: v3 - Yosemite/10.10.x, Mavericks/10.9.x and Mountain Lion/10.8.x support
+	Note: audio_realtekALC-90_v2.command deprecated
 Update: v2.1 - 9 Series/EAPD added to 887, 892, 898, 1150, credit: kidalive
 Update: v2 - updated script; no downloads, double click and done.
 
@@ -18,7 +20,7 @@ Requirements
 	1. 10.10 or newer
 	2. 10.9 or newer
 	3. 10.8 or newer
-  3. Native AppleHDA.kext  (If not installed, run Mavericks installer)
+  3. Native AppleHDA.kext  (If not installed, run OS X installer)
   4. Supported Realtek on board audio codec
   5. Audio ID Injection, see https://github.com/toleda/audio_ALCinjection
 
@@ -41,10 +43,10 @@ Realtek ALC Patched AppleHDA Kext Method
 	1. Native AppleHDA.kext
 
 Realtek ALC Patched AppleHDA Kext - Installation
-  1. v2 Patched Realtek ALC AppleHDA.kext  (patch in place)
-	1. https://github.com/toleda/audio_RealtekALC/blob/master/audio_realtekALC-90_v2_patch.command.zip
+  1. Patched Realtek ALC AppleHDA.kext  (patch in place)
+	1. https://github.com/toleda/audio_RealtekALC/blob/master/audio_realtekALC-100.command.zip
 	2. Download (View Raw)
-	3. Double click Downloads/audio_realtekALC-90_patch_v2.command
+	3. Double click Downloads/audio_realtekALC-100.command
 	4. Password?
 	5. Verify Codec? (885, 887, 888, 889, 892, 898, 1150 only)
 	6. Legacy_v100202 - y/n? (887, 888 only)
@@ -65,7 +67,7 @@ Notes
 	2 - 3 audio port analog audio
 	3 - HD3000/HD4000 HDMI audio and analog audio
   3. Recommendations
-	1. Archive Desktop/audio_ALCxxx-10.9.x
+	1. Archive Desktop/audio_ALCxxx-10.x.x
 	   1. Native: AppleHDA-orig.kext
 	   2. Patched: AppleHDA.kext
 	2. If audio fails after Software Update
@@ -96,7 +98,7 @@ Problem Reporting (include the following information)
 Patched AppleHDA Kext Method/Terminal Output
 Last login: Wed Aug  6 16:11:37 on console
  
-File: audio_realtekALC-90_v2.command
+File: audio_realtekALC-100.command
 Verify kext-dev-mode=1 boot flag/argument
 Password:
 Confirm Realtek ALC1150 (y/n): y
