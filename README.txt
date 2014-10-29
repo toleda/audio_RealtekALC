@@ -4,6 +4,7 @@ Realtek ALC Audio - Patched AppleHDA.kext
 
 The Realtek ALC Patched AppleHDA kext enables full onboard, HDMI and DP audio (Note 1).  The script patches the audio codec binary and installs config data (pin configs) and layouts (audio devices) and platforms (pathmap) files.  Other than the script, no file downloads are required.
 
+Update: v3.1 - Yosemite/audio_alc_x99-hda-100_patch.command added
 Update: v3 - Yosemite/10.10.x, Mavericks/10.9.x and Mountain Lion/10.8.x support
 	Note: audio_realtekALC-90_v2.command deprecated
 Update: v2.1 - 9 Series/EAPD added to 887, 892, 898, 1150, credit: kidalive
@@ -20,7 +21,7 @@ Requirements
 	1. 10.10 or newer
 	2. 10.9 or newer
 	3. 10.8 or newer
-  3. Native AppleHDA.kext  (If not installed, run OS X installer)
+  3. Native AppleHDA.kext  (If not installed, run OS X Installer)
   4. Supported Realtek on board audio codec
   5. Audio ID Injection, see https://github.com/toleda/audio_ALCinjection
 
@@ -73,6 +74,21 @@ Notes
 	2. If audio fails after Software Update
 	   1. See Installation above
 	   2. If new patch fails, install working archived patched AppleHDA.kext
+  4. OS X/AppleHDA.kext/9 Series motherboard support (Mavericks only, select one)
+	1. Download/Install/audio_alc_9series-hda-93_patch.command
+	2. ApppleHDAController binary patch:
+	   1. Find: 20 8C
+	   2. Replace (4x): A0 8C
+	   3. Save
+	   4. Restart
+  5. OS X/AppleHDA.kext/x99 motherboard support (temporary, select one)
+	1. Download/Install/audio_alc_x99-hda-100_patch.command
+	2. ApppleHDAController binary patch:
+	   1. Find: 20 8C
+	   2. Replace (4x): 20 8D
+	   3. Save
+	   4. Restart
+
 
 Tools
   1. IOReg (View Raw) - https://github.com/toleda/audio_ALCInjection/blob/master/IORegistryExplorer_v2.1.zip
