@@ -31,9 +31,9 @@ Other than the script, no file downloads are required.
 	6. 898
 	7. 1150
 2. Layout Support (Definitions: [Note #2](#2-layout-definitions))
-    **`1`** - 885, 887, 888, 889, 892, 898, 1150
-    **`2`** - 887, 888, 889, 892, 898, 1150
-    **`3`** - 887, 888, 889, 892, 898
+    * **`1`** - 885, 887, 888, 889, 892, 898, 1150
+    * **`2`** - 887, 888, 889, 892, 898, 1150
+    * **`3`** - 887, 888, 889, 892, 898
 
 ### Realtek ALC Patched AppleHDA Kext Method
 1. Patched AppleHDA.kext - ConfigData, layouts, Platforms and HDA binary patch
