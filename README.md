@@ -5,10 +5,6 @@ The Realtek ALC Patched AppleHDA kext enables full onboard, HDMI and DP audio ([
 
 Other than the script, no file downloads are required.
 
-**Other OS X Realtek ALC Onboard Audio Solutions**
-1. https://github.com/toleda/audio_pikeralphaALC
-2. https://github.com/toleda/audio_CloverALC
-
 ## Requirements
 1. Chameleon/Chimera/Clover 
     * Optional/Clover (see [audio_CloverALC](https://github.com/toleda/audio_CloverALC))
@@ -152,6 +148,11 @@ logout
 
 [Process completed]
 ```
+
+
+## Other OS X Realtek ALC Onboard Audio Solutions
+- https://github.com/toleda/audio_pikeralphaALC
+- https://github.com/toleda/audio_CloverALC
 
 ## Release Notes
 
