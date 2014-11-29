@@ -1,6 +1,6 @@
 #!/bin/sh
 # Maintained by: toleda for: github.com/toleda/audio_realtekALC
-gFile="File: audio_realtekALC-100.command_v1.0.2"
+gFile="File: audio_realtekALC-100.command_v1.0.3"
 # Credit: bcc9, RevoGirl, PikeRAlpha, SJ_UnderWater, RehabMan, TimeWalker
 #
 # OS X Realtek ALC Onboard Audio
