@@ -4,6 +4,7 @@ Realtek ALC Audio - Patched AppleHDA.kext
 
 The Realtek ALC Patched AppleHDA kext enables full onboard, HDMI and DP audio (Note 1).  The script patches the audio codec binary and installs config data (pin configs) and layouts (audio devices) and platforms (pathmap) files.  Other than the script, no file downloads are required.
 
+Update: v3.4 - BRIX/ALC269, BRIX Pro/ALC283 and NUC/ALC283 Support, see Note F
 Update: v3.3 - audio_realtekALC-100.sh (v1.0.3) release
 Update: v3.1 - Yosemite/audio_alc_x99-hda-100_patch.command added
 Update: v3 - Yosemite/10.10.x, Mavericks/10.9.x and Mountain Lion/10.8.x support
@@ -47,15 +48,17 @@ Requirements
 
 Required Information (Select one from each category)
   A. Codec/ALC Support (auto detection)
-	1. 885
-	2. 887
-	3. 888
-	4. 889
-	5. 892
-	6. 898
-	7. 11501
-  B. Layout Support (Definitions, Note B)
-	1. 885, 887, 888, 889, 892, 898, 1150
+	1. 269 (BRIX only)
+	2. 283 (BRIX Pro and NUC)
+	3. 885
+	4. 887
+	5. 888
+	6. 889
+	7. 892
+	8. 898
+	9. 1150 (see Note F)
+  B. Layout ID Support (Definitions, Note B)
+	1. 269, 283. 885, 887, 888, 889, 892, 898, 1150
 	2. 887, 888, 889, 892, 898, 1150
 	3. 887, 888, 889, 892, 898
 
@@ -93,6 +96,15 @@ Notes
 	   b. Replace (4x): 20 8D
 	   c. Save
 	   d. Restart
+  F. BRIX/ALC269, BRIX Pro/ALC283 and NUC/ALC283 Support
+	1. Installation methods
+	   a. realtekALC/patch in place
+	2. Audio Devices
+	   a. ALC269 - BRIX/Headphones and SPDIF out
+	   b. ALC283 - BRIX Pro and NUC/Headphones (Microphone is not supported)
+	   c. HDMI audio with dsdt edits or ssdt, see
+	      i.  HD4600 - https://github.com/toleda/audio_hdmi_8series
+	      ii. HD4000 - https://github.com/toleda/audio_hdmi_hd4000
 
 Tools
   A. IOReg (View Raw) - https://github.com/toleda/audio_ALCInjection/blob/master/IORegistryExplorer_v2.1.zip
