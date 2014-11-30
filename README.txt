@@ -2,7 +2,7 @@ audio_realtekALC
 ============
 Realtek ALC Audio - Patched AppleHDA.kext
 
-The Realtek ALC Patched AppleHDA kext enables full onboard, HDMI and DP audio (Note 1).  The script patches the audio codec binary and installs config data (pin configs) and layouts (audio devices) and platforms (pathmap) files.  Other than the script, no file downloads are required.
+The Realtek ALC Patched AppleHDA kext enables full onboard, HDMI and DP audio (Note A).  The script patches the audio codec binary and installs config data (pin configs) and layouts (audio devices) and platforms (pathmap) files.  Other than the script, no file downloads are required.
 
 Update: v3.4 - BRIX/ALC269, BRIX Pro/ALC283 and NUC/ALC283 Support, see Note F
 Update: v3.3 - audio_realtekALC-100.sh (v1.0.3) release
