@@ -1,0 +1,77 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1343\cocoasubrtf160
+{\fonttbl\f0\fnil\fcharset0 Verdana;\f1\fswiss\fcharset0 ArialMT;\f2\fnil\fcharset0 HelveticaNeue;
+}
+{\colortbl;\red255\green255\blue255;\red47\green47\blue47;\red0\green0\blue255;\red17\green90\blue209;
+}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc3\levelnfcn3\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{upper-alpha\}.}{\leveltext\leveltemplateid1\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid2\'02\'01.;}{\levelnumbers\'01;}\fi-360\li1440\lin1440 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc3\levelnfcn3\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{upper-alpha\}.}{\leveltext\leveltemplateid101\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid102\'02\'01.;}{\levelnumbers\'01;}\fi-360\li1440\lin1440 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc3\levelnfcn3\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{upper-alpha\}.}{\leveltext\leveltemplateid201\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid3}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}}
+\margl1440\margr1440\vieww12320\viewh7280\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs26 \cf0 audio_realtekALC\
+============\
+Realtek ALC AppleHDA - No Audio After Wake/Sleep [Fixes]\
+
+\f1 \cf2 \expnd0\expndtw0\kerning0
+\
+
+\f0 \cf0 \kerning1\expnd0\expndtw0 No onboard audio after wake occurs on some systems with 10.10 and newer and since 10.9.2 and newer.  The problem was introduced in 10.9.2, ironically, when Apple tried to fix no audio after wake on native hardware (more information, see Details). For users that believe codec patching causes the problem, the patches do not modify a single line of code. Instead, the patches configure the codec to support AppleHDA requirements. The specific AppleHDA codec engine enabled is no longer actively supported and, at some point, may be removed. Resolution of this problem is not likely.\
+\
+Details\
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural
+\ls1\ilvl0\cf0 {\listtext	A.	}{\field{\*\fldinst{HYPERLINK "http://www.tonymacx86.com/audio/112461-mavericks-no-audio-realtek-alc-applehda-guide-73.html#post853949"}}{\fldrslt \cf3 Mavericks: No Audio - Realtek ALC AppleHDA [Guide] - Page 73}}\
+\pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\pardirnatural
+\ls1\ilvl1\cf0 {\listtext	1.	}credit: TimeWalker75a  #721\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 \
+Solutions - install one solution; if it does not work, remove and try another\
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural
+\ls2\ilvl0\cf0 {\listtext	A.	}AppleHDA prior to Apple "fix". Install patched AppleHDA or native AppleHDA
+\f2  
+\f0 and patch in place or Clover patch, see  {\field{\*\fldinst{HYPERLINK "http://www.tonymacx86.com/audio/143757-audio-realtek-alc-applehda-guide.html#post886744"}}{\fldrslt 
+\f2 \cf3 Realtek ALC AppleHDA}}\
+\pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\pardirnatural
+\ls2\ilvl1\cf0 {\listtext	1.	}Mavericks 10.9.1/AppleHDA.kext_v2.5.3/MultiBeast 6.1.0\
+{\listtext	2.	}Mavericks 10.9/AppleHDA.kext_v2.5.2/MultiBeast 6.0.1\
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural
+\ls2\ilvl0\cf0 {\listtext	B.	}{\field{\*\fldinst{HYPERLINK "https://github.com/Dolnor/EAPD-Codec-Commander"}}{\fldrslt \cf3 \ul \ulc4 Dolnor/EAPD-Codec-Commander}}\cf4 \ul \ulc4 \
+\pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\pardirnatural
+\ls2\ilvl1\cf0 \ulnone {\listtext	1.	}credit: TimeWalker75a  #20, {\field{\*\fldinst{HYPERLINK "http://www.insanelymac.com/forum/topic/299166-no-sound-after-waking-from-sleep/?p=2073415"}}{\fldrslt \cf3 No sound after waking from sleep}}\
+{\listtext	2.	}set boot flag: darkwake=8\
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural
+\ls2\ilvl0\cf0 {\listtext	C.	}{\field{\*\fldinst{HYPERLINK "https://github.com/cliffom/appleHDAReset/releases"}}{\fldrslt \cf3 \expnd0\expndtw0\kerning0
+Releases \'b7 cliffom/appleHDAReset \'b7 GitHub}}\expnd0\expndtw0\kerning0
+\
+\pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\pardirnatural
+\ls2\ilvl1\cf0 \kerning1\expnd0\expndtw0 {\listtext	1.	}credit: \cf2 cliffom  #92, {\field{\*\fldinst{HYPERLINK "http://www.tonymacx86.com/audio/127038-realtek-alc-892-no-sound-after-sleep-10-9-2-a-10.html#post852331"}}{\fldrslt \cf3 Realtek ALC 892 No sound after sleep [10.9.2\cf2 ]}}\
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural
+\ls2\ilvl0\cf0 {\listtext	D.	}{\field{\*\fldinst{HYPERLINK "http://www.tonymacx86.com/audio/146465-no-onboard-audio-after-wake-sleep.html"}}{\fldrslt \cf3 \expnd0\expndtw0\kerning0
+No OnBoard Audio After Wake From Sleep?}}\expnd0\expndtw0\kerning0
+\
+\pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\pardirnatural
+\ls2\ilvl1\cf0 \kerning1\expnd0\expndtw0 {\listtext	1.	}credit: \expnd0\expndtw0\kerning0
+shilohh\
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural
+\ls2\ilvl0\cf0 \kerning1\expnd0\expndtw0 {\listtext	E.	}\expnd0\expndtw0\kerning0
+Onboard audio substitutes\
+\pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\pardirnatural
+\ls2\ilvl1\cf0 \kerning1\expnd0\expndtw0 {\listtext	1.	}\expnd0\expndtw0\kerning0
+PCIe\
+\ls2\ilvl1\kerning1\expnd0\expndtw0 {\listtext	2.	}\expnd0\expndtw0\kerning0
+USB\
+\ls2\ilvl1\kerning1\expnd0\expndtw0 {\listtext	3.	}\expnd0\expndtw0\kerning0
+HDMI\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 \expnd0\expndtw0\kerning0
+\
+Problem Reporting\
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural
+\ls3\ilvl0\cf0 \kerning1\expnd0\expndtw0 {\listtext	A.	}\expnd0\expndtw0\kerning0
+No Support, contact developers\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 \expnd0\expndtw0\kerning0
+\
+toleda\
+https://github.com/toleda/audio_realtekALC}
