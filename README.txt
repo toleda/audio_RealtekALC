@@ -32,9 +32,17 @@ Realtek ALC Patched AppleHDA Kext - Installation
   D. Verify ALC onboard audio
 	1. System Preferences/Sound/Output/select audio device
 
-Other OS X Realtek ALC Onboard Audio Solutions
+Other OS X Realtek ALC ApleHDA Audio Solutions
   A. https://github.com/toleda/audio_pikeralphaALC
   B. https://github.com/toleda/audio_CloverALC
+
+Guides - see https://github.com/toleda/audio_ALC_guides
+  A. Capabilities - Realtek ALC AppleHDA_v2 [Guide]
+  B. Customization - Realtek ALC AppleHDA_v2 [Guide]
+  C. No Audio After Sleep/Wake - Realtek ALC AppleHDA [Fixes]
+  D. No Audio Devices - Realtek ALC AppleHDA [Guide]
+  E. No Sound - Realtek ALC AppleHDA [Guide]
+  F. Surround Sound - Realtek ALC -  AppleHDA [Guide]
 
 Requirements
   A. Chameleon/Chimera/Clover 
@@ -57,8 +65,8 @@ Required Information (Select one from each category)
 	6. 889
 	7. 892
 	8. 898
-	9. 1150 (see Note F)
-  B. Layout ID Support (Definitions, Note B)
+	9. 1150
+  B. Audio ID Support (Definitions, Note B)
 	1. 269, 283. 885, 887, 888, 889, 892, 898, 1150
 	2. 887, 888, 889, 892, 898, 1150
 	3. 887, 888, 889, 892, 898
@@ -71,10 +79,10 @@ Notes
   A. HDMI/DP audio may require
 	1. dsdt/ssdt edits
 	2. framebuffer edits
-  B. Layout Definitions (Layout/Audio ID injection installed separately, 
+  B. Audio ID Definitions (Layout/Audio ID injection installed separately, 
         see https://github.com/toleda/audio_ALCInjection)
 	1 - 3/5/6 audio port analog audio
-	2 - 3 audio port analog audio
+	2 - 3 audio port analog 5.1 surround sound
 	3 - HD3000/HD4000 HDMI audio and analog audio
   C. Recommendations
 	1. Archive Desktop/audio_ALCxxx-10.x.x
@@ -137,7 +145,7 @@ Problem Reporting (include the following information)
 	   b. EFI/CLOVER/ACPI/Patched/dsdt.aml (if installed) 
 	   c. EFI/CLOVER/ACPI/Patched/ssdt.aml (if installed)
   B. Post to:
-	1. http://www.tonymacx86.com/audio/112461-mavericks-no-audio-realtek-alc-applehda.html
+	1. http://www.tonymacx86.com/audio/143752-no-audio-devices-realtek-alc-applehda-guide.html#post886726
 	2. http://www.insanelymac.com/forum/topic/298819-yosemite-audio-realtek-alc-applehda/
 	3. http://www.insanelymac.com/forum/topic/293001-mavericks-realtek-alc-applehda-audio/
 
