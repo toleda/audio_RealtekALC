@@ -1,6 +1,5 @@
 ![alt text](https://github.com/toleda/audio_RealtekALC/blob/master/sound.jpeg)
-
-##audio\_realtekALC
+###audio_realtekALC
 ##OS X Realtek ALC AppleHDA Onboard Audio Solutions
 
 ##Details/Contents
@@ -190,3 +189,6 @@
 
 Credit:
 THe KiNG, bcc9, RevoGirl, PikeRAlpha, SJ\_UnderWater, RehabMan, TimeWalker75a, [abxite](http://applelife.ru/threads/patchim-applehda-s-pomoschju-zagruzchika.39406/#post-353647)
+
+toleda
+https://github.com/toleda/audio_RealtekALC
