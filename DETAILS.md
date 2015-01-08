@@ -4,6 +4,8 @@
 **OS X Realtek ALC AppleHDA Onboard Audio Solutions**
 **Details**
 
+**Contents**
+
 I.   Onboard Audio Solutions
 II.  Requirements - Supported/Unsupported
 III. Notes
