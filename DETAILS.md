@@ -7,10 +7,15 @@
 **Contents**
 
 I.   Onboard Audio Solutions
+
 II.  Requirements - Supported/Unsupported
+
 III. Notes
+
 IV.  Guides
+
 V.   Tools
+
 VI.  Problem Reporting
 
 ###I.   OS X Realtek ALC AppleHDA Onboard Audio Solutions
