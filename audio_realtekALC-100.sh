@@ -1,6 +1,6 @@
 #!/bin/sh
 # Maintained by: toleda for: github.com/toleda/audio_realtekALC
-gFile="File: audio_realtekALC-100.command_v1.0.3"
+gFile="File: audio_realtekALC-100.command_v1.0.4"
 # Credit: bcc9, RevoGirl, PikeRAlpha, SJ_UnderWater, RehabMan, TimeWalker
 #
 # OS X Realtek ALC Onboard Audio
@@ -19,8 +19,11 @@ gFile="File: audio_realtekALC-100.command_v1.0.3"
 # 1. Double click audio_cloverALC-100.command
 # 2. Enter password at prompt
 # 3. Confirm Realtek ALC . . . (y/n): (885, 887, 888, 889, 892, 898, 1150 only)
-# 4. Enter Legacy (y/n): (887 and 888 only)
-# 5. Enable HD4600 HDMI audio (y/n): (887, 892, 898, 1150 only)
+# 4. Enable HD4600 HDMI audio (y/n): (887, 892, 898, 1150 only)
+# 5. Restart
+#
+# Change log:
+# v1.0.4 - 1/5/15: 1. 887/888 legacy codec detection, 2. bug fixes
 #
 echo " "
 echo "Agreement"
@@ -34,7 +37,8 @@ echo " "
 gSysVer=`sw_vers -productVersion`
 gSysName="Mavericks"
 gSysFolder="10.9"
-gCloverDirectory=/Volumes/EFI/EFI/CLOVER
+gStartupDisk=EFI
+gCloverDirectory=/Volumes/$gStartupDisk/EFI/CLOVER
 gDesktopDirectory=/Users/$(whoami)/Desktop
 gExtensionsDirectory=/System/Library/Extensions
 gHDAContentsDirectory=$gExtensionsDirectory/AppleHDA.kext/Contents
@@ -43,10 +47,10 @@ gHDAControllerbinaryDirectory=$gHDAContentsDirectory/Plugins/AppleHDAController.
 gAudioid=1
 gLayoutid=1
 gPatch="-toledaALC"
-gCodec=283
+gCodec=892
 gLegacy=n
 gController=n
-gMake=0
+gMake=1
 gDebug=0
 # gCodecsinstalled
 # gCodecVendor
@@ -76,16 +80,15 @@ echo "gRealtekALC = $gRealtekALC"
 fi
 
 #verify system version
-
-case ${gSysVer:0:5} in
-10.8|10.8. ) gSysName="Mountain Lion"
-gSysFolder=/kexts/10.8
+case ${gSysVer} in
+10.10* ) gSysName="Yosemite"
+gSysFolder=/kexts/10.10
 ;;
-10.9|10.9. ) gSysName="Mavericks"
+10.9* ) gSysName="Mavericks"
 gSysFolder=/kexts/10.9
 ;;
-10.10 ) gSysName="Yosemite"
-gSysFolder=/kexts/10.10
+10.8* ) gSysName="Mountain Lion"
+gSysFolder=/kexts/10.8
 ;;
 * ) echo "OS X Version: $gSysVer is not supported"
 echo "No system files were changed"
@@ -114,7 +117,7 @@ fi
 fi
 
 # get password
-gHDAversioninstalled=$(sudo /usr/libexec/plistbuddy -c "Print ':CFBundleShortVersionString'" $gHDAContentsDirectory/Info.plist)
+gHDAversioninstalled=$(sudo /usr/libexec/PlistBuddy -c "Print ':CFBundleShortVersionString'" $gHDAContentsDirectory/Info.plist)
 
 # exit if error
 if [ "$?" != "0" ]; then
@@ -124,18 +127,88 @@ echo "To save a Copy to this Terminal session: Terminal/Shell/Export Text As ...
 exit 1
 fi
 
-# set up efi/clover
-if [ $gCloverALC = 1 ]; then
+# credit: mfram, http://forums.macrumors.com/showpost.php?p=18302055&postcount=6
+gStartupDevice=$(mount | grep "on / " | cut -f1 -d' ')
+gStartupDisk=$(mount | grep "on / " | cut -f1 -d' ' | xargs diskutil info | grep "Volume Name" | perl -an -F'/:\s+/' -e 'print "$F[1]"')
 
 # debug
+if [ $gDebug = 1 ]; then
+echo "Boot device: $gStartupDevice"
+echo "Boot volume: $gStartupDisk"
+fi
+
+# set up clover (efi or legacy)
+if [ $gCloverALC = 1 ]; then
+
+# initialize variable
+choice8=n
+
+# check for debug (debug=1 does not touch CLOVER folder)
 case $gDebug in
 0 )
-gCloverDirectory=/Volumes/EFI/EFI/CLOVER
-gCloverDirectorykexts=$gCloverDirectory$gSysFolder
-sudo rm -R $gCloverDirectory/config-backup.plist
-sudo cp -p $gCloverDirectory/config.plist /tmp/config.plist
-sudo cp -p $gCloverDirectory/config.plist $gCloverDirectory/config-backup.plist
+if [ -d $gCloverDirectory ]; then
+echo "EFI partition is mounted"
+    if [ -f "$gCloverDirectory/config.plist" ]; then
+        sudo cp -p $gCloverDirectory/config.plist /tmp/config.plist
+        if [ -f "$gCloverDirectory/config-backup.plist" ]; then
+            rm -R $gCloverDirectory/config-backup.plist
+        fi
+        sudo cp -p $gCloverDirectory/config.plist $gCloverDirectory/config-backup.plist
+    else
+        echo "$gCloverDirectory/config.plist is missing"
+        echo "No system files were changed"
+        echo "To save a Copy to this Terminal session: Terminal/Shell/Export Text As ..."
+        exit 1
+    fi
+else
+echo "EFI partition is not mounted"
+
+# confirm Clover Legacy install
+while true
+do
+read -p "Confirm Clover Legacy Install (y/n): " choice8
+case "$choice8" in
+
+[yY]* )
+gStartupDisk=${gStartupDisk}
+gCloverDirectory=/Volumes/$gStartupDisk/EFI/CLOVER
+if [ -d $gCloverDirectory ]; then
+echo "$gStartupDisk/EFI folder found"
+    if [ -f "$gCloverDirectory/config.plist" ]; then
+        sudo cp -p $gCloverDirectory/config.plist /tmp/config.plist
+        if [ -f "$gCloverDirectory/config-backup.plist" ]; then
+            rm -R $gCloverDirectory/config-backup.plist
+        fi
+        sudo cp -p $gCloverDirectory/config.plist $gCloverDirectory/config-backup.plist
+    else
+        echo "$gCloverDirectory/config.plist is missing"
+        echo "No system files were changed"
+        echo "To save a Copy to this Terminal session: Terminal/Shell/Export Text As ..."
+        exit 1
+    fi
+else
+echo "$gCloverDirectory not found"
+echo "No system files were changed"
+echo "To save a Copy to this Terminal session: Terminal/Shell/Export Text As ..."
+exit 1
+fi
+
+break
 ;;
+
+[nN]* )
+echo "User terminated, no EFI partition/folder"
+echo "No system files were changed"
+echo "To save a Copy to this Terminal session: Terminal/Shell/Export Text As ..."
+exit 1
+;;
+
+* ) echo "Try again...";;
+esac
+done
+fi
+;;
+
 1 )
 echo "gHDAversioninstalled = $gHDAversioninstalled"
 echo "Desktop/config-basic.plist copied to /tmp/config.plist"
@@ -147,14 +220,20 @@ exit 1
 ;;
 esac
 
+fi
+
 # exit if error
 if [ "$?" != "0" ]; then
-echo "Error, EFI partition not mounted"
+if [ $choice8 != “y” ]; then
+echo "Error, $gStartupDisk/EFI not found"
 echo "No system files were changed"
 echo "To save a Copy to this Terminal session: Terminal/Shell/Export Text As ..."
 exit 1
 fi
-
+echo "Error, EFI partition not mounted"
+echo "No system files were changed"
+echo "To save a Copy to this Terminal session: Terminal/Shell/Export Text As ..."
+exit 1
 fi
 
 # debug
@@ -184,7 +263,6 @@ echo "gLayoutidihex = $gLayoutidhex"
 echo "gAudioid = $gAudioid"
 echo "HDEF/Audio ID: success"
 fi
-
 
 # verify native s/l/e/applehda.kext 
 if [ $gMake = 0 ]; then
@@ -227,16 +305,22 @@ if [ $gDebug = 1 ]; then
 echo "Native AppleHDA: success"
 fi
 
-# get installed codec ids
+# get installed codec/revision
 gCodecsInstalled=$(ioreg -rxn IOHDACodecDevice | grep VendorID | awk '{ print $4 }' | sed -e 's/ffffffff//')
-
-# debug
-# gCodecsInstalled=0x10ec0900
-# gCodecsInstalled=0x10134206
+gCodecsVersion=$(ioreg -rxn IOHDACodecDevice | grep RevisionID| awk '{ print $4 }')
 
 # debug
 if [ $gDebug = 1 ]; then
+gCodecsInstalled=0x10ec0887
+# gCodecsVersion=0x100101
+# gCodecsVersion=0x100201
+gCodecsVersion=0x100301
+# gCodecsInstalled=0x10ec0900
+# gCodecsVersion=0x100001
+# gCodecsInstalled=0x10134206
+# gCodecsVersion=0x100301
 echo "gCodecsInstalled = $gCodecsInstalled"
+echo "gCodecsVersion = $gCodecsVersion"
 fi
 
 # no codecs detected
@@ -256,8 +340,15 @@ unknown=n
 alternate=n
 
 # find realtek codecs
+index=0
+version=($gCodecsVersion)
 for codec in $gCodecsInstalled
 do
+
+# debug
+if [ $gDebug = 1 ]; then
+echo "Index = $index, Codec = $codec, Version = ${version[$index]}"
+fi
 case ${codec:2:4} in
 
 8086 ) Codecintelhdmi=$codec; intel=y
@@ -266,11 +357,12 @@ case ${codec:2:4} in
 ;;
 10de ) Codecnvidiahdmi=$codec; nvidia=y
 ;;
-10ec ) Codecrealtekaudio=$codec; realtek=y
+10ec ) Codecrealtekaudio=$codec; Versionrealtekaudio=${version[$index]}; realtek=y
 ;;
 *) Codecunknownaudio=$codec; unknown=y
 ;;
 esac
+index=$((index + 1))
 done
 
 # debug
@@ -289,6 +381,7 @@ echo ""
 echo "Onboard audio codec"
 if [ $realtek = y ]; then
 echo "Realtek:  $Codecrealtekaudio"
+echo "Version:  $Versionrealtekaudio"
 fi
 if [ $unknown = y ]; then
 echo "Unknown:  $Codecunknownaudio"
@@ -302,7 +395,9 @@ do
 read -p "Codec $Codecunknownaudio is not supported, continue (y/n): " choice7
 case "$choice7" in
 	[yY]* )  break;;
-	[nN]* ) echo "No system files were changed"; exit 1;;
+	[nN]* ) echo "No system files were changed"
+		echo "To save a Copy to this Terminal session: Terminal/Shell/Export Text As ..."	
+		exit 1;;
 	* ) echo "Try again..."
 ;;
 esac
@@ -359,6 +454,7 @@ fi
 
 fi
 
+
 if [ $gCodecvalid != y ]; then
 
 #  get supported codec
@@ -371,28 +467,51 @@ case "$choice0" in
 	* ) echo "Try again...";;
 esac
 done
+Versionrealtekaudio=0x100301
 
 fi
 
 # legacy
+
 case "$gCodec" in
 
 887|888 )
+if [ gMake = 0 ]; then
+
+case "$Versionrealtekaudio" in
+
+0x100301 ) echo "ALC$gCodec v_$Versionrealtekaudio - Current"; gLegacy=n ;;
+
+0x100201 ) echo "ALC$gCodec v_$Versionrealtekaudio - Legacy"; gLegacy=y ;;
+
+* ) echo "ALC$gCodec v_$Versionrealtekaudio not supported"
 while true
 do
-# read -p "$gCodec Legacy_v100202 (y/n): " choice1
-read -p "ALC$gCodec Current_v..0302 (y/n): " choice1
+read -p "Continue with Legacy (v100201) Patch (y/n): " choice1
 case "$choice1" in
-#	[yY]* ) gLegacy=y; break;;
-#	[nN]* ) gLegacy=n; break;;
-	[nN]* ) gLegacy=y; break;;
-	[yY]* ) gLegacy=n; break;;
-
+ 	[yY]* ) gLegacy=y; break;;
+	[nN]* ) echo "No system files were changed"
+		echo "To save a Copy to this Terminal session: Terminal/Shell/Export Text As ..."
+		exit;;
 	* ) echo "Try again...";;
 esac
 done
 esac
 
+else
+while true
+do
+read -p "887/888 Legacy (v100201) Patch (y/n): " choice1
+case "$choice1" in
+ 	[yY]* ) gLegacy=y; break;;
+	[nN]* ) gLegacy=n; break;;
+	* ) echo "Try again...";;
+esac
+done
+
+fi
+
+esac
 
 # HD4600 HDMI audio patch
 if [ $gRealtekALC = 1 ]; then
@@ -501,10 +620,6 @@ echo "gController = $gController"
 echo "Codec configuration: success"
 fi
 
-# echo $gCodec
-# echo $gAudioid
-# exit   # ?
-
 echo ""
 echo "Download ALC$gCodec files ..."
 gDownloadLink="https://raw.githubusercontent.com/toleda/audio_ALC$gCodec/master/$gCodec.zip"
@@ -542,7 +657,7 @@ sudo rm -fR $gExtensionsDirectory/AppleHDA.kext
 sudo cp -R $gDesktopDirectory/AppleHDA.kext $gExtensionsDirectory/AppleHDA.kext
 sudo chown -R root:wheel $gExtensionsDirectory/AppleHDA.kext
 sudo touch $gExtensionsDirectory
-gHDAversioninstalled=$(sudo /usr/libexec/plistbuddy -c "Print ':CFBundleShortVersionString'" $gHDAContentsDirectory/Info.plist)
+gHDAversioninstalled=$(sudo /usr/libexec/PlistBuddy -c "Print ':CFBundleShortVersionString'" $gHDAContentsDirectory/Info.plist)
 echo "Desktop/AppleHDA.kext installed in $gExtensionsDirectory"
 fi
 
@@ -625,7 +740,7 @@ fi
 # codec binary patch
 case $gSysVer in
 
-10.8.5|10.9|10.9.1|10.9.2|10.9.3|10.9.4|10.9.5|10.9.6|10.10|10.10.1|10.10.2|10.10.3|10.10.4 ) 
+10.8.5|10.9*|10.10* ) 
 echo "$gSysVer codec patch"
 
 # patch codec
@@ -670,7 +785,7 @@ esac
 
 ;;
 
-10.8|10.8.1|10.8.2|10.8.3|10.8.4 )
+10.8|10.8.*[1-4] )
 echo "$gSysVer codec patch"
 
 # patch codec
@@ -751,9 +866,9 @@ fi
 
 echo "Install files ..."
 gPatchversion=$gHDAversioninstalled$gPatch$gCodec
-sudo /usr/libexec/plistbuddy -c "Set ':CFBundleShortVersionString' $gPatchversion" $gHDAContentsDirectory/Info.plist
-sudo /usr/libexec/plistbuddy -c "Delete ':IOKitPersonalities:HDA Hardware Config Resource:HDAConfigDefault'" $gHDAHardwarConfigDirectory/Info.plist
-sudo /usr/libexec/plistbuddy -c "Merge /tmp/$gCodec/hdacd.plist ':IOKitPersonalities:HDA Hardware Config Resource'" $gHDAHardwarConfigDirectory/Info.plist
+sudo /usr/libexec/PlistBuddy -c "Set ':CFBundleShortVersionString' $gPatchversion" $gHDAContentsDirectory/Info.plist
+sudo /usr/libexec/PlistBuddy -c "Delete ':IOKitPersonalities:HDA Hardware Config Resource:HDAConfigDefault'" $gHDAHardwarConfigDirectory/Info.plist
+sudo /usr/libexec/PlistBuddy -c "Merge /tmp/$gCodec/hdacd.plist ':IOKitPersonalities:HDA Hardware Config Resource'" $gHDAHardwarConfigDirectory/Info.plist
 
 sudo rm -R $gHDAContentsDirectory/Resources/*.zlib
 
@@ -818,16 +933,6 @@ esac
 # echo "To save a Copy to this Terminal session: Terminal/Shell/Export Text As ..."
 # exit 1
 # fi
-
-if [ $gCloverALC = 1 ]; then
-if [ $gCodec = 1150 ]; then
-echo " "
-echo "NOTE: ALC1150 only, edit config.plist before restarting"
-echo "config.plist/KernelAndKextPatches/KextsToPatch/ALC1150/Replace edit required"
-echo "Before: <09ec10>    After: <0009ec10> or"
-echo "Before: CewQ    After: AAnsEA=="
-fi
-fi
 
 echo ""
 echo "Install finished, restart required."
