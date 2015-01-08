@@ -1,20 +1,14 @@
-
-![alt text](https:....
+![alt text](https://github.com/toleda/audio_RealtekALC/blob/master/sound.jpeg)
 
 ##audio\_realtekALC
 **OS X Realtek ALC AppleHDA Onboard Audio Solutions**
 **Details**
 
 I.   Onboard Audio Solutions
-
 II.  Requirements - Supported/Unsupported
-
 III. Notes
-
 IV.  Guides
-
 V.   Tools
-
 VI.  Problem Reporting
 
 ###I.   OS X Realtek ALC AppleHDA Onboard Audio Solutions
@@ -161,10 +155,9 @@ VI.  Problem Reporting
     4.  TextEdit
     5.  etc.
 
-###VI.  Problem Reporting 
-(attach the following information)
+###VI.  Problem Reporting
 
-1.  Description of onboard audio problem
+1.  Description of onboard audio problem (attach the following information)
 
     1.  OS X version/motherboard model/BIOS version/processor/graphics
     2.  Procedure/Guide Used
@@ -189,6 +182,5 @@ VI.  Problem Reporting
     1.  [tonymacx86 - Realtek ALC AppleHDA](http://www.tonymacx86.com/audio/143752-no-audio-devices-realtek-alc-applehda-guide.html#post886726)
     2.  [InsanelyMac - Realtek ALC AppleHDA](http://www.insanelymac.com/forum/topic/298819-yosemite-audio-realtek-alc-applehda/)
 
-
 Credit:
-bcc9, RevoGirl, PikeRAlpha, SJ\_UnderWater, RehabMan, TimeWalker75a, [abxite](http://applelife.ru/threads/patchim-applehda-s-pomoschju-zagruzchika.39406/#post-353647)
+THe KiNG, bcc9, RevoGirl, PikeRAlpha, SJ\_UnderWater, RehabMan, TimeWalker75a, [abxite](http://applelife.ru/threads/patchim-applehda-s-pomoschju-zagruzchika.39406/#post-353647)
