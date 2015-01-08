@@ -166,28 +166,24 @@
 ###VI.  Problem Reporting
 
 1.  Description of onboard audio problem (attach the following information)
-
-    1.  OS X version/motherboard model/BIOS version/processor/graphics
-    2.  Procedure/Guide Used
-    3.  Copy of IOReg - IOReg/File/Save a Copy As. . ., verify file (no ioreg.txt)
-    4.  Installed System/Library/Extensions/AppleHDA.kext
-    5.  Installed System/Library/Extensions/AppleHDAxxx.kext (if Piker-Alpha)
-    6.  DPCIManager/Misc/Boot Log
-    7.  Screenshot of System Information/Hardware/Audio/Intel High Definition
-        Audio (not Devices)
-    8.  Console/All Messages/kernel Sound assertions selected/Save Selection
-        As. . .
-    9.  Chameleon/Chimera
-        1.  Extra/org.chameleon.Boot.plist
-        2.  Extra/dsdt.aml (if installed)
-        3.  Extra/ssdt.aml (if installed)
-    10. Clover/EFI or Legacy 
-        1.  EFI/CLOVER/config.plist
-        2.  EFI/CLOVER/ACPI/Patched/dsdt.aml (if installed)
-        3.  EFI/CLOVER/ACPI/Patched/ssdt.aml (if installed)
-
-2.  Post to:
-    1.  [tonymacx86 - Realtek ALC AppleHDA](http://www.tonymacx86.com/audio/143752-no-audio-devices-realtek-alc-applehda-guide.html#post886726)
+2.  OS X version/motherboard model/BIOS version/processor/graphics
+3.  Procedure/Guide Used
+4.  Copy of IOReg - IOReg/File/Save a Copy As. . ., verify file (no ioreg.txt)
+5.  Installed System/Library/Extensions/AppleHDA.kext
+6.  Installed System/Library/Extensions/AppleHDAxxx.kext (if Piker-Alpha)
+7.  DPCIManager/Misc/Boot Log
+8.  Screenshot of System Information/Hardware/Audio/Intel High Definition Audio (not Devices)
+9.  Console/All Messages/kernel Sound assertions selected/Save Selection As. . .
+10.  Chameleon/Chimera
+    1.  Extra/org.chameleon.Boot.plist
+    2.  Extra/dsdt.aml (if installed)
+    3.  Extra/ssdt.aml (if installed)
+11. Clover/EFI or Legacy 
+    1.  EFI/CLOVER/config.plist
+    2.  EFI/CLOVER/ACPI/Patched/dsdt.aml (if installed)
+    3.  EFI/CLOVER/ACPI/Patched/ssdt.aml (if installed)
+12. Post to:
+    1.  [tonymacx86 - Realtek ALC AppleHDA](http://www.tonymacx86.com/audio/143752-no-audio-devices-realtek-alc-applehda-guide.html#post886726) ORå
     2.  [InsanelyMac - Realtek ALC AppleHDA](http://www.insanelymac.com/forum/topic/298819-yosemite-audio-realtek-alc-applehda/)
 
 Credit:
