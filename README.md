@@ -71,7 +71,7 @@ The Realtek Realtek ALC Patched method enables OS X AppleHDA onboard with or wit
 4. Verify ALC onboard audio
     1. System Preferences/Sound/Output/select audio device
 
-**Terminal**
+**D. Terminal**
 
 1. [audio_realtekALC-100_v1.0.4](https://github.com/toleda/audio_RealtekALC/blob/master/audio_realtekALC-100.sh): 887/888 legacy detection, bug fixes
 2. v1.0.3: First release
