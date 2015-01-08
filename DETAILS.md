@@ -1,15 +1,20 @@
 ![alt text](https://github.com/toleda/audio_RealtekALC/blob/master/sound.jpeg)
 
 ##audio\_realtekALC
-##S X Realtek ALC AppleHDA Onboard Audio Solutions**
+##OS X Realtek ALC AppleHDA Onboard Audio Solutions
 
 ##Details/Contents
 
 **I.   Onboard Audio Solutions**
+
 **II.  Requirements - Supported/Unsupported**
+
 **III. Notes**
+
 **IV.  Guides**
+
 **V.   Tools**
+
 **VI.  Problem Reporting**
 
 ###I.   OS X Realtek ALC AppleHDA Onboard Audio Solutions
