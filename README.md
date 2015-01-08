@@ -12,7 +12,7 @@ The Realtek Realtek ALC Patched method enables OS X AppleHDA onboard with or wit
 **Updates**
 
 1.  v3.6 - audio_realtekALC-100.command_v1.0.4 release
-2.  v3.5 - Realtek ALC AppleHDA - [No Audio After Sleep/Wake](https://github.com/toleda/audio_RealtekALC)
+2.  v3.5 - Realtek ALC AppleHDA - [No Audio After Sleep/Wake](https://github.com/toleda/audio_ALC_guides)
 3.  v3.4 - BRIX/ALC269, BRIX Pro/ALC283 and NUC/ALC283 Support
 4.  v3.3 - audio_realtekALC-100.sh (v1.0.3) release
 5.  v3.2 - audio_realtekALC-100.command: UI update, ALC88x Current replaces ALC88x Legacy
