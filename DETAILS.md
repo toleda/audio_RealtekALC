@@ -183,7 +183,7 @@
     2.  EFI/CLOVER/ACPI/Patched/dsdt.aml (if installed)
     3.  EFI/CLOVER/ACPI/Patched/ssdt.aml (if installed)
 12. Post to:
-    1.  [tonymacx86 - Realtek ALC AppleHDA](http://www.tonymacx86.com/audio/143752-no-audio-devices-realtek-alc-applehda-guide.html#post886726) ORå
+    1.  [tonymacx86 - Realtek ALC AppleHDA](http://www.tonymacx86.com/audio/143752-no-audio-devices-realtek-alc-applehda-guide.html#post886726) OR
     2.  [InsanelyMac - Realtek ALC AppleHDA](http://www.insanelymac.com/forum/topic/298819-yosemite-audio-realtek-alc-applehda/)
 
 Credit:
