@@ -73,19 +73,19 @@ The Realtek Realtek ALC Patched method enables OS X AppleHDA onboard with or wit
 
 **Terminal**
 
-1. [v1.0.4](https://github.com/toleda/audio_RealtekALC/blob/master/audio_realtekALC-100.sh): 887/888 legacy detection, bug fixes
+1. [audio_realtekALC-100_v1.0.4](https://github.com/toleda/audio_RealtekALC/blob/master/audio_realtekALC-100.sh): 887/888 legacy detection, bug fixes
 2. v1.0.3: First release
 
 **E. More Information**
 
-1. https://github.com/toleda/audio_RealtekALC/blob/master/DETAILS.md
+1. [Details](https://github.com/toleda/audio_RealtekALC/blob/master/DETAILS.md)
     1.  Realtek ALC Audio Solutions
     2.  Requirements - Supported/Unsupported
     3.  Notes
     4.  Guides
     5.  Tools
     6.  Problem Reporting
-2. [Terminal Saved Output](https://github.com/toleda/audio_RealtekALC/blob/master/Terminal%20Saved%20Output.txt_v1.0.4
+2. [Terminal Saved Output](https://github.com/toleda/audio_RealtekALC/blob/master/Terminal%20Saved%20Output.txt_v1.0.4)
 
 Credit
 THe KiNG, bcc9, RevoGirl, PikeRAlpha, SJ_UnderWater, RehabMan, TimeWalker75a
