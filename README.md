@@ -6,8 +6,8 @@ The Realtek Realtek ALC Patched method enables OS X AppleHDA onboard with or wit
 
 **Versions: audio_realtekALC-100**
 
-1. Easy/.command, see C. Installation
-2. Bash/.sh, see D. Terminal
+1. Easy: .command, see C. Installation
+2. Bash: .sh, see D. Terminal
 
 **Updates**
 
