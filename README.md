@@ -85,7 +85,7 @@ The Realtek Realtek ALC Patched method enables OS X AppleHDA onboard with or wit
     4.  Guides
     5.  Tools
     6.  Problem Reporting
-2. [Terminal Saved Output](https://github.com/toleda/audio_RealtekALC/blob/master/Terminal%20Saved%20Output.txt_v1.0.4)
+2. [Terminal Saved Output](https://github.com/toleda/audio_RealtekALC/blob/master/Terminal%20Saved%20Output_v1.0.4)
 
 Credit
 THe KiNG, bcc9, RevoGirl, PikeRAlpha, SJ_UnderWater, RehabMan, TimeWalker75a
