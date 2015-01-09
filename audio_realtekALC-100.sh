@@ -1,6 +1,6 @@
 #!/bin/sh
 # Maintained by: toleda for: github.com/toleda/audio_realtekALC
-gFile="File: audio_realtekALC-100.command_v1.0.4"
+gFile="File: audio_realtekALC-100.command_v1.0.4a"
 # Credit: bcc9, RevoGirl, PikeRAlpha, SJ_UnderWater, RehabMan, TimeWalker
 #
 # OS X Realtek ALC Onboard Audio
@@ -50,7 +50,7 @@ gPatch="-toledaALC"
 gCodec=892
 gLegacy=n
 gController=n
-gMake=1
+gMake=0
 gDebug=0
 # gCodecsinstalled
 # gCodecVendor
