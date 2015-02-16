@@ -1,6 +1,6 @@
 #!/bin/sh
 # Maintained by: toleda for: github.com/toleda/audio_realtekALC
-gFile="File: audio_realtekALC-100.command_v1.0.4a"
+gFile="File: audio_realtekALC-100.command_v1.0.4b"
 # Credit: bcc9, RevoGirl, PikeRAlpha, SJ_UnderWater, RehabMan, TimeWalker
 #
 # OS X Realtek ALC Onboard Audio
@@ -23,6 +23,8 @@ gFile="File: audio_realtekALC-100.command_v1.0.4a"
 # 5. Restart
 #
 # Change log:
+# v1.0.4b - 2/15/15: 1. validate supported realtek codecs, 2. bug fixes
+# v1.0.4a - 1/9/15: set make=0
 # v1.0.4 - 1/5/15: 1. 887/888 legacy codec detection, 2. bug fixes
 #
 echo " "
@@ -36,7 +38,6 @@ echo " "
 # set initial variables
 gSysVer=`sw_vers -productVersion`
 gSysName="Mavericks"
-gSysFolder="10.9"
 gStartupDisk=EFI
 gCloverDirectory=/Volumes/$gStartupDisk/EFI/CLOVER
 gDesktopDirectory=/Users/$(whoami)/Desktop
@@ -104,7 +105,7 @@ echo "System version: supported"
 echo "gSysVer = $gSysVer"
 fi
 
-echo "$gFile"
+echo "File: $gFile"
 
 if [ $gCloverALC = 1 ]; then
 echo "Verify EFI partition mounted, Finder/Devices/EFI"
@@ -312,9 +313,9 @@ gCodecsVersion=$(ioreg -rxn IOHDACodecDevice | grep RevisionID| awk '{ print $4 
 # debug
 if [ $gDebug = 1 ]; then
 gCodecsInstalled=0x10ec0887
-# gCodecsVersion=0x100101
+gCodecsVersion=0x100101
 # gCodecsVersion=0x100201
-gCodecsVersion=0x100301
+# gCodecsVersion=0x100301
 # gCodecsInstalled=0x10ec0900
 # gCodecsVersion=0x100001
 # gCodecsInstalled=0x10134206
@@ -432,17 +433,28 @@ if [ $gDebug = 1 ]; then
 echo "Codec identification: success"
 fi
 
+#  validate_realtek codec
+case "$gCodecName" in
+269|283|885|887|888|889|892|898|1150 )
 
 # confirm codec, go button
 while true
 do
 read -p "Confirm Realtek ALC$gCodecName (y/n): " choice3
 case "$choice3" in
-	[yY]* ) gCodec=$gCodecName; gCodecvalid=y; break;;
-	[nN]* ) break;;
-	* ) echo "Try again...";;
+[yY]* ) gCodec=$gCodecName; gCodecvalid=y; break;;
+[nN]* ) break;;
+* ) echo "Try again...";;
 esac
 done
+;;
+
+* ) echo "Realtek ALC$gCodecName is not supported with $gFile"
+echo "No system files were changed"
+echo "To save a Copy to this Terminal session: Terminal/Shell/Export Text As ..."
+exit 1
+;;
+esac
 
 # exit if error
 if [ "$?" != "0" ]; then
@@ -453,7 +465,6 @@ exit 1
 fi
 
 fi
-
 
 if [ $gCodecvalid != y ]; then
 
@@ -467,7 +478,7 @@ case "$choice0" in
 	* ) echo "Try again...";;
 esac
 done
-Versionrealtekaudio=0x100301
+# Versionrealtekaudio=0x100301
 
 fi
 
@@ -476,18 +487,18 @@ fi
 case "$gCodec" in
 
 887|888 )
-if [ gMake = 0 ]; then
+if [ $gMake = 0 ]; then
 
 case "$Versionrealtekaudio" in
 
-0x100301 ) echo "ALC$gCodec v_$Versionrealtekaudio - Current"; gLegacy=n ;;
+0x100301 ) echo "ALC$gCodec v_$Versionrealtekaudio (Current)"; gLegacy=n ;;
 
-0x100201 ) echo "ALC$gCodec v_$Versionrealtekaudio - Legacy"; gLegacy=y ;;
+0x100201 ) echo "ALC$gCodec v_$Versionrealtekaudio (Legacy)"; gLegacy=y ;;
 
 * ) echo "ALC$gCodec v_$Versionrealtekaudio not supported"
 while true
 do
-read -p "Continue with Legacy (v100201) Patch (y/n): " choice1
+read -p "Use Legacy (v100201) Patch (y/n): " choice1
 case "$choice1" in
  	[yY]* ) gLegacy=y; break;;
 	[nN]* ) echo "No system files were changed"
@@ -539,8 +550,8 @@ case $gAudioid in
 * )  
 while true
 do
-read -p "Audio ID: $gAudioid is not supported, continue (y/n): " choice6
-case "$choice6" in
+read -p "Audio ID: $gAudioid is not supported, continue (y/n): " choice9
+case "$choice9" in
 	[yY]* ) gAudioid=0; gAudioidvalid=n break;;
 	[nN]* ) echo "No system files were changed"; exit;;
 	* ) echo "Try again..."
@@ -600,7 +611,7 @@ case "$choice6" in
 #	0* ) gAudioid=0; break;;
 	1* ) gAudioid=1; break;;
 	2* ) gAudioid=2; if [ $gCodec = 885 ]; then echo "ID: 2 n/a, try again..."; else break; fi;;
-	3* ) gAudioid=3; 
+	3* ) gAudioid=3; valid=y;
 		if [ $gCodec = 885 ]; then valid=n; fi;
 		if [ $gCodec = 1150 ]; then valid=n; fi;
 		if [ $gLegacy = y ]; then valid=n; fi;

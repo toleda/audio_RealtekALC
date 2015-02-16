@@ -54,7 +54,9 @@
     2.  10.9/Mavericks
     3.  10.8/Mountain Lion
 2.  Native AppleHDA.kext
+    1.  [Need native?](https://github.com/toleda/audio_ALC_guides/blob/master/Restore%20native%20AppleHDA%20%5BGuide%5D.pdf)
 3.  Supported Realtek onboard audio codec
+    1.  [Unknown codec?](https://github.com/toleda/audio_ALC_guides/blob/master/Identify%20Audio%20Codec%20%5BGuide%5D.pdf)
 
 **B. Realtek ALCxxxn** (verify codec and Audio ID)
 
@@ -140,11 +142,13 @@
 ###IV. [Realtek ALC AppleHDA Guides](https://github.com/toleda/audio_ALC_guides)
 1.  Capabilities - Realtek ALC AppleHDA_v2 [Guide]
 2.  Customization - Realtek ALC AppleHDA_v2 [Guide]
-3.  No Audio After Sleep/Wake - Realtek ALC AppleHDA [Fixes]
-4.  No Audio Devices - Realtek ALC AppleHDA [Guide]
-5.  No Sound - Realtek ALC AppleHDA [Guide]
-6.  Screenshots - Realtek ALC AppleHDA_v2
-7.  Surround Sound - Realtek ALC -  AppleHDA [Guide]
+3.  Identify Audio Codec [Guide]
+4.  No Audio After Sleep/Wake - Realtek ALC AppleHDA [Fixes]
+5.  No Audio Devices - Realtek ALC AppleHDA [Guide]
+6.  No Sound - Realtek ALC AppleHDA [Guide]
+7.  Restore native AppleHDA [Guide]
+8.  Screenshots - Realtek ALC AppleHDA_v2
+9.  Surround Sound - Realtek ALC -  AppleHDA [Guide]
 
 ###V.   Tools
 
@@ -183,7 +187,7 @@
     2.  EFI/CLOVER/ACPI/Patched/dsdt.aml (if installed)
     3.  EFI/CLOVER/ACPI/Patched/ssdt.aml (if installed)
 12. Post to:
-    1.  [tonymacx86 - Realtek ALC AppleHDA](http://www.tonymacx86.com/audio/143752-no-audio-devices-realtek-alc-applehda-guide.html#post886726) OR
+    1.  [tonymacx86 - Realtek ALC AppleHDA](http://www.tonymacx86.com/audio/143752-no-audio-devices-realtek-alc-applehda-guide.html#post886726) Or
     2.  [InsanelyMac - Realtek ALC AppleHDA](http://www.insanelymac.com/forum/topic/298819-yosemite-audio-realtek-alc-applehda/)
 
 Credit:
