@@ -1,6 +1,6 @@
 #!/bin/sh
 # Maintained by: toleda for: github.com/toleda/audio_realtekALC
-gFile="File: audio_realtekALC-100.command_v1.0.4b"
+gFile="File: audio_realtekALC-100.command_v1.0.4c"
 # Credit: bcc9, RevoGirl, PikeRAlpha, SJ_UnderWater, RehabMan, TimeWalker
 #
 # OS X Realtek ALC Onboard Audio
@@ -23,6 +23,7 @@ gFile="File: audio_realtekALC-100.command_v1.0.4b"
 # 5. Restart
 #
 # Change log:
+# v1.0.4c - 5/19/15: 1. fixed current/legacy revision, 2. bug fixes
 # v1.0.4b - 2/15/15: 1. validate supported realtek codecs, 2. bug fixes
 # v1.0.4a - 1/9/15: set make=0
 # v1.0.4 - 1/5/15: 1. 887/888 legacy codec detection, 2. bug fixes
@@ -106,6 +107,23 @@ echo "gSysVer = $gSysVer"
 fi
 
 echo "File: $gFile"
+
+# debug
+if [ $gMake = 1 ]; then
+if [ -d "$gDesktopDirectory/AppleHDA.kext" ]; then
+sudo rm -R $gExtensionsDirectory/AppleHDA.kext
+else
+echo "Error, no Desktop/AppleHDA.kext (native)"
+echo "No system files were changed"
+echo "To save a Copy to this Terminal session: Terminal/Shell/Export Text As ..."
+exit 1
+fi
+sudo cp -R $gDesktopDirectory/AppleHDA.kext $gExtensionsDirectory/AppleHDA.kext
+sudo chown -R root:wheel $gExtensionsDirectory/AppleHDA.kext
+sudo touch $gExtensionsDirectory
+gHDAversioninstalled=$(sudo /usr/libexec/PlistBuddy -c "Print ':CFBundleShortVersionString'" $gHDAContentsDirectory/Info.plist)
+echo "Desktop/AppleHDA.kext installed in $gExtensionsDirectory"
+fi
 
 if [ $gCloverALC = 1 ]; then
 echo "Verify EFI partition mounted, Finder/Devices/EFI"
@@ -314,12 +332,11 @@ gCodecsVersion=$(ioreg -rxn IOHDACodecDevice | grep RevisionID| awk '{ print $4 
 if [ $gDebug = 1 ]; then
 gCodecsInstalled=0x10ec0887
 gCodecsVersion=0x100101
-# gCodecsVersion=0x100201
-# gCodecsVersion=0x100301
+# gCodecsVersion=0x100202
+# gCodecsVersion=0x100302
 # gCodecsInstalled=0x10ec0900
 # gCodecsVersion=0x100001
 # gCodecsInstalled=0x10134206
-# gCodecsVersion=0x100301
 echo "gCodecsInstalled = $gCodecsInstalled"
 echo "gCodecsVersion = $gCodecsVersion"
 fi
@@ -478,7 +495,7 @@ case "$choice0" in
 	* ) echo "Try again...";;
 esac
 done
-# Versionrealtekaudio=0x100301
+# Versionrealtekaudio=0x100302
 
 fi
 
@@ -491,14 +508,14 @@ if [ $gMake = 0 ]; then
 
 case "$Versionrealtekaudio" in
 
-0x100301 ) echo "ALC$gCodec v_$Versionrealtekaudio (Current)"; gLegacy=n ;;
+0x100302 ) echo "ALC$gCodec v_$Versionrealtekaudio (Current)"; gLegacy=n ;;
 
-0x100201 ) echo "ALC$gCodec v_$Versionrealtekaudio (Legacy)"; gLegacy=y ;;
+0x100202 ) echo "ALC$gCodec v_$Versionrealtekaudio (Legacy)"; gLegacy=y ;;
 
 * ) echo "ALC$gCodec v_$Versionrealtekaudio not supported"
 while true
 do
-read -p "Use Legacy (v100201) Patch (y/n): " choice1
+read -p "Use Legacy (v100202) Patch (y/n): " choice1
 case "$choice1" in
  	[yY]* ) gLegacy=y; break;;
 	[nN]* ) echo "No system files were changed"
@@ -512,7 +529,7 @@ esac
 else
 while true
 do
-read -p "887/888 Legacy (v100201) Patch (y/n): " choice1
+read -p "887/888 Legacy (v100202) Patch (y/n): " choice1
 case "$choice1" in
  	[yY]* ) gLegacy=y; break;;
 	[nN]* ) gLegacy=n; break;;
@@ -662,15 +679,6 @@ fi
 if [ $gRealtekALC = 1 ]; then    # main loop
 
 ######################
-# debug
-if [ $gMake = 1 ]; then 
-sudo rm -fR $gExtensionsDirectory/AppleHDA.kext
-sudo cp -R $gDesktopDirectory/AppleHDA.kext $gExtensionsDirectory/AppleHDA.kext
-sudo chown -R root:wheel $gExtensionsDirectory/AppleHDA.kext
-sudo touch $gExtensionsDirectory
-gHDAversioninstalled=$(sudo /usr/libexec/PlistBuddy -c "Print ':CFBundleShortVersionString'" $gHDAContentsDirectory/Info.plist)
-echo "Desktop/AppleHDA.kext installed in $gExtensionsDirectory"
-fi
 
 echo " "
 echo "Preparing $gSysVer ALC$gCodec AppleHDA.kext_v$gHDAversioninstalled"
