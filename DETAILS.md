@@ -27,6 +27,7 @@
     1.  [audio_ALCInjection](https://github.com/toleda/audio_ALCInjection)
 
 [**B. Piker-Alpha AppleHDA8series**](https://github.com/toleda/audio_pikeralphaALC)  Credit: Piker-Alpha
+Note: Yosemite Only
     
 1.  Native AppleHDA.kext
 2.  AppleHDAxxx.kext (codec specific support)
@@ -49,10 +50,11 @@
 
 **A. OS X Requirements**
 
-1.  OS X/Clover_v2696 or newer
-    1.  10.10/Yosemite
-    2.  10.9/Mavericks
-    3.  10.8/Mountain Lion
+1.  OS X Versions
+    1.  10.11/El Capitan
+    2.  10.10/Yosemite
+    3.  10.9/Mavericks
+    4.  10.8/Mountain Lion
 2.  Native AppleHDA.kext
     1.  [Need native?](https://github.com/toleda/audio_ALC_guides/blob/master/Restore%20native%20AppleHDA%20%5BGuide%5D.pdf)
 3.  Supported Realtek onboard audio codec
@@ -87,7 +89,7 @@
 
 **C. OS X Unsupported Intel Chipsets**
 
-1.  9 Series motherboard support (Mavericks only, Note 2)
+1.  9 Series motherboard support (10.9/Mavericks only, Note 2)
 2.  X99 motherboard support (Note 3)
 
 ###III. Notes

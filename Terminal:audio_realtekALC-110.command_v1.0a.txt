@@ -1,32 +1,33 @@
-Terminal Save Output
-audio_realtekALC-100.command
+Last login: Sun Jun 14 17:31:02 on ttys018
+~ Downloads/audio_realtekALC-110_v1.0a.command ; exit;
  
-File: audio_realtekALC-100.command_v1.0.4
-Verify kext-dev-mode=1 boot flag/argument
+File: File: audio_realtekALC-110.command_v1.0a
+Kernel Flags = rootless=0 found
+Password:
 Confirm Realtek ALC1150 (y/n): y
 Enable HD4600 HDMI audio (y/n): y
 
 Download ALC1150 files ...
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-100 21366  100 21366    0     0  70445      0 --:--:-- --:--:-- --:--:-- 70514
-Desktop/AppleHDA.kext installed in /System/Library/Extensions
+100 21366  100 21366    0     0   3673      0  0:00:05  0:00:05 --:--:--  4994
  
-Preparing 10.10.1 ALC1150 AppleHDA.kext_v267.0
+Preparing 10.11 ALC1150 AppleHDA.kext_v272.36
 Patch binaries ...
-10.10.1 controller patch
-10.10.1 codec patch
+10.11 controller patch
+10.11 codec patch
 Install files ...
 Fix permissions ...
 Kernel cache...
-rebuilding //System/Library/Caches/com.apple.kext.caches/Startup/kernelcache
+rebuilding //System/Library/PrelinkedKernels/prelinkedkernel
 kext-dev-mode allowing invalid signature -67030 0xFFFFFFFFFFFEFA2A for kext AppleHDAHardwareConfigDriver.kext
 kext-dev-mode allowing invalid signature -67061 0xFFFFFFFFFFFEFA0B for kext AppleHDAController.kext
 kext-dev-mode allowing invalid signature -67030 0xFFFFFFFFFFFEFA2A for kext AppleHDA.kext
 
 Install finished, restart required.
-To save a Copy to this Terminal session: Terminal/Shell/Export Text As ...
+To save a Copy of this Terminal session: Terminal/Shell/Export Text As ...
 logout
+Saving session...completed.
 
 [Process completed]
 

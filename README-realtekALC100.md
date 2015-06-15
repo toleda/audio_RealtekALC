@@ -1,27 +1,36 @@
 ![alt text](https://github.com/toleda/audio_RealtekALC/blob/master/sound.jpeg)
 #audio_realtekALC
-**OS X/Patch in Place AppleHDA Realtek ALC Audio**
-
-Native AppleHDA
+**OS X/Patched AppleHDA Realtek ALC Audio**
 
 The Realtek Realtek ALC Patched method enables OS X AppleHDA onboard with or without HDMI and DP audio.  The script patches the audio codec binary and installs pin configuration, layouts and platforms files.
 
-**Versions: audio_realtekALC-110**
+**Versions: audio_realtekALC-100**
 
 1. Easy: .command, see C. Installation
 2. Bash: .sh, see D. Terminal
 
 **Updates**
 
-1. 10.11 - El Capitan Realtek ALC AppleHDA.kext Initial Support
+1.  v3.6 - audio_realtekALC-100.command_v1.0.4 release
+2.  v3.5 - Realtek ALC AppleHDA - [No Audio After Sleep/Wake](https://github.com/toleda/audio_ALC_guides)
+3.  v3.4 - BRIX/ALC269, BRIX Pro/ALC283 and NUC/ALC283 Support
+4.  v3.3 - audio_realtekALC-100.sh (v1.0.3) release
+5.  v3.2 - audio_realtekALC-100.command: UI update, ALC88x Current replaces ALC88x Legacy
+6.  v3.1 - Yosemite/audio_alc_x99-hda-100.command patch added
+7.  v3 - Yosemite/10.10.x, Mavericks/10.9.x and Mountain Lion/10.8.x support
+    Note: audio\realtekALC-90_v2.command deprecated
+8.  v2.2 - x99 motherboard support (D. More Information)
+9.  v2.1 - 9 Series/EAPD added to 887, 892, 898, 1150, credit: kidalive
+10. v2 - new script, no downloads, double click and done.
+11. 10.10 - Yosemite Initial Realtek ALC support Update
+12. 10.9 - 9 Series/Realtek ALC support, audio_alc_9series-hda-93.command added
 
 **A. Requirements**
 
 1.  OS X/Chameleon/Chimera/Clover
-    1.  10.11/El Capitan, set boot flag: rootless=0 
-    2.  10.10/Yosemite, set boot flag: kext-dev-mode=1
-    3.  10.9/Mavericks
-    4.  10.8/Mountain Lion
+    1.  10.10/Yosemite
+    2.  10.9/Mavericks
+    3.  10.8/Mountain Lion
 2.  Native AppleHDA.kext
     1.  [Need native?](https://github.com/toleda/audio_ALC_guides/blob/master/Restore%20native%20AppleHDA%20%5BGuide%5D.pdf)
 3.  Supported Realtek onboard audio codec
@@ -31,7 +40,7 @@ The Realtek Realtek ALC Patched method enables OS X AppleHDA onboard with or wit
 
 1.  Supported codecs
     1.  269 (BRIX only)
-    2.  283 (BRIX Pro and NUC only)
+    2.  283 (BRIX Pro and NUC)
     3.  885
     4.  887
     5.  888
@@ -55,8 +64,8 @@ The Realtek Realtek ALC Patched method enables OS X AppleHDA onboard with or wit
 **C. Installation**
 
 1. Patched AppleHDA.kext
-    1. [Download (View Raw) audio_realtekALC-110.command](https://github.com/toleda/audio_RealtekALC/blob/master/audio_realtekALC-110.command.zip)
-    2. Double click Downloads/audio_realtekALC-110.command
+    1. [Download (View Raw) audio\_realtekALC-100.command](https://github.com/toleda/audio_RealtekALC/blob/master/audio_realtekALC-100.command.zip)
+    2. Double click Downloads/audio_realtekALC-100.command
     3. Password:
     4. Confirm Codec ALCxxx: (885, 887, 888, 889, 892, 898, 1150 only)
     5. Enable HD4600 HDMI audio (y/n): (887, 892, 898, 1150 only)
@@ -68,7 +77,7 @@ The Realtek Realtek ALC Patched method enables OS X AppleHDA onboard with or wit
 
 **D. Terminal**
 
-1. [audio_realtekALC-110_v1.0.4](https://github.com/toleda/audio_RealtekALC/blob/master/audio_realtekALC-110.sh): 887/888 legacy detection, bug fixes
+1. [audio_realtekALC-100_v1.0.4](https://github.com/toleda/audio_RealtekALC/blob/master/audio_realtekALC-100.sh): 887/888 legacy detection, bug fixes
 2. v1.0.3: First release
 
 **E. More Information**
@@ -83,7 +92,7 @@ The Realtek Realtek ALC Patched method enables OS X AppleHDA onboard with or wit
 2. [Terminal Saved Output](https://github.com/toleda/audio_RealtekALC/blob/master/Terminal%20Saved%20Output_v1.0.4)
 
 Credit
-THe KiNG, bcc9, RevoGirl, PikeRAlpha, SJ_UnderWater, RehabMan, TimeWalker75a, lisai9093
+THe KiNG, bcc9, RevoGirl, PikeRAlpha, SJ_UnderWater, RehabMan, TimeWalker75a
 
 toleda
-https://github.com/toleda/audio_realtekALC
+https://github.com/toleda/audio_RealtekALC
