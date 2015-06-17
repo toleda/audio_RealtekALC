@@ -1,6 +1,6 @@
 #!/bin/sh
 # Maintained by: toleda for: github.com/toleda/audio_realtekALC
-gFile="File: audio_realtekALC-110.command_v1.0a"
+gFile="File: audio_realtekALC-110.command_v1.0b"
 # Credit: bcc9, RevoGirl, PikeRAlpha, SJ_UnderWater, RehabMan, TimeWalker, lisai9093
 #
 # OS X Realtek ALC Onboard Audio
@@ -235,7 +235,7 @@ echo "EFI partition is mounted"
         if [[ $(cat /tmp/config.txt | grep -o "rootless=0") = "rootless=0" ]]; then
             echo "Boot/Arguments/rootless=0 found"
         else
-            rm -R /tmp/org.chameleon.Boot.txt
+            rm -R /tmp/config.txt
             echo "Boot/Arguments/rootless=0 not found; patching not possible"
             echo "Add config.plist/Boot/Arguments/rootless=0 and restart"
             echo "No system files were changed"
@@ -245,10 +245,10 @@ echo "EFI partition is mounted"
         ;;
 
         "Yosemite" )
-        if [[ $(cat /tmp/config.txt.txt | grep -o "kext-dev-mode=1") = "kext-dev-mode=1" ]]; then
+        if [[ $(cat /tmp/config.txt | grep -o "kext-dev-mode=1") = "kext-dev-mode=1" ]]; then
             echo "Boot/Arguments = kext-dev-mode=1 found"
         else
-            rm -R /tmp/org.chameleon.Boot.txt
+            rm -R /tmp/config.txt
             echo "Boot/Arguments/kext-dev-mode=1 not found; patching not possible"
             echo "Add config.plist/Boot/Arguments/kext-dev-mode=1 and restart"
             echo "No system files were changed"
