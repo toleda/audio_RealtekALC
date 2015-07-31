@@ -13,7 +13,7 @@ The Realtek Realtek ALC Patched method enables OS X AppleHDA onboard with or wit
 
 **Updates**
 
-1. 10.11 - El Capitan Realtek ALC AppleHDA.kext Initial Support
+1. 6-15-15 - 10.11 - El Capitan Realtek ALC AppleHDA.kext Initial Support
 
 **A. Requirements**
 

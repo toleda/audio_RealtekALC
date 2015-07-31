@@ -1,6 +1,6 @@
 #!/bin/sh
 # Maintained by: toleda for: github.com/toleda/audio_realtekALC
-gFile="File: audio_realtekALC-110.command_v1.0b"
+gFile="File: audio_realtekALC-110.command_v1.0d"
 # Credit: bcc9, RevoGirl, PikeRAlpha, SJ_UnderWater, RehabMan, TimeWalker, lisai9093
 #
 # OS X Realtek ALC Onboard Audio
@@ -24,6 +24,9 @@ gFile="File: audio_realtekALC-110.command_v1.0b"
 #
 # Change log:
 # v1.0a - 6/15/15: 1. Initial 10.11 support
+# v1.0b - 6/17/15: file name typo
+# v1.0c - not applicable
+# v1.0d - 7/31/15: add SID verification, fix copy extended attributes error
 #
 echo " "
 echo "Agreement"
@@ -35,6 +38,7 @@ echo " "
 
 # set initial variables
 gSysVer=`sw_vers -productVersion`
+gSID=$(csrutil status)
 gSysName="Mavericks"
 gStartupDisk=EFI
 gCloverDirectory=/Volumes/$gStartupDisk/EFI/CLOVER
@@ -82,16 +86,16 @@ fi
 case ${gSysVer} in
 
 10.11* ) gSysName="El Capitan"
-gSysFolder=/kexts/10.11
+gSysFolder=kexts/10.11
 ;;
 10.10* ) gSysName="Yosemite"
-gSysFolder=/kexts/10.10
+gSysFolder=kexts/10.10
 ;;
 10.9* ) gSysName="Mavericks"
-gSysFolder=/kexts/10.9
+gSysFolder=kexts/10.9
 ;;
 10.8* ) gSysName="Mountain Lion"
-gSysFolder=/kexts/10.8
+gSysFolder=kexts/10.8
 ;;
 
 * )
@@ -123,7 +127,7 @@ if [ $gMake = 1 ]; then
     exit 1
     fi
 
-    sudo cp -R $gDesktopDirectory/AppleHDA.kext $gExtensionsDirectory/AppleHDA.kext
+    sudo cp -X $gDesktopDirectory/AppleHDA.kext $gExtensionsDirectory/AppleHDA.kext
     sudo chown -R root:wheel $gExtensionsDirectory/AppleHDA.kext
     sudo touch $gExtensionsDirectory
     gHDAversioninstalled=$(sudo /usr/libexec/PlistBuddy -c "Print ':CFBundleShortVersionString'" $gHDAContentsDirectory/Info.plist)
@@ -174,30 +178,31 @@ if [ $gRealtekALC = 1 ]; then
         case $gSysName in
 
         "El Capitan" )
-        if [[ $(cat /tmp/org.chameleon.Boot.txt | grep -o "rootless=0") = "rootless=0" ]]; then
-            echo "Kernel Flags = rootless=0 found"
-        else
-            rm -R /tmp/org.chameleon.Boot.txt
-            echo "Kernel Flags = rootless=0 not found; patching not possible"
-            echo "Add org.chameleon.Boot.plist/Kernel Flags = rootless=0 and restart"
+	    echo $gSID > /tmp/gsid.txt
+        if [[ $(cat /tmp/gsid.txt | grep -c "disabled") = 0 ]]; then
+            rm -R /tmp/gsid.txt
+            echo "$gSID NOK to patch"
+            echo "Add org.chameleon.Boot.plist/Kernel Flags = CsrActiveConfig=0x3 and restart"
             echo "No system files were changed"
             echo "To save a Copy of this Terminal session: Terminal/Shell/Export Text As ..."
             exit 1
+        else
+            rm -R /tmp/gsid.txt            	
+	     echo "$gSID OK to patch"
         fi
         ;;
 
         "Yosemite" )
-        if [[ $(cat /tmp/org.chameleon.Boot.txt | grep -o "kext-dev-mode=1") = "kext-dev-mode=1" ]]; then
-            echo "Kernel Flags = kext-dev-mode=1 found"
-        else
+        if [[ $(cat /tmp/org.chameleon.Boot.txt | grep -c "kext-dev-mode=1") = 0 ]]; then
             rm -R /tmp/org.chameleon.Boot.txt
             echo "Kernel Flags = kext-dev-mode=1 not found; patching not possible"
             echo "Add org.chameleon.Boot.plist/Kernel Flags = kext-dev-mode=1 and restart"
             echo "No system files were changed"
             echo "To save a Copy of this Terminal session: Terminal/Shell/Export Text As ..."
-        exit 1
-        fi
-        ;;
+            exit 1
+        else
+            echo "Kernel Flags = kext-dev-mode=1 found"
+        fi        ;;
 
         esac
     fi
@@ -232,28 +237,30 @@ echo "EFI partition is mounted"
         case $gSysName in
 
         "El Capitan" )
-        if [[ $(cat /tmp/config.txt | grep -o "rootless=0") = "rootless=0" ]]; then
-            echo "Boot/Arguments/rootless=0 found"
-        else
-            rm -R /tmp/config.txt
-            echo "Boot/Arguments/rootless=0 not found; patching not possible"
-            echo "Add config.plist/Boot/Arguments/rootless=0 and restart"
+	    echo $gSID > /tmp/gsid.txt
+            if [[ $(cat /tmp/gsid.txt | grep -c "disabled") = 0 ]]; then
+            rm -R /tmp/gsid.txt 
+            echo "$gSID NOK to patch"
+            echo "Add config.plist/RtVariables/CsrActiveConfig=0x3 and restart"
             echo "No system files were changed"
             echo "To save a Copy of this Terminal session: Terminal/Shell/Export Text As ..."
             exit 1
+        else
+            rm -R /tmp/gsid.txt            
+	     echo "$gSID OK to patch"
         fi
         ;;
 
         "Yosemite" )
-        if [[ $(cat /tmp/config.txt | grep -o "kext-dev-mode=1") = "kext-dev-mode=1" ]]; then
-            echo "Boot/Arguments = kext-dev-mode=1 found"
-        else
+        if [[ $(cat /tmp/config.txt | grep -c "kext-dev-mode=1") = 0 ]]; then
             rm -R /tmp/config.txt
             echo "Boot/Arguments/kext-dev-mode=1 not found; patching not possible"
             echo "Add config.plist/Boot/Arguments/kext-dev-mode=1 and restart"
             echo "No system files were changed"
             echo "To save a Copy of this Terminal session: Terminal/Shell/Export Text As ..."
-        exit 1
+            exit 1
+        else
+            echo "Boot/Arguments = kext-dev-mode=1 found"
         fi
         ;;
 
@@ -291,28 +298,30 @@ else
             case $gSysName in
 
             "El Capitan" )
-            if [[ $(cat /tmp/config.txt | grep -o "rootless=0") = "rootless=0" ]]; then
-                echo "Boot/Arguments/rootless=0 found"
-            else
-                rm -R /tmp/config.txt
-                echo "Boot/Arguments/rootless=0 not found; patching not possible"
-                echo "Add config.plist/Boot/Arguments/rootless=0 and restart"
+	    	echo $gSID > /tmp/gsid.txt
+        	if [[ $(cat /tmp/gsid.txt | grep -c "disabled") = 0 ]]; then
+            	rm -R /tmp/gsid.txt 
+                echo "$gSID NOK to patch"
+                echo "Add config.plist/RtVariables/CsrActiveConfig=0x3 and restart"
                 echo "No system files were changed"
                 echo "To save a Copy of this Terminal session: Terminal/Shell/Export Text As ..."
                 exit 1
+            else
+            	rm -R /tmp/gsid.txt                
+		echo "$gSID OK to patch"
             fi
             ;;
 
             "Yosemite" )
-            if [[ $(cat /tmp/config.txt | grep -o "kext-dev-mode=1") = "kext-dev-mode=1" ]]; then
-                echo "Boot/Arguments = kext-dev-mode=1 found"
-            else
+            if [[ $(cat /tmp/config.txt | grep -c "kext-dev-mode=1") = 0 ]]; then
                 rm -R /tmp/config.txt
                 echo "Boot/Arguments/kext-dev-mode=1 not found; patching not possible"
                 echo "Add config.plist/Boot/Arguments/kext-dev-mode=1 and restart"
                 echo "No system files were changed"
                 echo "To save a Copy of this Terminal session: Terminal/Shell/Export Text As ..."
-            exit 1
+                exit 1
+            else
+                echo "Boot/Arguments = kext-dev-mode=1 found"
             fi
             ;;
 
@@ -358,7 +367,7 @@ else
     1 )
     echo "gHDAversioninstalled = $gHDAversioninstalled"
     echo "Desktop/config-basic.plist copied to /tmp/config.plist"
-    sudo cp -R config-basic.plist /tmp/config.plist
+    sudo cp -X config-basic.plist /tmp/config.plist
 ;;
 * )
 echo "gDebug = $gDebug, fix"
@@ -685,7 +694,7 @@ case "$gCodec" in
 esac
 
 # HD4600 HDMI audio patch
-if [ $gRealtekALC = 1 ]; then
+# if [ $gRealtekALC = 1 ]; then
     if [ $gCodec = 887 -a $gLegacy = y ]; then gController=n; else
         case "$gCodec" in
 
@@ -701,7 +710,7 @@ if [ $gRealtekALC = 1 ]; then
         done
         esac
     fi
-fi
+# fi
 
 # validate audio id
 case $gAudioid in
@@ -829,7 +838,7 @@ if [ $gMake = 1 ]; then
         echo "To save a Copy of this Terminal session: Terminal/Shell/Export Text As ..."
         exit 1
     fi
-    sudo cp -R $gDesktopDirectory/AppleHDA.kext $gExtensionsDirectory/AppleHDA.kext
+    sudo cp -X $gDesktopDirectory/AppleHDA.kext $gExtensionsDirectory/AppleHDA.kext
     sudo chown -R root:wheel $gExtensionsDirectory/AppleHDA.kext
     sudo touch $gExtensionsDirectory
     gHDAversioninstalled=$(sudo /usr/libexec/PlistBuddy -c "Print ':CFBundleShortVersionString'" $gHDAContentsDirectory/Info.plist)
@@ -904,7 +913,7 @@ fi
 # exit if error
 if [ "$?" != "0" ]; then
     echo "Error: $gCodec  controller patch failure"
-    sudo cp -R $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext $gExtensionsDirectory/AppleHDA.kext
+    sudo cp -X $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext $gExtensionsDirectory/AppleHDA.kext
     sudo chown -R root:wheel $gExtensionsDirectory/AppleHDA.kext
     sudo touch $gExtensionsDirectory
     echo "Original S/L/E/AppleHDA.kext restored"
@@ -1002,7 +1011,7 @@ sudo perl -pi -e 's|\xff\x87\xec\x1a\x0f\x8f\x2f\x01\x00\x00|\x99\x08\xec\x10\x0
 ;;
 
 1150 ) echo "ALC1150 supported in OS X 10.8.5 and newer"
-sudo cp -R $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext $gExtensionsDirectory/AppleHDA.kext
+sudo cp -X $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext $gExtensionsDirectory/AppleHDA.kext
 sudo chown -R root:wheel $gExtensionsDirectory/AppleHDA.kext
 sudo touch $gExtensionsDirectory
 echo "Original S/L/E/AppleHDA.kext restored"
@@ -1012,7 +1021,7 @@ exit 1
 
 * )
 echo "$gCodec not supported with this script"
-sudo cp -R $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext $gExtensionsDirectory/AppleHDA.kext
+sudo cp -X $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext $gExtensionsDirectory/AppleHDA.kext
 sudo chown -R root:wheel $gExtensionsDirectory/AppleHDA.kext
 sudo touch $gExtensionsDirectory
 echo "Original S/L/E/AppleHDA.kext restored"
@@ -1025,7 +1034,7 @@ esac
 
 * )
 echo "$gSysVer not supported with this script"
-sudo cp -R $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext $gExtensionsDirectory/AppleHDA.kext
+sudo cp -X $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext $gExtensionsDirectory/AppleHDA.kext
 sudo chown -R root:wheel $gExtensionsDirectory/AppleHDA.kext
 sudo touch $gExtensionsDirectory
 echo "Original S/L/E/AppleHDA.kext restored"
@@ -1038,7 +1047,7 @@ esac
 # exit if error
 if [ "$?" != "0" ]; then
     echo "Error: $gCodec codec patch failure"
-    sudo cp -R $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext $gExtensionsDirectory/AppleHDA.kext
+    sudo cp -X $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext $gExtensionsDirectory/AppleHDA.kext
     sudo chown -R root:wheel $gExtensionsDirectory/AppleHDA.kext
     sudo touch $gExtensionsDirectory
     echo "Original S/L/E/AppleHDA.kext restored"
@@ -1073,7 +1082,7 @@ esac
 # exit if error
 if [ "$?" != "0" ]; then
     echo "Error: Installation failure"
-    sudo cp -R $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext $gExtensionsDirectory/AppleHDA.kext
+    sudo cp -X $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext $gExtensionsDirectory/AppleHDA.kext
     sudo chown -R root:wheel $gExtensionsDirectory/AppleHDA.kext
     sudo touch $gExtensionsDirectory
     echo "Original S/L/E/AppleHDA.kext restored"
