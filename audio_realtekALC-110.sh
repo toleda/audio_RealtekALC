@@ -29,6 +29,7 @@ gFile="File: audio_realtekALC-110.command_v1.0f"
 # v1.0d - 7/31/15: add SID verification, fix copy extended attributes error
 # v1.0e - 8/14/15: fix  SID reporting esthetics
 # v1.0f - 8/14/15: 269/283 binary edit update
+# v1.0g - 9/21/15: El Capitan typo
 #
 echo " "
 echo "Agreement"
@@ -951,7 +952,7 @@ case $gCodec in
 
 # codec patch out/credit lisai9093
 
-"El Capitan" ) sudo perl -pi -e 's|\x83\x19\xd4\x11|\x00\x00\x00\x00|g' $gHDAContentsDirectory/MacOS/AppleHDA
+sudo perl -pi -e 's|\x83\x19\xd4\x11|\x00\x00\x00\x00|g' $gHDAContentsDirectory/MacOS/AppleHDA
 ;;
 
 esac

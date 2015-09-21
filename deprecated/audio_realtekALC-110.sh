@@ -1,6 +1,6 @@
 #!/bin/sh
 # Maintained by: toleda for: github.com/toleda/audio_realtekALC
-gFile="File: audio_realtekALC-110.command_v1.0d"
+gFile="File: audio_realtekALC-110.command_v1.0f"
 # Credit: bcc9, RevoGirl, PikeRAlpha, SJ_UnderWater, RehabMan, TimeWalker, lisai9093
 #
 # OS X Realtek ALC Onboard Audio
@@ -27,6 +27,8 @@ gFile="File: audio_realtekALC-110.command_v1.0d"
 # v1.0b - 6/17/15: file name typo
 # v1.0c - not applicable
 # v1.0d - 7/31/15: add SID verification, fix copy extended attributes error
+# v1.0e - 8/14/15: fix  SID reporting esthetics
+# v1.0f - 8/14/15: 269/283 binary edit update
 #
 echo " "
 echo "Agreement"
@@ -38,10 +40,9 @@ echo " "
 
 # set initial variables
 gSysVer=`sw_vers -productVersion`
-gSID=$(csrutil status)
 gSysName="Mavericks"
 gStartupDisk=EFI
-gCloverDirectory=/Volumes/$gStartupDisk/EFI/CLOVER
+gCloverDirectory="/Volumes/$gStartupDisk/EFI/CLOVER"
 gDesktopDirectory=/Users/$(whoami)/Desktop
 gExtensionsDirectory=/System/Library/Extensions
 gHDAContentsDirectory=$gExtensionsDirectory/AppleHDA.kext/Contents
@@ -87,6 +88,7 @@ case ${gSysVer} in
 
 10.11* ) gSysName="El Capitan"
 gSysFolder=kexts/10.11
+gSID=$(csrutil status)
 ;;
 10.10* ) gSysName="Yosemite"
 gSysFolder=kexts/10.10
@@ -120,6 +122,18 @@ echo "File: $gFile"
 if [ $gMake = 1 ]; then
     if [ -d "$gDesktopDirectory/AppleHDA.kext" ]; then
         sudo rm -R $gExtensionsDirectory/AppleHDA.kext
+    case $gSysName in
+
+    "El Capitan" )
+    sudo cp -X $gDesktopDirectory/AppleHDA.kext $gExtensionsDirectory/AppleHDA.kext
+    ;;
+
+    "Yosemite"|"Mavericks"|"Mountain Lion" )
+    sudo cp -R $gDesktopDirectory/AppleHDA.kext $gExtensionsDirectory/AppleHDA.kext
+    ;;
+
+    esac
+
     else
         echo "Error, no Desktop/AppleHDA.kext (native)"
         echo "No system files were changed"
@@ -127,7 +141,6 @@ if [ $gMake = 1 ]; then
     exit 1
     fi
 
-    sudo cp -X $gDesktopDirectory/AppleHDA.kext $gExtensionsDirectory/AppleHDA.kext
     sudo chown -R root:wheel $gExtensionsDirectory/AppleHDA.kext
     sudo touch $gExtensionsDirectory
     gHDAversioninstalled=$(sudo /usr/libexec/PlistBuddy -c "Print ':CFBundleShortVersionString'" $gHDAContentsDirectory/Info.plist)
@@ -181,14 +194,16 @@ if [ $gRealtekALC = 1 ]; then
 	    echo $gSID > /tmp/gsid.txt
         if [[ $(cat /tmp/gsid.txt | grep -c "disabled") = 0 ]]; then
             rm -R /tmp/gsid.txt
-            echo "$gSID NOK to patch"
+            echo "$gSID"
+            echo "NOK to patch"
             echo "Add org.chameleon.Boot.plist/Kernel Flags = CsrActiveConfig=0x3 and restart"
             echo "No system files were changed"
             echo "To save a Copy of this Terminal session: Terminal/Shell/Export Text As ..."
             exit 1
         else
             rm -R /tmp/gsid.txt            	
-	     echo "$gSID OK to patch"
+	     echo "$gSID"
+	     echo "OK to patch"
         fi
         ;;
 
@@ -240,14 +255,16 @@ echo "EFI partition is mounted"
 	    echo $gSID > /tmp/gsid.txt
             if [[ $(cat /tmp/gsid.txt | grep -c "disabled") = 0 ]]; then
             rm -R /tmp/gsid.txt 
-            echo "$gSID NOK to patch"
+            echo "$gSID"
+            echo "NOK to patch"
             echo "Add config.plist/RtVariables/CsrActiveConfig=0x3 and restart"
             echo "No system files were changed"
             echo "To save a Copy of this Terminal session: Terminal/Shell/Export Text As ..."
             exit 1
         else
             rm -R /tmp/gsid.txt            
-	     echo "$gSID OK to patch"
+	     echo "$gSID"
+	     echo "OK to patch"
         fi
         ;;
 
@@ -301,14 +318,16 @@ else
 	    	echo $gSID > /tmp/gsid.txt
         	if [[ $(cat /tmp/gsid.txt | grep -c "disabled") = 0 ]]; then
             	rm -R /tmp/gsid.txt 
-                echo "$gSID NOK to patch"
+                echo "$gSID"
+                echo "NOK to patch"
                 echo "Add config.plist/RtVariables/CsrActiveConfig=0x3 and restart"
                 echo "No system files were changed"
                 echo "To save a Copy of this Terminal session: Terminal/Shell/Export Text As ..."
                 exit 1
             else
             	rm -R /tmp/gsid.txt                
-		echo "$gSID OK to patch"
+		echo "$gSID"
+		echo "OK to patch"
             fi
             ;;
 
@@ -693,7 +712,8 @@ case "$gCodec" in
 
 esac
 
-# HD4600 HDMI audio patch
+# HD4600 HDMI audio patch]
+choice2=n
 # if [ $gRealtekALC = 1 ]; then
     if [ $gCodec = 887 -a $gLegacy = y ]; then gController=n; else
         case "$gCodec" in
@@ -828,23 +848,6 @@ if [ $gDebug = 1 ]; then
     echo "gRealtekALC = $gRealtekALC"
 fi
 
-# debug
-if [ $gMake = 1 ]; then
-    if [ -d "$gDesktopDirectory/AppleHDA.kext" ]; then
-        sudo rm -R $gExtensionsDirectory/AppleHDA.kext
-    else
-        echo "Error, no Desktop/AppleHDA.kext (native)"
-        echo "No system files were changed"
-        echo "To save a Copy of this Terminal session: Terminal/Shell/Export Text As ..."
-        exit 1
-    fi
-    sudo cp -X $gDesktopDirectory/AppleHDA.kext $gExtensionsDirectory/AppleHDA.kext
-    sudo chown -R root:wheel $gExtensionsDirectory/AppleHDA.kext
-    sudo touch $gExtensionsDirectory
-    gHDAversioninstalled=$(sudo /usr/libexec/PlistBuddy -c "Print ':CFBundleShortVersionString'" $gHDAContentsDirectory/Info.plist)
-    echo "Desktop/AppleHDA.kext installed in $gExtensionsDirectory"
-fi
-
 ######################
 
 if [ $gRealtekALC = 1 ]; then    # main loop
@@ -865,7 +868,18 @@ if [ -d "$gDesktopDirectory/audio_ALC$gCodec-$gSysVer" ]; then
 fi
 sudo mkdir -p $gDesktopDirectory/audio_ALC$gCodec-$gSysVer
 sudo chown $(whoami) $gDesktopDirectory/audio_ALC$gCodec-$gSysVer
+
+case $gSysName in
+
+"El Capitan" )
+sudo cp -X $gExtensionsDirectory/AppleHDA.kext $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext
+;;
+
+"Yosemite"|"Mavericks"|"Mountain Lion" )
 sudo cp -R $gExtensionsDirectory/AppleHDA.kext $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext
+;;
+
+esac
 
 # exit if error
 if [ "$?" != "0" ]; then
@@ -927,11 +941,20 @@ case $gSysVer in
 10.8.5|10.9*|10.10*|10.11* )
 echo "$gSysVer codec patch"
 
-# patch out codec, el capitan only/credit lisai9093
 case $gSysName in
+
+"El Capitan" )
+
+case $gCodec in
+
+887|888|889|892|898|1150 )
+
+# codec patch out/credit lisai9093
 
 "El Capitan" ) sudo perl -pi -e 's|\x83\x19\xd4\x11|\x00\x00\x00\x00|g' $gHDAContentsDirectory/MacOS/AppleHDA
 ;;
+
+esac
 
 esac
 
@@ -1094,7 +1117,18 @@ fi    # end: if [ $gRealtekALC = 1 ]
 
 sudo rm -R /tmp/ALC$gCodec.zip
 sudo rm -R /tmp/$gCodec
+
+case $gSysName in
+
+"El Capitan" )
+sudo cp -X $gExtensionsDirectory/AppleHDA.kext $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA.kext
+;;
+
+"Yosemite"|"Mavericks"|"Mountain Lion" )
 sudo cp -R $gExtensionsDirectory/AppleHDA.kext $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA.kext
+;;
+
+esac
 
 case $gSysName in
 
