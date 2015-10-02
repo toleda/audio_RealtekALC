@@ -1,6 +1,6 @@
 #!/bin/sh
 # Maintained by: toleda for: github.com/toleda/audio_realtekALC
-gFile="File: audio_realtekALC-110.command_v1.0f"
+gFile="File: audio_realtekALC-110.command_v1.0h"
 # Credit: bcc9, RevoGirl, PikeRAlpha, SJ_UnderWater, RehabMan, TimeWalker, lisai9093
 #
 # OS X Realtek ALC Onboard Audio
@@ -30,6 +30,7 @@ gFile="File: audio_realtekALC-110.command_v1.0f"
 # v1.0e - 8/14/15: fix  SID reporting esthetics
 # v1.0f - 8/14/15: 269/283 binary edit update
 # v1.0g - 9/21/15: El Capitan typo
+# v1.0h - 10/1/15: El Capitan typo
 #
 echo " "
 echo "Agreement"
@@ -126,7 +127,7 @@ if [ $gMake = 1 ]; then
     case $gSysName in
 
     "El Capitan" )
-    sudo cp -X $gDesktopDirectory/AppleHDA.kext $gExtensionsDirectory/AppleHDA.kext
+    sudo cp -XR $gDesktopDirectory/AppleHDA.kext $gExtensionsDirectory/AppleHDA.kext
     ;;
 
     "Yosemite"|"Mavericks"|"Mountain Lion" )
@@ -222,7 +223,10 @@ if [ $gRealtekALC = 1 ]; then
 
         esac
     fi
+if [ -f /tmp/org.chameleon.Boot.txt ]; then
 rm -R /tmp/org.chameleon.Boot.txt
+fi
+
 fi
 
 # get password
@@ -873,7 +877,7 @@ sudo chown $(whoami) $gDesktopDirectory/audio_ALC$gCodec-$gSysVer
 case $gSysName in
 
 "El Capitan" )
-sudo cp -X $gExtensionsDirectory/AppleHDA.kext $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext
+sudo cp -XR $gExtensionsDirectory/AppleHDA.kext $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext
 ;;
 
 "Yosemite"|"Mavericks"|"Mountain Lion" )
@@ -928,7 +932,7 @@ fi
 # exit if error
 if [ "$?" != "0" ]; then
     echo "Error: $gCodec  controller patch failure"
-    sudo cp -X $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext $gExtensionsDirectory/AppleHDA.kext
+    sudo cp -XR $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext $gExtensionsDirectory/AppleHDA.kext
     sudo chown -R root:wheel $gExtensionsDirectory/AppleHDA.kext
     sudo touch $gExtensionsDirectory
     echo "Original S/L/E/AppleHDA.kext restored"
@@ -1035,7 +1039,7 @@ sudo perl -pi -e 's|\xff\x87\xec\x1a\x0f\x8f\x2f\x01\x00\x00|\x99\x08\xec\x10\x0
 ;;
 
 1150 ) echo "ALC1150 supported in OS X 10.8.5 and newer"
-sudo cp -X $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext $gExtensionsDirectory/AppleHDA.kext
+sudo cp -XR $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext $gExtensionsDirectory/AppleHDA.kext
 sudo chown -R root:wheel $gExtensionsDirectory/AppleHDA.kext
 sudo touch $gExtensionsDirectory
 echo "Original S/L/E/AppleHDA.kext restored"
@@ -1045,7 +1049,7 @@ exit 1
 
 * )
 echo "$gCodec not supported with this script"
-sudo cp -X $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext $gExtensionsDirectory/AppleHDA.kext
+sudo cp -XR $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext $gExtensionsDirectory/AppleHDA.kext
 sudo chown -R root:wheel $gExtensionsDirectory/AppleHDA.kext
 sudo touch $gExtensionsDirectory
 echo "Original S/L/E/AppleHDA.kext restored"
@@ -1058,7 +1062,7 @@ esac
 
 * )
 echo "$gSysVer not supported with this script"
-sudo cp -X $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext $gExtensionsDirectory/AppleHDA.kext
+sudo cp -XR $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext $gExtensionsDirectory/AppleHDA.kext
 sudo chown -R root:wheel $gExtensionsDirectory/AppleHDA.kext
 sudo touch $gExtensionsDirectory
 echo "Original S/L/E/AppleHDA.kext restored"
@@ -1071,7 +1075,7 @@ esac
 # exit if error
 if [ "$?" != "0" ]; then
     echo "Error: $gCodec codec patch failure"
-    sudo cp -X $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext $gExtensionsDirectory/AppleHDA.kext
+    sudo cp -XR $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext $gExtensionsDirectory/AppleHDA.kext
     sudo chown -R root:wheel $gExtensionsDirectory/AppleHDA.kext
     sudo touch $gExtensionsDirectory
     echo "Original S/L/E/AppleHDA.kext restored"
@@ -1106,7 +1110,7 @@ esac
 # exit if error
 if [ "$?" != "0" ]; then
     echo "Error: Installation failure"
-    sudo cp -X $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext $gExtensionsDirectory/AppleHDA.kext
+    sudo cp -XR $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext $gExtensionsDirectory/AppleHDA.kext
     sudo chown -R root:wheel $gExtensionsDirectory/AppleHDA.kext
     sudo touch $gExtensionsDirectory
     echo "Original S/L/E/AppleHDA.kext restored"
@@ -1122,7 +1126,7 @@ sudo rm -R /tmp/$gCodec
 case $gSysName in
 
 "El Capitan" )
-sudo cp -X $gExtensionsDirectory/AppleHDA.kext $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA.kext
+sudo cp -XR $gExtensionsDirectory/AppleHDA.kext $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA.kext
 ;;
 
 "Yosemite"|"Mavericks"|"Mountain Lion" )
