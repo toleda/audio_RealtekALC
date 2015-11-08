@@ -1,6 +1,6 @@
 #!/bin/sh
 # Maintained by: toleda for: github.com/toleda/audio_realtekALC
-gFile="File: audio_realtekALC-110.command_v1.0h"
+gFile="File: audio_realtekALC-110.command_v1.0k"
 # Credit: bcc9, RevoGirl, PikeRAlpha, SJ_UnderWater, RehabMan, TimeWalker, lisai9093
 #
 # OS X Realtek ALC Onboard Audio
@@ -30,7 +30,10 @@ gFile="File: audio_realtekALC-110.command_v1.0h"
 # v1.0e - 8/14/15: fix  SID reporting esthetics
 # v1.0f - 8/14/15: 269/283 binary edit update
 # v1.0g - 9/21/15: El Capitan typo
-# v1.0h - 10/1/15: El Capitan typo
+# v1.0h - 10/1/15: El Capitan typo/cp fix
+# v1.0h - 10/8/15: Legacy fix - 2
+# v1.0j - 10/30/15: add /Volume/ESP detection
+# v1.0k - 11/5/15: add Skylake HDEF
 #
 echo " "
 echo "Agreement"
@@ -123,11 +126,11 @@ echo "File: $gFile"
 # debug
 if [ $gMake = 1 ]; then
     if [ -d "$gDesktopDirectory/AppleHDA.kext" ]; then
-        sudo rm -R $gExtensionsDirectory/AppleHDA.kext
+        sudo rm -R "$gExtensionsDirectory/AppleHDA.kext"
     case $gSysName in
 
     "El Capitan" )
-    sudo cp -XR $gDesktopDirectory/AppleHDA.kext $gExtensionsDirectory/AppleHDA.kext
+    sudo cp -X $gDesktopDirectory/AppleHDA.kext $gExtensionsDirectory/AppleHDA.kext
     ;;
 
     "Yosemite"|"Mavericks"|"Mountain Lion" )
@@ -176,7 +179,7 @@ if [ $gRealtekALC = 1 ]; then
 
     if [ -d $gChameleonDirectory ]; then
         if [ -f "$gChameleonDirectory/org.chameleon.Boot.plist" ]; then
-            cp -p $gChameleonDirectory/org.chameleon.Boot.plist /tmp/org.chameleon.Boot.txt
+            cp -p "$gChameleonDirectory/org.chameleon.Boot.plist" "/tmp/org.chameleon.Boot.txt"
 
 # debug
             if [ $gDebug = 1 ]; then
@@ -197,6 +200,7 @@ if [ $gRealtekALC = 1 ]; then
         if [[ $(cat /tmp/gsid.txt | grep -c "disabled") = 0 ]]; then
             rm -R /tmp/gsid.txt
             echo "$gSID"
+            echo ""
             echo "NOK to patch"
             echo "Add org.chameleon.Boot.plist/Kernel Flags = CsrActiveConfig=0x3 and restart"
             echo "No system files were changed"
@@ -205,6 +209,7 @@ if [ $gRealtekALC = 1 ]; then
         else
             rm -R /tmp/gsid.txt            	
 	     echo "$gSID"
+            echo ""
 	     echo "OK to patch"
         fi
         ;;
@@ -223,10 +228,7 @@ if [ $gRealtekALC = 1 ]; then
 
         esac
     fi
-if [ -f /tmp/org.chameleon.Boot.txt ]; then
 rm -R /tmp/org.chameleon.Boot.txt
-fi
-
 fi
 
 # get password
@@ -249,10 +251,26 @@ if [ $gCloverALC = 1 ]; then
 # check for debug (debug=1 does not touch CLOVER folder)
 case $gDebug in
 0 )
+
+# verify EFI install
+gEFI=0
 if [ -d $gCloverDirectory ]; then
-echo "EFI partition is mounted"
+     gEFI=1
+fi
+
+if [ $gEFI = 0 ]; then
+
+    if [ -d '/Volumes/ESP/EFI/CLOVER' ]; then
+        gCloverDirectory=/Volumes/ESP/EFI/CLOVER
+        gEFI=1
+    fi
+
+fi
+
+if [ $gEFI = 1 ]; then
+    echo "EFI partition is mounted"
     if [ -f "$gCloverDirectory/config.plist" ]; then
-        cp -p $gCloverDirectory/config.plist /tmp/config.txt
+        cp -p "$gCloverDirectory/config.plist" "/tmp/config.txt"
 
         case $gSysName in
 
@@ -261,6 +279,7 @@ echo "EFI partition is mounted"
             if [[ $(cat /tmp/gsid.txt | grep -c "disabled") = 0 ]]; then
             rm -R /tmp/gsid.txt 
             echo "$gSID"
+            echo ""
             echo "NOK to patch"
             echo "Add config.plist/RtVariables/CsrActiveConfig=0x3 and restart"
             echo "No system files were changed"
@@ -269,6 +288,7 @@ echo "EFI partition is mounted"
         else
             rm -R /tmp/gsid.txt            
 	     echo "$gSID"
+            echo ""
 	     echo "OK to patch"
         fi
         ;;
@@ -289,11 +309,11 @@ echo "EFI partition is mounted"
         esac
 
         rm -R /tmp/config.txt
-        cp -p $gCloverDirectory/config.plist /tmp/config.plist
+        cp -p "$gCloverDirectory/config.plist" "/tmp/config.plist"
         if [ -f "$gCloverDirectory/config-backup.plist" ]; then
-            rm -R $gCloverDirectory/config-backup.plist
+            rm -R "$gCloverDirectory/config-backup.plist"
         fi
-        cp -p $gCloverDirectory/config.plist $gCloverDirectory/config-backup.plist
+        cp -p "$gCloverDirectory/config.plist" "$gCloverDirectory/config-backup.plist"
     else
         echo "$gCloverDirectory/config.plist is missing"
         echo "No system files were changed"
@@ -301,22 +321,30 @@ echo "EFI partition is mounted"
         exit 1
     fi
 else
-    echo "EFI partition is not mounted"
+    echo "EFI partition not mounted"
 
 # confirm Clover Legacy install
+    gCloverDirectory=/Volumes/"$gStartupDisk"/EFI/CLOVER
+    if [ -d "$gCloverDirectory" ]; then
+	    echo "$gStartupDisk/EFI folder found"
+    else echo "$gStartupDisk/EFI not found"
+	    echo "EFI/CLOVER folder not available to install audio"
+	    echo "No system files were changed"
+	    echo "To save a Copy of this Terminal session: Terminal/Shell/Export Text As ..."
+	    exit 1
+    fi
+
     while true
     do
     read -p "Confirm Clover Legacy Install (y/n): " choice8
     case "$choice8" in
 
     [yY]* )
-    gCloverDirectory=/Volumes/"$gStartupDisk"/EFI/CLOVER
-    if [ -d $gCloverDirectory ]; then
-    echo "$gStartupDisk/EFI folder found"
+#    gCloverDirectory=/Volumes/"$gStartupDisk"/EFI/CLOVER
+    if [ -d "$gCloverDirectory" ]; then
         if [ -f "$gCloverDirectory/config.plist" ]; then
 
-            cp -p $gCloverDirectory/config.plist /tmp/config.txt
-
+            cp -p "$gCloverDirectory/config.plist" "/tmp/config.txt"
             case $gSysName in
 
             "El Capitan" )
@@ -324,6 +352,7 @@ else
         	if [[ $(cat /tmp/gsid.txt | grep -c "disabled") = 0 ]]; then
             	rm -R /tmp/gsid.txt 
                 echo "$gSID"
+                echo ""
                 echo "NOK to patch"
                 echo "Add config.plist/RtVariables/CsrActiveConfig=0x3 and restart"
                 echo "No system files were changed"
@@ -332,6 +361,7 @@ else
             else
             	rm -R /tmp/gsid.txt                
 		echo "$gSID"
+               echo ""
 		echo "OK to patch"
             fi
             ;;
@@ -351,12 +381,11 @@ else
 
             esac
 
-            rm -R /tmp/config.txt
-            sudo cp -p $gCloverDirectory/config.plist /tmp/config.plist
+            cp -p "$gCloverDirectory/config.plist" "/tmp/config.plist"
             if [ -f "$gCloverDirectory/config-backup.plist" ]; then
-                rm -R $gCloverDirectory/config-backup.plist
+                rm -R "$gCloverDirectory/config-backup.plist"
             fi
-            sudo cp -p $gCloverDirectory/config.plist $gCloverDirectory/config-backup.plist
+            cp -p "$gCloverDirectory/config.plist" "$gCloverDirectory/config-backup.plist"
         else
             echo "$gCloverDirectory/config.plist is missing"
             echo "No system files were changed"
@@ -423,7 +452,7 @@ fi
 # verify ioreg/HDEF
 ioreg -rw 0 -p IODeviceTree -n HDEF > /tmp/HDEF.txt
 
-if [[ $(cat /tmp/HDEF.txt | grep -o "HDEF@1B") = "HDEF@1B" ]]; then
+if [[ $(cat /tmp/HDEF.txt | grep -c "HDEF@1") != 0 ]]; then
     gLayoutidioreg=$(cat /tmp/HDEF.txt | grep layout-id | sed -e 's/.*<//' -e 's/>//')
     gLayoutidhex="0x${gLayoutidioreg:6:2}${gLayoutidioreg:4:2}${gLayoutidioreg:2:2}${gLayoutidioreg:0:2}"
     let gAudioid=$gLayoutidhex
@@ -664,12 +693,16 @@ fi
 if [ $gCodecvalid != y ]; then
 
 #  get supported codec
-    echo "Supported RealtekALC codecs: 885, 887, 888, 889, 892, 898 or 1150"
+    echo "Supported RealtekALC codecs: 885, 887, 888, 889, 892, 898 or 1150 (0 to exit)"
     while true
     do
     read -p "Enter codec: " choice0
     case "$choice0" in
         269|283|885|887|888|889|892|898|1150 ) gCodec=$choice0; break;;
+        0 ) echo "No system files were changed"
+        echo "To save a Copy of this Terminal session: Terminal/Shell/Export Text As ..."
+        exit 1;;
+
         * ) echo "Try again...";;
     esac
     done
@@ -763,7 +796,7 @@ if [ $gRealtekALC = 1 ]; then
 # echo "0 - dsdt/ssdt HDMI audio (AMD/Nvidia/Intel)"
         echo "1 - 3/5/6 port Realtek ALCxxx audio"
         echo "2 - 3 port (5.1) Realtek ALCxxx audio (n/a 885)"
-        echo "3 - HD3000/HD4000 HDMI and Realtek ALCxxx audio (n/a 885/1150 & 887/888 Legacy)"
+        echo "3 - HD3000/HD4000/GT530 HDMI and Realtek ALCxxx audio (n/a 885 & 887/888 Legacy)"
         echo "Caution: if Audio ID: $gAudioid is not fixed, no audio after restart"
     fi
 fi
@@ -796,7 +829,7 @@ if [ $gCloverALC = 1 ]; then
 # echo "0 - dsdt/ssdt HDMI audio (AMD/Nvidia/Intel)"
         echo "1 - 3/5/6 port Realtek ALCxxx audio"
         echo "2 - 3 port (5.1) Realtek ALCxxx audio (n/a 885)"
-        echo "3 - HD3000/HD4000 HDMI and Realtek ALCxxx audio (n/a 885/1150 & 887/888 Legacy)"
+        echo "3 - HD3000/HD4000/GT530 HDMI and Realtek ALCxxx audio (n/a 885 & 887/888 Legacy)"
         while true
         do
 # read -p "Select Audio ID? (0, 1, 2 or 3): " choice6
@@ -1097,19 +1130,22 @@ sudo install -m 644 -o root -g wheel /tmp/$gCodec/layout1.xml.zlib  $gHDAContent
 
 case $gCodec in
 
-887|888|889|892|898 )
+887|888|889|892|898|1150 )
 sudo install -m 644 -o root -g wheel /tmp/$gCodec/layout2.xml.zlib  $gHDAContentsDirectory/Resources
-
 sudo install -m 644 -o root -g wheel /tmp/$gCodec/layout3.xml.zlib  $gHDAContentsDirectory/Resources
 ;;
-1150 )
-sudo install -m 644 -o root -g wheel /tmp/$gCodec/layout2.xml.zlib  $gHDAContentsDirectory/Resources
-;;
+# 1150 )
+# sudo install -m 644 -o root -g wheel /tmp/$gCodec/layout2.xml.zlib  $gHDAContentsDirectory/Resources
+# ;;
 esac
+
+sudo rm -R /tmp/ALC$gCodec.zip
+sudo rm -R /tmp/$gCodec
 
 # exit if error
 if [ "$?" != "0" ]; then
     echo "Error: Installation failure"
+    sudo rm -R $gExtensionsDirectory/AppleHDA.kext
     sudo cp -XR $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext $gExtensionsDirectory/AppleHDA.kext
     sudo chown -R root:wheel $gExtensionsDirectory/AppleHDA.kext
     sudo touch $gExtensionsDirectory
@@ -1119,9 +1155,6 @@ if [ "$?" != "0" ]; then
 fi
 
 fi    # end: if [ $gRealtekALC = 1 ]
-
-sudo rm -R /tmp/ALC$gCodec.zip
-sudo rm -R /tmp/$gCodec
 
 case $gSysName in
 
