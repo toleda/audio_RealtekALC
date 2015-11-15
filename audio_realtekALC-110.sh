@@ -1,6 +1,6 @@
 #!/bin/sh
 # Maintained by: toleda for: github.com/toleda/audio_realtekALC
-gFile="File: audio_realtekALC-110.command_v1.0k"
+gFile="File: audio_realtekALC-110.command_v1.0l"
 # Credit: bcc9, RevoGirl, PikeRAlpha, SJ_UnderWater, RehabMan, TimeWalker, lisai9093
 #
 # OS X Realtek ALC Onboard Audio
@@ -34,6 +34,7 @@ gFile="File: audio_realtekALC-110.command_v1.0k"
 # v1.0h - 10/8/15: Legacy fix - 2
 # v1.0j - 10/30/15: add /Volume/ESP detection
 # v1.0k - 11/5/15: add Skylake HDEF
+# v1.0k - 11/13/15: add 1150/Audio ID: 3
 #
 echo " "
 echo "Agreement"
@@ -49,6 +50,7 @@ gSysName="Mavericks"
 gStartupDisk=EFI
 gCloverDirectory="/Volumes/$gStartupDisk/EFI/CLOVER"
 gDesktopDirectory=/Users/$(whoami)/Desktop
+gLibraryDirectory=/Library/Extensions
 gExtensionsDirectory=/System/Library/Extensions
 gHDAContentsDirectory=$gExtensionsDirectory/AppleHDA.kext/Contents
 gHDAHardwarConfigDirectory=$gHDAContentsDirectory/Plugins/AppleHDAHardwareConfigDriver.kext/Contents
@@ -61,6 +63,8 @@ gLegacy=n
 gController=n
 gMake=0
 gDebug=0
+gDebug=0
+gMB=0
 # gCodecsinstalled
 # gCodecVendor
 # gCodecDevice
@@ -796,7 +800,7 @@ if [ $gRealtekALC = 1 ]; then
 # echo "0 - dsdt/ssdt HDMI audio (AMD/Nvidia/Intel)"
         echo "1 - 3/5/6 port Realtek ALCxxx audio"
         echo "2 - 3 port (5.1) Realtek ALCxxx audio (n/a 885)"
-        echo "3 - HD3000/HD4000/GT530 HDMI and Realtek ALCxxx audio (n/a 885 & 887/888 Legacy)"
+        echo "3 - HD3000/HD4000/HD5xx HDMI and Realtek ALCxxx audio (n/a 885 & 887/888 Legacy)"
         echo "Caution: if Audio ID: $gAudioid is not fixed, no audio after restart"
     fi
 fi
@@ -829,7 +833,7 @@ if [ $gCloverALC = 1 ]; then
 # echo "0 - dsdt/ssdt HDMI audio (AMD/Nvidia/Intel)"
         echo "1 - 3/5/6 port Realtek ALCxxx audio"
         echo "2 - 3 port (5.1) Realtek ALCxxx audio (n/a 885)"
-        echo "3 - HD3000/HD4000/GT530 HDMI and Realtek ALCxxx audio (n/a 885 & 887/888 Legacy)"
+        echo "3 - HD3000/HD4000/HD5xx HDMI and Realtek ALCxxx audio (n/a 885 & 887/888 Legacy)"
         while true
         do
 # read -p "Select Audio ID? (0, 1, 2 or 3): " choice6
@@ -840,7 +844,7 @@ if [ $gCloverALC = 1 ]; then
             2* ) gAudioid=2; if [ $gCodec = 885 ]; then echo "ID: 2 n/a, try again..."; else break; fi;;
             3* ) gAudioid=3; valid=y;
                 if [ $gCodec = 885 ]; then valid=n; fi;
-                if [ $gCodec = 1150 ]; then valid=n; fi;
+#                if [ $gCodec = 1150 ]; then valid=n; fi;
                 if [ $gLegacy = y ]; then valid=n; fi;
                 if [ $valid = n ]; then echo "ID: 3 n/a, try again..."; else break; fi;;
             * ) echo "Try again...";;
