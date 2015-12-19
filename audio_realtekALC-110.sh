@@ -1,6 +1,6 @@
 #!/bin/sh
 # Maintained by: toleda for: github.com/toleda/audio_realtekALC
-gFile="File: audio_realtekALC-110.command_v1.0n"
+gFile="File: audio_realtekALC-110.command_v1.0n1"
 # Credit: bcc9, RevoGirl, PikeRAlpha, SJ_UnderWater, RehabMan, TimeWalker, lisai9093
 #
 # OS X Realtek ALC Onboard Audio
@@ -37,6 +37,7 @@ gFile="File: audio_realtekALC-110.command_v1.0n"
 # v1.0k - 11/13/15: add 1150/Audio ID: 3
 # v1.0m - 11/30/15: unsupported audio_id fix
 # v1.0n - 12/20/15: detect HD4600 HDMI audio codec
+# v1.0n1 - 12/20/15: typo
 #
 echo " "
 echo "Agreement"
