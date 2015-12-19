@@ -776,7 +776,7 @@ if [[ $(cat /tmp/B0D3.txt | grep -c "B0D3@3") != 0 ]]; then
         echo "B0D3@3 found, HDAU edit required for HD4600 HDMI audio"
         echo "dsdt edit/ssdt injection not available with this script"
         gController=1
-    afi
+    fi
 fi
 sudo rm -R /tmp/B0D3.txt
 
