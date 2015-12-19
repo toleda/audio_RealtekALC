@@ -1,6 +1,6 @@
 #!/bin/sh
 # Maintained by: toleda for: github.com/toleda/audio_realtekALC
-gFile="File: audio_realtekALC-110.command_v1.0l"
+gFile="File: audio_realtekALC-110.command_v1.0n"
 # Credit: bcc9, RevoGirl, PikeRAlpha, SJ_UnderWater, RehabMan, TimeWalker, lisai9093
 #
 # OS X Realtek ALC Onboard Audio
@@ -35,6 +35,8 @@ gFile="File: audio_realtekALC-110.command_v1.0l"
 # v1.0j - 10/30/15: add /Volume/ESP detection
 # v1.0k - 11/5/15: add Skylake HDEF
 # v1.0k - 11/13/15: add 1150/Audio ID: 3
+# v1.0m - 11/30/15: unsupported audio_id fix
+# v1.0n - 12/20/15: detect HD4600 HDMI audio codec
 #
 echo " "
 echo "Agreement"
@@ -71,6 +73,7 @@ gMB=0
 # gCodecName
 # gCodec
 gCloverALC=0
+gPikerAlphaALC=0
 gRealtekALC=1
 gAudioidvalid=n
 gCodecvalid=n
@@ -754,16 +757,37 @@ case "$gCodec" in
 
 esac
 
+# verify ioreg/HDAU for HD4600 HDMI audio
+ioreg -rw 0 -p IODeviceTree -n HDAU > /tmp/HDAU.txt
+
+if [[ $(cat /tmp/HDAU.txt | grep -c "HDAU@3") != 0 ]]; then
+    if [[ $(cat /tmp/HDAU.txt | grep -c "0c0c") != 0 ]]; then
+        echo "HDAU@3 found, HD4600 HDMI audio capable"
+        gController=1
+    fi
+fi
+sudo rm -R /tmp/HDAU.txt
+
+ioreg -rw 0 -p IODeviceTree -n B0D3 > /tmp/B0D3.txt
+
+if [[ $(cat /tmp/B0D3.txt | grep -c "B0D3@3") != 0 ]]; then
+    if [[ $(cat /tmp/B0D3.txt | grep -c "0c0c") != 0 ]]; then
+        echo "B0D3@3 found, HDAU edit required for HD4600 HDMI audio"
+        echo "dsdt edit/ssdt injection not available with this script"
+        gController=1
+    afi
+fi
+sudo rm -R /tmp/B0D3.txt
+
 # HD4600 HDMI audio patch]
-choice2=n
-# if [ $gRealtekALC = 1 ]; then
+if [ $gController = 1 ]; then
     if [ $gCodec = 887 -a $gLegacy = y ]; then gController=n; else
         case "$gCodec" in
 
         887|892|898|1150 )
         while true
         do
-        read -p "Enable HD4600 HDMI audio (y/n): " choice2
+        read -p "Patch AppleHDA.kext for HD4600 HDMI audio (y/n): " choice2
         case "$choice2" in
             [yY]* ) gController=y; break;;
             [nN]* ) gController=n; break;;
@@ -772,7 +796,7 @@ choice2=n
         done
         esac
     fi
-# fi
+fi
 
 # validate audio id
 case $gAudioid in
@@ -863,6 +887,7 @@ if [ $gDebug = 1 ]; then
     echo "Codec configuration: success"
 fi
 
+if [ $gPikerAlphaALC = 0 ]; then
 echo ""
 echo "Download ALC$gCodec files ..."
 gDownloadLink="https://raw.githubusercontent.com/toleda/audio_ALC$gCodec/master/$gCodec.zip"
@@ -883,10 +908,12 @@ if [ "$?" != "0" ]; then
     echo "To save a Copy of this Terminal session: Terminal/Shell/Export Text As ..."
     exit 1
 fi
+fi
 
 # debug
 if [ $gDebug = 1 ]; then
     echo "gCloverALC = $gCloverALC"
+    echo "gPikerAlphaALC = $gPikerAlphaALC"
     echo "gRealtekALC = $gRealtekALC"
 fi
 
