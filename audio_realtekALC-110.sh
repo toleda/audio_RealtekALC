@@ -185,7 +185,7 @@ if [ $gRealtekALC = 1 ]; then
         echo "gSysName = $gSysName"
     fi
 
-    if [ -d $gChameleonDirectory ]; then
+    if [[ -d $gChameleonDirectory ]]; then
         if [ -f "$gChameleonDirectory/org.chameleon.Boot.plist" ]; then
             cp -p "$gChameleonDirectory/org.chameleon.Boot.plist" "/tmp/org.chameleon.Boot.txt"
 
@@ -440,7 +440,7 @@ fi
 
 # exit if error
 if [ "$?" != "0" ]; then
-    if [ $choice8 != “y” ]; then
+    if [ $choice8 != "y" ]; then
         echo "Error, $gStartupDisk/EFI not found"
         echo "No system files were changed"
         echo "To save a Copy of this Terminal session: Terminal/Shell/Export Text As ..."
@@ -776,7 +776,7 @@ if [[ $(cat /tmp/B0D3.txt | grep -c "B0D3@3") != 0 ]]; then
         echo "B0D3@3 found, HDAU edit required for HD4600 HDMI audio"
         echo "dsdt edit/ssdt injection not available with this script"
         gController=1
-    afi
+    fi
 fi
 sudo rm -R /tmp/B0D3.txt
 
@@ -1036,7 +1036,7 @@ case $gCodec in
 283 ) sudo perl -pi -e 's|\x62\x02\xec\x10|\x83\x02\xec\x10|g' $gHDAContentsDirectory/MacOS/AppleHDA
 ;;
 
-885 ) echo “No patch, native ALC885”  
+885 ) echo "No patch, native ALC885"
 # Optional patch, remove "# " from the following two lines
 # sudo perl -pi -e 's|\x85\x08\xec\x10|\x80\x08\xec\x10|g' $gHDAContentsDirectory/MacOS/AppleHDA
 # sudo perl -pi -e 's|\x8b\x19\xd4\x11|\x85\x08\xec\x10|g' $gHDAContentsDirectory/MacOS/AppleHDA
@@ -1076,7 +1076,7 @@ echo "$gSysVer codec patch"
 # patch codec
 case $gCodec in
 
-885 ) echo “No patch, native ALC885, optional patch available, see script”  
+885 ) echo "No patch, native ALC885, optional patch available, see script"
 # Optional patch, remove "# " from the following 3 lines
 # sudo perl -pi -e 's|\x85\x08\xec\x10|\x80\x08\xec\x10|g' $gHDAContentsDirectory/MacOS/AppleHDA
 # sudo perl -pi -e 's|\xff\x87\xec\x1a\x0f\x8f\x53\x01\x00\x00|\x99\x08\xec\x10\x0f\x84\x2a\x01\x00\x00|g' $gHDAContentsDirectory/MacOS/AppleHDA/AppleHDA
