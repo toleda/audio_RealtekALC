@@ -1,6 +1,6 @@
 #!/bin/sh
 # Maintained by: toleda for: github.com/toleda/audio_realtekALC
-gFile="File: audio_realtekALC-110.command_v1.0n1"
+gFile="File: audio_realtekALC-110.command_v1.0o1"
 # Credit: bcc9, RevoGirl, PikeRAlpha, SJ_UnderWater, RehabMan, TimeWalker, lisai9093
 #
 # OS X Realtek ALC Onboard Audio
@@ -37,7 +37,8 @@ gFile="File: audio_realtekALC-110.command_v1.0n1"
 # v1.0k - 11/13/15: add 1150/Audio ID: 3
 # v1.0m - 11/30/15: unsupported audio_id fix
 # v1.0n - 12/20/15: detect HD4600 HDMI audio codec
-# v1.0n1 - 12/20/15: typo
+# v1.0n11 - 12/20/15: typo
+# v1.0o10 - 12/20/15: add Osmosis, typo, credit: dabaer
 #
 echo " "
 echo "Agreement"
@@ -204,7 +205,7 @@ if [ $gRealtekALC = 1 ]; then
         case $gSysName in
 
         "El Capitan" )
-	    echo $gSID > /tmp/gsid.txt
+        echo $gSID > /tmp/gsid.txt
         if [[ $(cat /tmp/gsid.txt | grep -c "disabled") = 0 ]]; then
             rm -R /tmp/gsid.txt
             echo "$gSID"
@@ -215,10 +216,10 @@ if [ $gRealtekALC = 1 ]; then
             echo "To save a Copy of this Terminal session: Terminal/Shell/Export Text As ..."
             exit 1
         else
-            rm -R /tmp/gsid.txt            	
-	     echo "$gSID"
+            rm -R /tmp/gsid.txt
+            echo "$gSID"
             echo ""
-	     echo "OK to patch"
+            echo "OK to patch"
         fi
         ;;
 
@@ -232,11 +233,81 @@ if [ $gRealtekALC = 1 ]; then
             exit 1
         else
             echo "Kernel Flags = kext-dev-mode=1 found"
-        fi        ;;
-
+        fi
+        ;;
         esac
+        rm -R /tmp/org.chameleon.Boot.txt
+
+        else
+# osmosis/other
+
+    while true
+    do
+    read -p "No Clover/Chameleon files, confirm Osmosis/other install (y/n): " choice10
+    case "$choice10" in
+
+    [yY]* )
+        case $gSysName in
+        "El Capitan" )
+
+        echo $gSID > /tmp/gsid.txt
+        if [[ $(cat /tmp/gsid.txt | grep -c "disabled") = 0 ]]; then
+            rm -R /tmp/gsid.txt
+            echo "$gSID"
+            echo ""
+            echo "NOK to patch"
+            echo "Set Kernel Flag = CsrActiveConfig=0x3 and restart"
+            echo "No system files were changed"
+            echo "To save a Copy of this Terminal session: Terminal/Shell/Export Text As ..."
+            exit 1
+        else
+        rm -R /tmp/gsid.txt
+        echo "$gSID"
+        echo ""
+        echo "OK to patch"
+        fi
+        break
+        ;;
+
+        "Yosemite" )
+
+        while true
+        do
+        read -p "kext-dev-mode=1 set (y/n): " choice11
+        case "$choice11" in
+
+        [yY]* ) break
+        ;;
+
+        [nN]* )
+        echo "User terminated, set Boot Flag/kext-dev-mode=1 and restart"
+        echo "No system files were changed"
+        echo "To save a Copy of this Terminal session: Terminal/Shell/Export Text As ..."
+        exit 1
+        ;;
+
+        * ) echo "Try again...";;
+        esac
+        done
+        ;;
+    
+    esac
+    break
+    ;;
+
+    [nN]* )
+    echo "User terminated, no Clover/Chameleon files"
+    echo "No system files were changed"
+    echo "To save a Copy of this Terminal session: Terminal/Shell/Export Text As ..."
+    exit 1
+    ;;
+
+    * ) echo "Try again...";;
+    esac
+    done
+
     fi
-rm -R /tmp/org.chameleon.Boot.txt
+
 fi
 
 # get password
@@ -781,6 +852,7 @@ fi
 sudo rm -R /tmp/B0D3.txt
 
 # HD4600 HDMI audio patch]
+choice2=n
 if [ $gController = 1 ]; then
     if [ $gCodec = 887 -a $gLegacy = y ]; then gController=n; else
         case "$gCodec" in
@@ -825,7 +897,7 @@ if [ $gRealtekALC = 1 ]; then
 # echo "0 - dsdt/ssdt HDMI audio (AMD/Nvidia/Intel)"
         echo "1 - 3/5/6 port Realtek ALCxxx audio"
         echo "2 - 3 port (5.1) Realtek ALCxxx audio (n/a 885)"
-        echo "3 - HD3000/HD4000/HD5xx HDMI and Realtek ALCxxx audio (n/a 885 & 887/888 Legacy)"
+        echo "3 - HD3000/HD4000/HD5xx HDMI audio and Realtek ALCxxx audio (n/a 885 & 887/888 Legacy)"
         echo "Caution: if Audio ID: $gAudioid is not fixed, no audio after restart"
     fi
 fi
@@ -841,16 +913,20 @@ if [ $gCloverALC = 1 ]; then
     esac
     done
 
-    if [ $choice4 = y ]; then
-    while true
-    do
-    read -p "Use Audio ID: $gAudioid (y/n): " choice5
-    case "$choice5" in
-        [yY]* ) break;;
-        [nN]* ) choice5=n; break;;
-        * ) echo "Try again...";;
-    esac
-    done
+    if [ $gAudioidvalid = n ]; then
+    choice5=n
+    else
+        if [ $choice4 = y ]; then
+        while true
+        do
+        read -p "Use Audio ID: $gAudioid (y/n): " choice5
+        case "$choice5" in
+            [yY]* ) break;;
+            [nN]* ) choice5=n; break;;
+            * ) echo "Try again...";;
+        esac
+        done
+        fi
     fi
 
     if [ $choice5 = n ]; then
@@ -858,7 +934,7 @@ if [ $gCloverALC = 1 ]; then
 # echo "0 - dsdt/ssdt HDMI audio (AMD/Nvidia/Intel)"
         echo "1 - 3/5/6 port Realtek ALCxxx audio"
         echo "2 - 3 port (5.1) Realtek ALCxxx audio (n/a 885)"
-        echo "3 - HD3000/HD4000/HD5xx HDMI and Realtek ALCxxx audio (n/a 885 & 887/888 Legacy)"
+        echo "3 - HD3000/HD4000/HD5xx HDMI audio and Realtek ALCxxx audio (n/a 885 & 887/888 Legacy)"
         while true
         do
 # read -p "Select Audio ID? (0, 1, 2 or 3): " choice6
@@ -960,8 +1036,7 @@ if [ "$?" != "0" ]; then
 fi
 
 echo "Patch binaries ..."
-
-if [ $gController = y ]; then
+if [ $choice2 = y ]; then
 
     case $gSysVer in
 
