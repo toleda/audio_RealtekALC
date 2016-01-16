@@ -67,7 +67,7 @@ The Realtek Realtek ALC Patched method enables OS X AppleHDA onboard with or wit
     -  Audio ID: 2 supports 887, 888, 889, 892, 898, 1150   
         Realtek ALC/5.1 surround sound (3 motherboard audio ports) 
 
-    -  Audio ID: 3 supports 887, 888, 889, 892, 898, 1150
+    -  Audio ID: 3 supports 887, 888, 889, 892, 898, 1150  
         HD3000/HD4000 HDMI audio with Realtek ALC audio
 
 **E. More Information**
