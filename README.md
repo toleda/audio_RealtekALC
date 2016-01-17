@@ -73,13 +73,13 @@ The Realtek Realtek ALC Patched method enables OS X AppleHDA onboard with or wit
     8.  898
     9.  1150
 2.  Supported Audio IDs
-    -  Audio ID: 1 supports 269, 283, 885, 887, 888, 889, 892, 898, 1150  
+    1. Audio ID: 1 supports 269, 283, 885, 887, 888, 889, 892, 898, 1150  
         Realtek ALC audio (default, 1/2/3/5/6 motherboard audio ports)
 
-    -  Audio ID: 2 supports 887, 888, 889, 892, 898, 1150   
+    2. Audio ID: 2 supports 887, 888, 889, 892, 898, 1150   
         Realtek ALC/5.1 surround sound (3 motherboard audio ports) 
 
-    -  Audio ID: 3 supports 887, 888, 889, 892, 898, 1150  
+    3. Audio ID: 3 supports 887, 888, 889, 892, 898, 1150  
         HD3000/HD4000 HDMI audio with Realtek ALC audio
 
 **E. More Information**
@@ -91,8 +91,15 @@ The Realtek Realtek ALC Patched method enables OS X AppleHDA onboard with or wit
     3.  Notes
     4.  Guides
     5.  Tools
-    6.  Problem Reporting
-3. [Terminal Saved Output](https://github.com/toleda/audio_RealtekALC/blob/master/Terminal%20Saved%20Output_v1.0.4)
+3. [Realtek ALC guides](https://github.com/toleda/audio_ALC_guides)
+	1. Capabilities
+	2. Customization 
+	3. No Audio After Sleep/Wake
+	4. No Audio Devices
+	5. No Sound
+	6. Screenshots
+	7. Surround Sound 
+4. [Terminal Saved Output](https://github.com/toleda/audio_RealtekALC/blob/master/Terminal:audio_realtekALC-110.command_v1.0a.txt)
 
 **F - Tools**
 
@@ -119,12 +126,12 @@ The Realtek Realtek ALC Patched method enables OS X AppleHDA onboard with or wit
 	2. audio_pikeralphaALC-110...command
 10. Chameleon (if installed)
 	1. Extra/org.chameleon.Boot.plist
-	2. DPCIManager/Misc/Boot Log
+	2. DPCIManager/Misc/Boot Log (Tools 2.)
 	3. Extra/dsdt.aml (if installed)
 	4. Extra/ssdt.aml (if installed)
-11.	Clover
+11.	Clover (if installed)
 	1.	EFI/CLOVER/config.plist
-	2.	DPCIManager/Misc/Boot Log
+	2.	DPCIManager/Misc/Boot Log (Tools 2.)
 	3.	EFI/CLOVER/ACPI/Patched/dsdt.aml (if installed)
 	4.	EFI/CLOVER/ACPI/Patched/ssdt.aml (if installed)
 12.	Post to:
