@@ -1,5 +1,6 @@
 ![alt text](https://github.com/toleda/audio_RealtekALC/blob/master/sound.jpeg)
 #audio_realtekALC
+============
 **OS X/Patch in Place AppleHDA Realtek ALC Audio**  
 Native AppleHDA
 
@@ -17,16 +18,22 @@ The Realtek Realtek ALC Patched method enables OS X AppleHDA onboard with or wit
 
 **A. Installation**
 
-1. Patched AppleHDA.kext
+1. Confirm, Audio/ALC Injection: OK
+	2. Download: [audio_codecdetect.command](https://github.com/toleda/audio_ALCInjection/blob/master/audio_codecdetect.command.zip) (select View Raw)
+	3. Double click
+	4. Result
+		1. OK, proceed
+		2. NOK, fix
+2. Patched AppleHDA.kext
     1. [audio_realtekALC-110.command](https://github.com/toleda/audio_RealtekALC/blob/master/audio_realtekALC-110.command.zip) (select View Raw)
     2. Double click Downloads/audio_realtekALC-110.command
     3. Password:
     4. Confirm Codec ALCxxx: (885, 887, 888, 889, 892, 898, 1150 only)
     5. Enable HD4600 HDMI audio (y/n): (887, 892, 898, 1150 only)
-2. Verify Patched AppleHDA kext installed
+3. Verify Patched AppleHDA kext installed
     1. S/L/E/AppleHDA.kext_vx.x-toledaALCxxx
-3. Restart
-4. Verify ALC onboard audio
+4. Restart
+5. Verify ALC onboard audio
     1. System Preferences/Sound/Output/select audio device
 
 **B. Terminal**
@@ -55,12 +62,10 @@ The Realtek Realtek ALC Patched method enables OS X AppleHDA onboard with or wit
 			1. Boot/Arguments/kext-dev-mode=1
 		2. Chameleon/Extra/org.chameleon.Boot.plist/
 			1. Kernel Flags/kext-dev-mode=1
-3.  Native AppleHDA.kext
-    1.  [Need native?](https://github.com/toleda/audio_ALC_guides/blob/master/Restore%20native%20AppleHDA%20%5BGuide%5D.pdf)
-4.  Supported Realtek onboard audio codec
-    1.  [Unknown codec?](https://github.com/toleda/audio_ALC_guides/blob/master/Identify%20Audio%20Codec%20%5BGuide%5D.pdf)
+3.  [Native AppleHDA.kext](https://github.com/toleda/audio_ALC_guides/blob/master/Restore%20native%20AppleHDA%20%5BGuide%5D.pdf)
+4.  Audio codec? See Tools 4.  
 
-**D. Realtek ALCxxx** (verify codec and Audio ID)
+**D. Realtek ALCxxx** - Verify, see Tools 4.
 
 1.  Supported codecs
     1.  269 (BRIX only)
@@ -101,28 +106,29 @@ The Realtek Realtek ALC Patched method enables OS X AppleHDA onboard with or wit
 	7. Surround Sound 
 4. [Terminal Saved Output](https://github.com/toleda/audio_RealtekALC/blob/master/Terminal:audio_realtekALC-110.command_v1.0a.txt)
 
-**F - Tools**
+**F. Tools**
 
 1. [IOReg_v2.1](https://github.com/toleda/audio_ALCInjection/blob/master/IORegistryExplorer_v2.1.zip) (select View Raw)
 2. [DPCIManger](http://sourceforge.net/projects/dpcimanager/)  
 3. [MaciASL](http://sourceforge.net/projects/maciasl/)
-4. Property List Editors -
+4. [audio_codecdetect.command](https://github.com/toleda/audio_ALCInjection/blob/master/audio_codecdetect.command.zip) (select View Raw)
+5. Property List Editors -
 	1. [Xcode](https://developer.apple.com/xcode/)  
 	2. Property List Editor, PlistEdit Pro, TextEdit, etc.
 	3. TextEdit, TextWrangler (last resort)
 
-**G - Problem Reporting** (no files atached, no reply)
+**G. Problem Reporting** (no files atached, no reply)
 
 1.	Description of audio problem
 2.	OS X version/motherboard model/BIOS version/processor/graphics
 3.	Procedure/Guide used
-4.	Installed S/L/E/AppleHDA.kext
-5.	Copy of IOReg - IOReg_v2.1/File/Save a Copy As…, verify file (Tools 1.)
-6.	Screenshot: DPCIManager/Status (Tools 2.) 
-7.	DPCIManager/Misc/Boot Log, atttach text file
-8.	Terminal/Shell/File/Export Text As. . . /
-	1. audio_cloverALC-110...command
-	2. audio_pikeralphaALC-110...command
+4. Terminal/Shell/File/Export Text As. . . 
+	1. audio_codecdetect.command (Tools 4.)
+	2. audio_realtekALC-110...command
+5.	Installed S/L/E/AppleHDA.kext
+6.	Copy of IOReg - IOReg_v2.1/File/Save a Copy As…, verify file (Tools 1.)
+7.	Screenshot: DPCIManager/Status (Tools 2.) 
+8.	DPCIManager/Misc/Boot Log, atttach text file
 9. Chameleon (if installed)
 	1. Extra/org.chameleon.Boot.plist
 	2. DPCIManager/Misc/Boot Log (Tools 2.)
