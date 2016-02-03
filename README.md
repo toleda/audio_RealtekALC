@@ -1,7 +1,6 @@
 Realtek ALC AppleHDA Audio [Guides]_v4.0  
 ![alt text](https://github.com/toleda/audio_RealtekALC/blob/master/sound.jpeg)
-#audio_realtekALC
-============
+#audio_realtekALC  
 Realtek ALC/Desktop: 269(1), 283(1), 885, 887, 888, 892, 898 and 1150 on board audio  (1) BRIX/NUC only  
 Supports OS X: 10.11, 10.10, 10.9 and 10.8
 Native AppleHDA
