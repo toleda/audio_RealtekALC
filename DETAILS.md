@@ -16,8 +16,31 @@
 
 **VI.  Problem Reporting**
 
-###I.   OS X Realtek ALC AppleHDA Onboard Audio Solutions
-[**A. Realtek ALC Patched AppleHDA Method**](https://github.com/toleda/audio_RealtekALC)  Credit: THe KiNG
+###I.   OS X Realtek ALC AppleHDA Installation Methods
+
+
+[**A. Clover Patched AppleHDA Method**](https://github.com/toleda/audio_CloverALC)   
+Credit: abxite
+
+1.  Native AppleHDA.kext
+    1.  renamed layouts/devices and platforms/pathmaps installed (.zml, persistent)
+2.  Clover/patch kernel cache on boot
+    1.  KernelAndKextPatches/KextsToPatch/AppleHDA (2 patches, persistent)
+    2.  EFI/CLOVER/kexts/10.xx/realtekALC.kext (configdata/pins, persistent)
+3.  Clover/Devices/Audio/Inject/Audio ID (persistent)
+
+[**B. Clover Patched Piker-Alpha AppleHDA8series**](https://github.com/toleda/audio_CloverALC)  
+Credit: Piker-Alpha
+    
+1.  Native AppleHDA.kext
+2.  AppleHDAxxx.kext (codec specific support)
+    1.  binary patch (device_id, hex edit)
+    2.  layouts/devices and platforms/pathmaps installed (.xml)
+    3.  configdata/pins installed (Info.plist)
+2.  Clover/Devices/Audio/Inject/Audio ID (persistent)
+
+[**C. Realtek ALC Patched AppleHDA Method**](https://github.com/toleda/audio_RealtekALC)  
+Credit: THe KiNG
 
 1.  Native AppleHDA.kext
     1.  binary patch (device_id, hex edit)
@@ -26,7 +49,8 @@
 2.  Audio ID Injection required
     1.  [audio_ALCInjection](https://github.com/toleda/audio_ALCInjection)
 
-[**B. Piker-Alpha AppleHDA8series**](https://github.com/toleda/audio_pikeralphaALC)  Credit: Piker-Alpha
+[**D. Piker-Alpha AppleHDA8series**](https://github.com/toleda/audio_pikeralphaALC)  
+Credit: Piker-Alpha  
 Note: Yosemite Only
     
 1.  Native AppleHDA.kext
@@ -36,15 +60,6 @@ Note: Yosemite Only
     3.  configdata/pins installed (Info.plist)
 2.  Audio ID Injection required
     1.  [audio_ALCInjection](https://github.com/toleda/audio_ALCInjection)
-
-[**C. Clover Patched AppleHDA Method**](https://github.com/toleda/audio_CloverALC) Credit: abxite
-
-1.  Native AppleHDA.kext
-    1.  renamed layouts/devices and platforms/pathmaps installed (.zml, persistent)
-2.  Clover/patch kernel cache on boot
-    1.  KernelAndKextPatches/KextsToPatch/AppleHDA (2 patches, persistent)
-    2.  EFI/CLOVER/kexts/10.xx/realtekALC.kext (configdata/pins, persistent)
-3.  Clover/Devices/Audio/Inject/Audio ID (persistent)
 
 ###II.  Requirements - Supported/Unsupported
 
@@ -60,7 +75,7 @@ Note: Yosemite Only
 3.  Supported Realtek onboard audio codec
     1.  [Unknown codec?](https://github.com/toleda/audio_ALC_guides/blob/master/Identify%20Audio%20Codec%20%5BGuide%5D.pdf)
 
-**B. Realtek ALCxxxn** (verify codec and Audio ID)
+**B. Realtek ALCxxx** (verify codec and Audio ID)
 
 1.  Supported codecs
     1.  269 (BRIX only, Note 4, NA - Piker-Alpha)
@@ -87,9 +102,9 @@ Note: Yosemite Only
 
         HD3000/HD4000 HDMI audio with Realtek ALC audio
 
-**C. OS X Unsupported Intel Chipsets**
+**C. OS X - Unsupported Intel High Definition Audio**
 
-1.  9 Series motherboard support (10.9/Mavericks only, Note 2)
+1.  100 Series motherboard support (Note 2)
 2.  X99 motherboard support (Note 3)
 
 ###III. Notes
@@ -103,30 +118,39 @@ Note: Yosemite Only
         1.  Run script (same method, same script)
         2.  Install Previous working AppleHDA.kext (backup, above)
 
-2.  OS X/AppleHDA.kext/9 Series motherboard support (Mavericks only, select 1, 2 or 3)
+2.  100 Series/Intel High Definition Audio (workaround requires 1, 2, 3, 4 and 5)
 
-    1.  AppleHDAController binary patch:
-        1.  Find: 20 8C
-        2.  Replace (4x): A0 8C
-        3.  Save
-        4.  Restart
-    2. [alc_9series-hda-93](https://github.com/toleda/audio_RealtekALC/blob/master/audio_alc_9series-hda-93_patch.command.zip)
-    	1.  Download/View Raw
-    	2.  Double click Downloads/audio_alc_9series-hda-93_patch.command
-    3. [cloverALC-9series](https://github.com/toleda/audio_CloverALC/blob/master/config-audio_cloverALC-9series.plist.zip)
-    	1.  Install/config.plist/KernelAndKextPatches/KextsToPatch/
+	1.	Rename dsdt/HDAS to HDEF
+		1. [Clover/config-audio_cloverALC-100series.plist](https://github.com/toleda/audio_CloverALC/blob/master/config-audio_cloverALC-100series.plist.zip)
+			1. Add config.plist/ACPI/DSDT/Patches/Rename HDAS to HDEF
+	2. sdt injection (any bootloader, select Audio ID and install)
+		1. [Audio ID: 1, ssdt_hdef-1-100-hdas](https://github.com/toleda/audio_ALCInjection/blob/master/ssdt_hdef/ssdt_hdef-1-100-hdas.zip)
+		2. [Audio ID: 2, ssdt_hdef-2-100-hdas](https://github.com/toleda/audio_ALCInjection/blob/master/ssdt_hdef/ssdt_hdef-2-100-hdas.zip)
+		3. [Audio ID: 3, ssdt_hdef-3-100-hdas](https://github.com/toleda/audio_ALCInjection/blob/master/ssdt_hdef/ssdt_hdef-3-100-hdas.zip)
+	3. Restart
+	4. Install Realtek ALC Audio
+		1. see Realtek ALC Installation Methods, above
+	5. Restart
+	
+3.  X99/Intel High Definition Audio  (workaround requires 1, 2, 3, 4 and 5)
 
-3.  OS X/AppleHDA.kext/x99 motherboard support (temporary, select 1, 2 or 3)
-    1.  AppleHDAController binary patch:
-        1.  Find: 20 8C
-        2.  Replace (4x): 20 8D
-        3.  Save
-        4.  Restart
-    2. [alc_x99-hda-100](https://github.com/toleda/audio_RealtekALC/blob/master/audio_alc_x99-hda-100_patch.command.zip)
-    	1.  Download/View Raw
-    	2.  Double click Downloads/audio_alc_x99-hda-100_patch.command
-    3. [cloverALC-x99](https://github.com/toleda/audio_CloverALC/blob/master/config-audio_cloverALC-x99.plist.zip)
-    	1.  Install/config.plist/KernelAndKextPatches/KextsToPatch/
+    1.  Rename dsdt/ALSA to HDEF (select one method)
+    	1. [Clover/config-audio_cloverALC-x99.plist.](https://github.com/toleda/audio_CloverALC/blob/master/config-audio_cloverALC-x99.plist.zip)
+    		1. Add config.plist/ACPI/DSDT/Patches/Rename ALZA to HDEF
+		2. ssdt injection (any bootloader)
+			1. [Audio ID: 1, ssdt_hdef-1-x99-alza](https://github.com/toleda/audio_ALCInjection/blob/master/ssdt_hdef/ssdt_hdef-1-x99-alza.zip)
+
+	2. Restart
+	3. Install Realtek ALC Audio
+		1. see Realtek ALC Installation Methods, above
+	4. Add x99 HD Audio device_id (Select one method)
+		1. Clover/config-audio_cloverALC-x99.plist above, select one, appropriate version)
+			1. Add config.plist/KernelAndKextPatches/KextsToPatch/10.10-10.11+x99-ALC-Onboard-Audio
+			2. Add config.plist/KernelAndKextPatches/KextsToPatch/110.9.4-10.9.5-x99-ALC-Onboard-Audio
+		2. Patched AppleHDA.kext (RealtekALC, MultiBeast 7 and earlier)
+			1. [audio_alc_x99-hda-100_patch.command](https://github.com/toleda/audio_RealtekALC/blob/master/audio_alc_x99-hda-100_patch.command.zip)
+	5. Restart
+	6. [Credit: bOLEMO, post #196](http://www.insanelymac.com/forum/topic/308387-el-capitan-realtek-alc-applehda-audio/page-10)
 
 4.  BRIX/ALC269, BRIX Pro/ALC283 and NUC/ALC283 Support
 
@@ -136,21 +160,27 @@ Note: Yosemite Only
         1.  ALC269 - BRIX/Headphones and SPDIF out
         2.  ALC283 - BRIX Pro and NUC/Headphones (Microphone is not supported)
         3.  HDMI audio with dsdt edits or ssdt, see
-
             1.  [HD4600](https://github.com/toleda/audio_hdmi_8series)
-
             2.  [HD4000](https://github.com/toleda/audio_hdmi_hd4000)
 
-###IV. [Realtek ALC AppleHDA Guides](https://github.com/toleda/audio_ALC_guides)
-1.  Capabilities - Realtek ALC AppleHDA_v2 [Guide]
-2.  Customization - Realtek ALC AppleHDA_v2 [Guide]
-3.  Identify Audio Codec [Guide]
-4.  No Audio After Sleep/Wake - Realtek ALC AppleHDA [Fixes]
-5.  No Audio Devices - Realtek ALC AppleHDA [Guide]
-6.  No Sound - Realtek ALC AppleHDA [Guide]
-7.  Restore native AppleHDA [Guide]
-8.  Screenshots - Realtek ALC AppleHDA_v2
-9.  Surround Sound - Realtek ALC -  AppleHDA [Guide]
+###IV. More Information
+
+1. [Realtek ALC AppleHDA](https://github.com/toleda/audio_ALC_guides/blob/master/Realtek%20ALC%20AppleHDA.pdf)
+
+    1. Installation
+    2. Details/Support  
+    3. Troubleshooting
+2. [Realtek ALC guides](https://github.com/toleda/audio_ALC_guides)
+	1. Enhancemants
+		1. Customization
+		2. Surround Sound
+	2. Troubleshooting
+		1. No Audio Devices
+		2. No Sound
+		3. No Audio After Sleep/Wake
+	3. Utilities
+		1. Identify Audio Codec
+		2. Restore native AppleHDA9.  Surround Sound - Realtek ALC -  AppleHDA [Guide]
 
 ###V.   Tools
 
@@ -163,34 +193,16 @@ Note: Yosemite Only
 4.  [DPCIManger](http://sourceforge.net/projects/dpcimanager/)
 
 5.  Property List Editors
-    1.  Xcode
+    1.  App Store/Xcode
     2.  Property List Editor
     3.  PlistEdit Pro
-    4.  TextEdit
+    4.  Applications/TextEdit
     5.  etc.
 
-###VI.  Problem Reporting
+###VI.  [Problem Reporting](https://github.com/toleda/audio_ALC_guides/blob/master/Problem%20Reporting.md)
 
-1.  Description of onboard audio problem (attach the following information)
-2.  OS X version/motherboard model/BIOS version/processor/graphics
-3.  Procedure/Guide Used
-4.  Copy of IOReg - IOReg/File/Save a Copy As. . ., verify file (no ioreg.txt)
-5.  Installed System/Library/Extensions/AppleHDA.kext
-6.  Installed System/Library/Extensions/AppleHDAxxx.kext (if Piker-Alpha)
-7.  DPCIManager/Misc/Boot Log
-8.  Screenshot of System Information/Hardware/Audio/Intel High Definition Audio (not Devices)
-9.  Console/All Messages/kernel Sound assertions selected/Save Selection As. . .
-10.  Chameleon/Chimera
-    1.  Extra/org.chameleon.Boot.plist
-    2.  Extra/dsdt.aml (if installed)
-    3.  Extra/ssdt.aml (if installed)
-11. Clover/EFI or Legacy 
-    1.  EFI/CLOVER/config.plist
-    2.  EFI/CLOVER/ACPI/Patched/dsdt.aml (if installed)
-    3.  EFI/CLOVER/ACPI/Patched/ssdt.aml (if installed)
-12. Post to:
-    1.  [tonymacx86 - Realtek ALC AppleHDA](http://www.tonymacx86.com/audio/143752-no-audio-devices-realtek-alc-applehda-guide.html#post886726) Or
-    2.  [InsanelyMac - Realtek ALC AppleHDA](http://www.insanelymac.com/forum/topic/298819-yosemite-audio-realtek-alc-applehda/)
+1.	Problem Reporting/Post to
+2.	Problem Reporting/Attached requested files
 
 Credit:
 THe KiNG, bcc9, RevoGirl, PikeRAlpha, SJ\_UnderWater, RehabMan, TimeWalker75a, [abxite](http://applelife.ru/threads/patchim-applehda-s-pomoschju-zagruzchika.39406/#post-353647)
