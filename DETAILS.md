@@ -193,7 +193,7 @@ Note: Yosemite Only
 4.  [DPCIManger](http://sourceforge.net/projects/dpcimanager/)
 
 5.  Property List Editors
-    1.  App Store/Xcode
+    1.  [Xcode](https://developer.apple.com/xcode/)
     2.  Property List Editor
     3.  PlistEdit Pro
     4.  Applications/TextEdit
@@ -201,8 +201,9 @@ Note: Yosemite Only
 
 ###VI.  [Problem Reporting](https://github.com/toleda/audio_ALC_guides/blob/master/Problem%20Reporting.md)
 
-1.	Problem Reporting/Post to
-2.	Problem Reporting/Attached requested files
+1. Problem Reporting/Post to
+2. Problem Reporting/Attached requested files
+	1. No files atached, reply unlikley
 
 Credit:
 THe KiNG, bcc9, RevoGirl, PikeRAlpha, SJ\_UnderWater, RehabMan, TimeWalker75a, [abxite](http://applelife.ru/threads/patchim-applehda-s-pomoschju-zagruzchika.39406/#post-353647)
