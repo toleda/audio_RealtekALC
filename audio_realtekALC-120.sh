@@ -1,44 +1,39 @@
 #!/bin/sh
 # Maintained by: toleda for: github.com/toleda/audio_realtekALC
-gFile="File: audio_realtekALC-110.command_v1.0o1"
+gFile="File: audio_realtekALC-120.command_v1.0d"
 # Credit: bcc9, RevoGirl, PikeRAlpha, SJ_UnderWater, RehabMan, TimeWalker, lisai9093
 #
 # OS X Realtek ALC Onboard Audio
 #
-# Enables OS X Realtek ALC onboard audio in 10.11, 10.10, 10.9 and 10.8, all versions
+# Enables OS X Realtek ALC onboard audio in 10.12, 10.11, 10.10, 10.9 and 10.8, all versions
 # 1. Supports Realtek ALC885, 887, 888, 889, 892, 898 and 1150
-# 2. Patches native AppleHDA.kext installed in System/Library/Extensions
+# 2. Clover patched native AppleHDA.kext installed in System/Library/Extensions
 #
 # Requirements
-# 1. OS X: 10.11/10.10/10.9/10.8, all versions
-# 2. Native AppleHDA.kext  (If not installed, run Mavericks installer)
+# 1. OS X: 10.12/10.11/10.10/10.9/10.8, all versions
+# 2. Native AppleHDA.kext (if not installed, run 10.x installer)
 # 3. Supported Realtek ALC on board audio codec (see above)
 # 4. Audio ID: 1, 2 or 3 Injection, see https://github.com/toleda/audio_ALCinjection
 #
 # Installation
-# 1. Double click audio_cloverALC-110.command
+# 1. Double click audio_realtekALC-120.command
 # 2. Enter password at prompt
-# 3. Confirm Realtek ALC . . . (y/n): (885, 887, 888, 889, 892, 898, 1150 only)
-# 4. Enable HD4600 HDMI audio (y/n): (887, 892, 898, 1150 only)
-# 5. Restart
+# 3. N/A
+# 4. No Clover/Chameleon files, confirm Osmosis/other install (y/n)
+# 5. Confirm Realtek ALCxxx (y/n): (885, 887, 888, 889, 892, 898, 1150)
+# 6. Clover Audio ID Injection (y/n):
+#    If y:
+# 7. Use Audio ID: x (y/n):
+#    If n:
+#    Audio IDs:
+#    1 - 3/5/6 port Realtek ALCxxx audio
+#    2 - 3 port (5.1) Realtek ALCxxx audio (n/a 885)
+#    3 - HD3000/HD4000 HDMI audio w/Realtek ALCxxx audio (n/a 885/1150 & 887/888 Legacy)
+# 8. Select Audio ID (1, 2 or 3)
+# 9. Restart
 #
 # Change log:
-# v1.0a - 6/15/15: 1. Initial 10.11 support
-# v1.0b - 6/17/15: file name typo
-# v1.0c - not applicable
-# v1.0d - 7/31/15: add SID verification, fix copy extended attributes error
-# v1.0e - 8/14/15: fix  SID reporting esthetics
-# v1.0f - 8/14/15: 269/283 binary edit update
-# v1.0g - 9/21/15: El Capitan typo
-# v1.0h - 10/1/15: El Capitan typo/cp fix
-# v1.0h - 10/8/15: Legacy fix - 2
-# v1.0j - 10/30/15: add /Volume/ESP detection
-# v1.0k - 11/5/15: add Skylake HDEF
-# v1.0k - 11/13/15: add 1150/Audio ID: 3
-# v1.0m - 11/30/15: unsupported audio_id fix
-# v1.0n - 12/20/15: detect HD4600 HDMI audio codec
-# v1.0n11 - 12/20/15: typo
-# v1.0o10 - 12/20/15: add Osmosis, typo, credit: dabaer
+# v1.0d - 10/24/16: Initial 10.12 support
 #
 echo " "
 echo "Agreement"
@@ -48,7 +43,11 @@ echo "for any reason without permission. The audio_realtekALC-110 script is"
 echo "provided as is and without any kind of warranty."
 echo " "
 
+# debug=0 - normal install,
+# debug=1 - test drive: copy config.plist to Desktop, edited config.plist, realtekALC.kext, layout_.xml and Platforms files copied to Desktop/codec
+
 # set initial variables
+gDebug=0
 gSysVer=`sw_vers -productVersion`
 gSysName="Mavericks"
 gStartupDisk=EFI
@@ -66,8 +65,6 @@ gCodec=892
 gLegacy=n
 gController=n
 gMake=0
-gDebug=0
-gDebug=0
 gMB=0
 # gCodecsinstalled
 # gCodecVendor
@@ -79,6 +76,7 @@ gPikerAlphaALC=0
 gRealtekALC=1
 gAudioidvalid=n
 gCodecvalid=n
+gtestALC=0
 
 # debug
 if [ $gDebug = 1 ]; then
@@ -100,37 +98,50 @@ fi
 # verify system version
 case ${gSysVer} in
 
-10.11* ) gSysName="El Capitan"
-gSysFolder=kexts/10.11
-gSID=$(csrutil status)
-;;
-10.10* ) gSysName="Yosemite"
-gSysFolder=kexts/10.10
-;;
-10.9* ) gSysName="Mavericks"
-gSysFolder=kexts/10.9
-;;
-10.8* ) gSysName="Mountain Lion"
-gSysFolder=kexts/10.8
-;;
+    10.12* ) gSysName="Sierra"
+    gSysFolder=kexts/10.12
+    gSID=$(csrutil status)
+    ;;
 
-* )
-echo "OS X Version: $gSysVer is not supported"
-echo "No system files were changed"
-echo "To save a Copy of this Terminal session: Terminal/Shell/Export Text As ..."
-exit 1
-;;
+    10.11* ) gSysName="El Capitan"
+    gSysFolder=kexts/10.11
+    gSID=$(csrutil status)
+    ;;
+
+    10.10* ) gSysName="Yosemite"
+    gSysFolder=kexts/10.10
+    ;;
+
+    10.9* ) gSysName="Mavericks"
+    gSysFolder=kexts/10.9
+    ;;
+
+    10.8* ) gSysName="Mountain Lion"
+    gSysFolder=kexts/10.8
+    ;;
+
+    * )
+    echo "OS X Version: $gSysVer is not supported"
+    echo "No system files were changed"
+    echo "To save a Copy of this Terminal session: Terminal/Shell/Export Text As ..."
+    exit 1
+    ;;
 
 esac
 
 # debug
-if [ $gDebug = 1 ]; then
+if [ $gDebug = 2 ]; then
     # gSysVer=10.9
     echo "System version: supported"
     echo "gSysVer = $gSysVer"
 fi
 
+gDebugMode[0]=Release
+gDebugMode[1]=TestDrive
+gDebugMode[2]=Debug
+
 echo "File: $gFile"
+echo "${gDebugMode[$gDebug]} Mode"
 
 # debug
 if [ $gMake = 1 ]; then
@@ -138,7 +149,7 @@ if [ $gMake = 1 ]; then
         sudo rm -R "$gExtensionsDirectory/AppleHDA.kext"
     case $gSysName in
 
-    "El Capitan" )
+    "Sierra"|"El Capitan" )
     sudo cp -X $gDesktopDirectory/AppleHDA.kext $gExtensionsDirectory/AppleHDA.kext
     ;;
 
@@ -167,7 +178,7 @@ gStartupDevice=$(mount | grep "on / " | cut -f1 -d' ')
 gStartupDisk=$(mount | grep "on / " | cut -f1 -d' ' | xargs diskutil info | grep "Volume Name" | perl -an -F'/:\s+/' -e 'print "$F[1]"')
 
 # debug
-if [ $gDebug = 1 ]; then
+if [ $gDebug = 2 ]; then
     echo "Boot device: $gStartupDevice"
     echo "Boot volume: $gStartupDisk"
 fi
@@ -181,7 +192,7 @@ if [ $gRealtekALC = 1 ]; then
     gChameleonDirectory=/Volumes/"$gStartupDisk"/Extra
 
 # debug
-    if [ $gDebug = 1 ]; then
+    if [ $gDebug = 2 ]; then
         echo "gChameleonDirectory = $gChameleonDirectory"
         echo "gSysName = $gSysName"
     fi
@@ -191,7 +202,7 @@ if [ $gRealtekALC = 1 ]; then
             cp -p "$gChameleonDirectory/org.chameleon.Boot.plist" "/tmp/org.chameleon.Boot.txt"
 
 # debug
-            if [ $gDebug = 1 ]; then
+            if [ $gDebug = 2 ]; then
                 echo "$gChameleonDirectory/org.chameleon.Boot.plist found"
             fi
 
@@ -204,7 +215,7 @@ if [ $gRealtekALC = 1 ]; then
 
         case $gSysName in
 
-        "El Capitan" )
+        "Sierra"|"El Capitan" )
         echo $gSID > /tmp/gsid.txt
         if [[ $(cat /tmp/gsid.txt | grep -c "disabled") = 0 ]]; then
             rm -R /tmp/gsid.txt
@@ -248,7 +259,7 @@ if [ $gRealtekALC = 1 ]; then
 
     [yY]* )
         case $gSysName in
-        "El Capitan" )
+        "Sierra"|"El Capitan" )
 
         echo $gSID > /tmp/gsid.txt
         if [[ $(cat /tmp/gsid.txt | grep -c "disabled") = 0 ]]; then
@@ -353,7 +364,7 @@ if [ $gEFI = 1 ]; then
 
         case $gSysName in
 
-        "El Capitan" )
+        "Sierra"|"El Capitan" )
 	    echo $gSID > /tmp/gsid.txt
             if [[ $(cat /tmp/gsid.txt | grep -c "disabled") = 0 ]]; then
             rm -R /tmp/gsid.txt 
@@ -426,7 +437,7 @@ else
             cp -p "$gCloverDirectory/config.plist" "/tmp/config.txt"
             case $gSysName in
 
-            "El Capitan" )
+            "Sierra"|"El Capitan" )
 	    	echo $gSID > /tmp/gsid.txt
         	if [[ $(cat /tmp/gsid.txt | grep -c "disabled") = 0 ]]; then
             	rm -R /tmp/gsid.txt 
@@ -496,15 +507,31 @@ else
     fi
     ;;
 
-    1 )
-    echo "gHDAversioninstalled = $gHDAversioninstalled"
+1 )
+    if [ -d "$gDesktopDirectory/config-basic.plist" ]; then  
+       echo "Desktop/config-basic.plist copied missing"
+       exit 1
+    fi
+
+    sudo cp -R "$gDesktopDirectory/config-basic.plist" /tmp/config.plist
     echo "Desktop/config-basic.plist copied to /tmp/config.plist"
-    sudo cp -X config-basic.plist /tmp/config.plist
-;;
+   ;;
+
+2 )
+    echo "gHDAversioninstalled = $gHDAversioninstalled"
+    if [ -d "$gDesktopDirectory/config-basic.plist" ]; then  
+       echo "Desktop/config-basic.plist copied missing"
+       exit 1
+    fi
+
+    sudo cp -R "$gDesktopDirectory/config-basic.plist" /tmp/config.plist
+    echo "Desktop/config-basic.plist copied to /tmp/config.plist"
+    ;;
+
 * )
-echo "gDebug = $gDebug, fix"
-exit 1
-;;
+    echo "gDebug = $gDebug, fix"
+    exit 1
+    ;;
 esac
 
 fi
@@ -524,7 +551,7 @@ if [ "$?" != "0" ]; then
 fi
 
 # debug
-if [ $gDebug = 1 ]; then
+if [ $gDebug = 2 ]; then
     echo "EFI: success"
 fi
 
@@ -534,17 +561,18 @@ ioreg -rw 0 -p IODeviceTree -n HDEF > /tmp/HDEF.txt
 if [[ $(cat /tmp/HDEF.txt | grep -c "HDEF@1") != 0 ]]; then
     gLayoutidioreg=$(cat /tmp/HDEF.txt | grep layout-id | sed -e 's/.*<//' -e 's/>//')
     gLayoutidhex="0x${gLayoutidioreg:6:2}${gLayoutidioreg:4:2}${gLayoutidioreg:2:2}${gLayoutidioreg:0:2}"
-    let gAudioid=$gLayoutidhex
+    gAudioid=$((gLayoutidhex))
     sudo rm -R /tmp/HDEF.txt
 else
     echo "Error: no IOReg/HDEF; BIOS/audio/disabled or ACPI problem"
     echo "No system files were changed"
     echo "To save a Copy of this Terminal session: Terminal/Shell/Export Text As ..."
-    exit 1
+    sudo rm -R /tmp/HDEF.txt
+exit 1
 fi
 
 # debug
-if [ $gDebug = 1 ]; then
+if [ $gDebug = 2 ]; then
     echo "gLayoutidioreg = $gLayoutidioreg"
     echo "gLayoutidihex = $gLayoutidhex"
     echo "gAudioid = $gAudioid"
@@ -599,7 +627,7 @@ if [ $gMake = 0 ]; then
 fi
 
 # debug
-if [ $gDebug = 1 ]; then
+if [ $gDebug = 2 ]; then
     echo "Native AppleHDA: success"
 fi
 
@@ -608,9 +636,9 @@ gCodecsInstalled=$(ioreg -rxn IOHDACodecDevice | grep VendorID | awk '{ print $4
 gCodecsVersion=$(ioreg -rxn IOHDACodecDevice | grep RevisionID| awk '{ print $4 }')
 
 # debug
-if [ $gDebug = 1 ]; then
-    gCodecsInstalled=0x10ec0887
-    gCodecsVersion=0x100101
+if [ $gDebug = 2 ]; then
+# gCodecsInstalled=0x10ec0887
+# gCodecsVersion=0x100101
 # gCodecsVersion=0x100202
 # gCodecsVersion=0x100302
 # gCodecsInstalled=0x10ec0900
@@ -644,7 +672,7 @@ for codec in $gCodecsInstalled
 do
 
 # debug
-if [ $gDebug = 1 ]; then
+if [ $gDebug = 2 ]; then
     echo "Index = $index, Codec = $codec, Version = ${version[$index]}"
 fi
 
@@ -667,7 +695,7 @@ index=$((index + 1))
 done
 
 # debug
-if [ $gDebug = 1 ]; then
+if [ $gDebug = 2 ]; then
     echo "HDMI audio codec(s)"
         if [ $intel = y ]; then
             echo "Intel:    $Codecintelhdmi"
@@ -714,7 +742,7 @@ if [ $realtek = y ]; then
     gCodecDevice=${Codecrealtekaudio:6:4}
 
 # debug
-    if [ $gDebug = 1 ]; then
+    if [ $gDebug = 2 ]; then
         echo "gCodecVendor = $gCodecVendor"
         echo "gCodecDevice = $gCodecDevice"
     fi
@@ -732,8 +760,16 @@ if [ $realtek = y ]; then
     fi
 
 # debug
-if [ $gDebug = 1 ]; then
+if [ $gDebug = 2 ]; then
     echo "Codec identification: success"
+fi
+
+if [ $gPikerAlphaALC = 1 ]; then
+    echo ""
+    echo "Note: when AppleHDA8Series asks:"
+    echo "Do you want to copy AppleHDA$gCodec.kext to: /System/Library/Extensions? (y/n)"
+    echo "Answer: n"
+    echo ""
 fi
 
 #  validate_realtek codec
@@ -829,27 +865,35 @@ case "$gCodec" in
 
 esac
 
+case "$gCodec" in
+
+887|892|898|1150 )
+
 # verify ioreg/HDAU for HD4600 HDMI audio
-ioreg -rw 0 -p IODeviceTree -n HDAU > /tmp/HDAU.txt
+   ioreg -rw 0 -p IODeviceTree -n HDAU > /tmp/HDAU.txt
 
-if [[ $(cat /tmp/HDAU.txt | grep -c "HDAU@3") != 0 ]]; then
-    if [[ $(cat /tmp/HDAU.txt | grep -c "0c0c") != 0 ]]; then
-        echo "HDAU@3 found, HD4600 HDMI audio capable"
-        gController=1
-    fi
-fi
-sudo rm -R /tmp/HDAU.txt
+   if [[ $(cat /tmp/HDAU.txt | grep -c "HDAU@3") != 0 ]]; then
+       if [[ $(cat /tmp/HDAU.txt | grep -c "0c0c") != 0 ]]; then
+           echo "HDAU@3 found, HD4600 HDMI audio capable"
+           gController=1
+       fi
+   fi
+   sudo rm -R /tmp/HDAU.txt
 
-ioreg -rw 0 -p IODeviceTree -n B0D3 > /tmp/B0D3.txt
+   ioreg -rw 0 -p IODeviceTree -n B0D3 > /tmp/B0D3.txt
 
-if [[ $(cat /tmp/B0D3.txt | grep -c "B0D3@3") != 0 ]]; then
-    if [[ $(cat /tmp/B0D3.txt | grep -c "0c0c") != 0 ]]; then
-        echo "B0D3@3 found, HDAU edit required for HD4600 HDMI audio"
-        echo "dsdt edit/ssdt injection not available with this script"
-        gController=1
-    fi
-fi
-sudo rm -R /tmp/B0D3.txt
+   if [[ $(cat /tmp/B0D3.txt | grep -c "B0D3@3") != 0 ]]; then
+        if [[ $(cat /tmp/B0D3.txt | grep -c "0c0c") != 0 ]]; then
+            echo "B0D3@3 found, HDAU edit required for HD4600 HDMI audio"
+            echo "dsdt edit/ssdt injection not available with this script"
+            gController=1
+        fi
+   fi
+   sudo rm -R /tmp/B0D3.txt
+
+   ;;
+
+esac
 
 # HD4600 HDMI audio patch]
 choice2=n
@@ -955,8 +999,10 @@ if [ $gCloverALC = 1 ]; then
 
 fi
 
+
+
 # debug
-if [ $gDebug = 1 ]; then
+if [ $gDebug = 2 ]; then
     echo "gCodec = $gCodec"
     echo "gAudioid = $gAudioid"
     echo "gLegacy = $gLegacy"
@@ -967,6 +1013,8 @@ fi
 if [ $gPikerAlphaALC = 0 ]; then
 echo ""
 echo "Download ALC$gCodec files ..."
+
+if [ $gtestALC = 0 ]; then
 gDownloadLink="https://raw.githubusercontent.com/toleda/audio_ALC$gCodec/master/$gCodec.zip"
 if [ $gLegacy = y ]; then
     Legacy=_v100202
@@ -978,6 +1026,33 @@ fi
 
 unzip -qu "/tmp/ALC$gCodec.zip" -d "/tmp/"
 
+else
+
+# confirm codec test
+while true
+do
+    read -p "Confirm Realtek ALC$gCodec test (y/n): "  choice13
+    case "$choice13" in
+    [yY]* ) break;;
+    [nN]* )
+        echo "Error: set gtestALC=0"
+        echo "No system files were changed"
+        echo "To save a Copy of this Terminal session: Terminal/Shell/Export Text As ..."
+        exit 1
+        ;;
+    * ) echo "Try again...";;
+    esac
+done
+
+gDownloadLink="https://raw.githubusercontent.com/toleda/audio_alc_test/master/$gCodec.zip"
+sudo curl -o "/tmp/ALC$gCodec.zip" $gDownloadLink
+unzip -qu "/tmp/ALC$gCodec.zip" -d "/tmp/"
+gDownloadLink="https://raw.githubusercontent.com/toleda/audio_alc_test/master/realtekALC.kext.zip"
+sudo curl -o "/tmp/realtekALC.kext.zip" $gDownloadLink
+unzip -qu "/tmp/realtekALC.kext.zip" -d "/tmp/"
+
+fi
+
 # exit if error
 if [ "$?" != "0" ]; then
     echo "Error: Download failure, verify network"
@@ -988,7 +1063,7 @@ fi
 fi
 
 # debug
-if [ $gDebug = 1 ]; then
+if [ $gDebug = 2 ]; then
     echo "gCloverALC = $gCloverALC"
     echo "gPikerAlphaALC = $gPikerAlphaALC"
     echo "gRealtekALC = $gRealtekALC"
@@ -1017,7 +1092,7 @@ sudo chown $(whoami) $gDesktopDirectory/audio_ALC$gCodec-$gSysVer
 
 case $gSysName in
 
-"El Capitan" )
+"Sierra"|"El Capitan" )
 sudo cp -XR $gExtensionsDirectory/AppleHDA.kext $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA-orig.kext
 ;;
 
@@ -1040,7 +1115,7 @@ if [ $choice2 = y ]; then
 
     case $gSysVer in
 
-    10.10*|10.11* )
+    10.12*|10.11*|10.10* )
     echo "$gSysVer controller patch"
 # HD4600/0c0c HDMI audio patch (10.10)
     sudo xxd -ps $gHDAControllerbinaryDirectory/AppleHDAController | tr -d '\n' > /tmp/AppleHDAController.txt
@@ -1060,7 +1135,7 @@ if [ $choice2 = y ]; then
     sudo rm -R /tmp/AppleHDAController.txt
     ;;
 
-    * ) echo "OS X Version: $gSysVer does not support HD46000 HDMI audio"
+    * ) echo "OS X Version: $gSysVer does not support HD4600 HDMI audio"
     echo "No system files were changed"
     echo "To save a copy of this Terminal session: Terminal/Shell/Export Text As ..."
     exit 1
@@ -1083,10 +1158,24 @@ fi
 # codec binary patch
 case $gSysVer in
 
-10.8.5|10.9*|10.10*|10.11* )
+10.12*|10.11*|10.10*|10.9*|10.8.5* )
 echo "$gSysVer codec patch"
 
 case $gSysName in
+
+"Sierra" )
+
+case $gCodec in
+
+887|888|889|892|898|1150 )
+
+# codec patch out/credit pcpaul/Riley Freeman
+
+sudo perl -pi -e 's|\x8a\x19\xd4\x11|\x00\x00\x00\x00|g' $gHDAContentsDirectory/MacOS/AppleHDA
+;;
+
+esac
+;;
 
 "El Capitan" )
 
@@ -1100,6 +1189,7 @@ sudo perl -pi -e 's|\x83\x19\xd4\x11|\x00\x00\x00\x00|g' $gHDAContentsDirectory/
 ;;
 
 esac
+;;
 
 esac
 
@@ -1111,7 +1201,7 @@ case $gCodec in
 283 ) sudo perl -pi -e 's|\x62\x02\xec\x10|\x83\x02\xec\x10|g' $gHDAContentsDirectory/MacOS/AppleHDA
 ;;
 
-885 ) echo "No patch, native ALC885"
+885 ) echo “No patch, native ALC885”  
 # Optional patch, remove "# " from the following two lines
 # sudo perl -pi -e 's|\x85\x08\xec\x10|\x80\x08\xec\x10|g' $gHDAContentsDirectory/MacOS/AppleHDA
 # sudo perl -pi -e 's|\x8b\x19\xd4\x11|\x85\x08\xec\x10|g' $gHDAContentsDirectory/MacOS/AppleHDA
@@ -1151,7 +1241,7 @@ echo "$gSysVer codec patch"
 # patch codec
 case $gCodec in
 
-885 ) echo "No patch, native ALC885, optional patch available, see script"
+885 ) echo “No patch, native ALC885, optional patch available, see script”  
 # Optional patch, remove "# " from the following 3 lines
 # sudo perl -pi -e 's|\x85\x08\xec\x10|\x80\x08\xec\x10|g' $gHDAContentsDirectory/MacOS/AppleHDA
 # sudo perl -pi -e 's|\xff\x87\xec\x1a\x0f\x8f\x53\x01\x00\x00|\x99\x08\xec\x10\x0f\x84\x2a\x01\x00\x00|g' $gHDAContentsDirectory/MacOS/AppleHDA/AppleHDA
@@ -1265,7 +1355,7 @@ fi    # end: if [ $gRealtekALC = 1 ]
 
 case $gSysName in
 
-"El Capitan" )
+"Sierra"|"El Capitan" )
 sudo cp -XR $gExtensionsDirectory/AppleHDA.kext $gDesktopDirectory/audio_ALC$gCodec-$gSysVer/AppleHDA.kext
 ;;
 
@@ -1277,7 +1367,7 @@ esac
 
 case $gSysName in
 
-"El Capitan"|"Yosemite" )
+"Sierra"|"El Capitan"|"Yosemite" )
 echo "Fix permissions ..."
 sudo chown -R root:wheel $gExtensionsDirectory/AppleHDA.kext
 echo "Kernel cache..."

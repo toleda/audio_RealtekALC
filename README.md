@@ -101,7 +101,7 @@ The Realtek Realtek ALC Patched method enables OS X AppleHDA onboard with or wit
     2. Details/Support  
     3. Troubleshooting
 2. [Realtek ALC guides](https://github.com/toleda/audio_ALC_guides)
-	1. Enhancemants
+	1. Enhancements
 		1. Customization
 		2. Surround Sound
 	2. Troubleshooting
