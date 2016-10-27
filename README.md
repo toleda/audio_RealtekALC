@@ -2,7 +2,7 @@ Realtek ALC AppleHDA Audio [Guides]_v4.0
 ![alt text](https://github.com/toleda/audio_RealtekALC/blob/master/sound.jpeg)
 #audio_realtekALC  
 Realtek ALC/Desktop: 269(1), 283(1), 885, 887, 888, 892, 898 and 1150 on board audio  (1) BRIX/NUC only  
-Supports OS X: 10.11, 10.10, 10.9 and 10.8
+Supports OS X: 10.12, 10.11, 10.10, 10.9 and 10.8
 Native AppleHDA
 
 **OS X/Patch in Place AppleHDA Realtek ALC Audio**  
@@ -11,10 +11,11 @@ The Realtek Realtek ALC Patched method enables OS X AppleHDA onboard with or wit
 
 **Updates**
 
-1. 11/8/15 - Skylake/Series 100 Update, Add 1150/Audio ID: 3
+1. 10/25/16 - 10.12 Support
+2. 11/8/15 - Skylake/Series 100 Update, Add 1150/Audio ID: 3
 2. 6/15/15 - 10.11 - El Capitan Realtek ALC AppleHDA.kext Initial Support
 
-**Versions: audio_realtekALC-110**
+**Versions: audio_realtekALC-120**
 
 1. Easy: .command, see A. Installation
 2. Bash: .sh, see B. Terminal
@@ -28,8 +29,8 @@ The Realtek Realtek ALC Patched method enables OS X AppleHDA onboard with or wit
 		1. OK, proceed
 		2. NOK, fix
 2. Patched AppleHDA.kext
-    1. [audio_realtekALC-110.command](https://github.com/toleda/audio_RealtekALC/blob/master/audio_realtekALC-110.command.zip) (select View Raw)
-    2. Double click Downloads/audio_realtekALC-110.command
+    1. [audio_realtekALC-120.command](https://github.com/toleda/audio_RealtekALC/blob/master/audio_realtekALC-120.command.zip) (select View Raw)
+    2. Double click Downloads/audio_realtekALC-120.command
     3. Password:
     4. Confirm Codec ALCxxx: (885, 887, 888, 889, 892, 898, 1150 only)
     5. Enable HD4600 HDMI audio (y/n): (887, 892, 898, 1150 only)
@@ -42,14 +43,15 @@ The Realtek Realtek ALC Patched method enables OS X AppleHDA onboard with or wit
 **B. Terminal**
 
 1. Clover patched AppleHDA
-    1. [audio_realtekALC-110.sh](https://github.com/toleda/audio_RealtekALC/blob/master/audio_realtekALC-110.sh) (select View Raw)
+    1. [audio_realtekALC-120.sh](https://github.com/toleda/audio_RealtekALC/blob/master/audio_realtekALC-120.sh) (select View Raw)
     2. Terminal $ ./audio_cloverALC-110....sh
     3. Same (as above)
 
 **C. Requirements**
 
 1.  OS X Versions (+ all)
-    1.  10.11+/El Capitan 
+    1.  10.12+/Sierra 
+    2.  10.11+/El Capitan
     2.  10.10+/Yosemite
     3.  10.9+/Mavericks
     4.  10.8+/Mountain Lion
@@ -89,7 +91,7 @@ The Realtek Realtek ALC Patched method enables OS X AppleHDA onboard with or wit
     2. Audio ID: 2 supports 887, 888, 889, 892, 898, 1150   
         Realtek ALC/5.1 surround sound (3 motherboard audio ports) 
 
-    3. Audio ID: 3 supports 887, 888, 889, 892, 898, 1150  
+    3. Audio ID: 3 supports 887, 888, 889, 892, 898 
         HD3000/HD4000 HDMI audio with Realtek ALC audio
 
 **E. More Information**
