@@ -1,8 +1,8 @@
 ![alt text](https://github.com/toleda/audio_RealtekALC/blob/master/sound.jpeg)
-#audio_realtekALC
+# audio_realtekALC
 **macOS AppleHDA Realtek ALC Onboard Audio Solutions**
 
-##11/8/18 - Deprecated
+## 11/8/18 - Deprecated
 
 Realtek onboard audio: try AppleALC.kext  
 See https://github.com/acidanthera/AppleALC
